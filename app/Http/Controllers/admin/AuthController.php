@@ -15,26 +15,29 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegistration;
 use App\Mail\ForgotPassword;
+use App\Notifications\NewUserNotification;
 
 class AuthController extends Controller
 {
     /* login view */
-    public function loginView(){
+    public function loginView()
+    {
         $pageTitle = 'Login';
         return view('admin.auth.login')
-                ->with('pageTitle', $pageTitle);
+            ->with('pageTitle', $pageTitle);
     }
 
     /* login Action */
-    public function login(Request $request){
-        try{
+    public function login(Request $request)
+    {
+        try {
 
             $validator = Validator::make($request->all(), [
                 'email' => 'required',
                 'password' => 'required',
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
@@ -55,22 +58,23 @@ class AuthController extends Controller
             return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
                 'password' => 'Your Password is not correct.',
             ]);
-
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
         }
     }
 
-    /* registration view */ 
-    public function registration(){
+    /* registration view */
+    public function registration()
+    {
         $pageTitle = 'Register';
         return view('admin.auth.registration')
-                ->with('pageTitle', $pageTitle);
+            ->with('pageTitle', $pageTitle);
     }
 
     /* Registration action */
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         try {
             $customMessages = [
                 'name.required' => 'The name field is required.',
@@ -92,42 +96,55 @@ class AuthController extends Controller
             }
 
             // If validation passes, create a new user
-            $user = new User([
+            $userData = [
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'password' => bcrypt($request->input('password')),
-            ]);
-
+                'user_type' => 'user'
+            ];
+            $user = new User($userData);
             $user->save();
 
-            $emailData = [
-                'name' => $request->input('name'),
-            ];
-            Mail::to($request->input('email'))->send(new UserRegistration($emailData));
+            if ($user->save()) {
+                //send mail data
+                $emailData = [
+                    'name' => $request->input('name'),
+                ];
+                Mail::to($request->input('email'))->send(new UserRegistration($emailData));
 
-            return redirect()->route('view.login')->with('success', 'Registered Successfully, Login here..');
-
-        }catch (\Exception $e) {
+                //notify the admin user
+                $users = new User();
+                $users = $users->getUser(['user_type' => 'admin']);
+                foreach ($users as $usr) {
+                    $usr->notify(new NewUserNotification($userData));
+                }
+                return redirect()->route('view.login')->with('success', 'Registered Successfully, Login here..');
+            } else {
+                return redirect()->route('view.login')->with('error', 'Not Registered, after some time try again.');
+            }
+        } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
         }
     }
 
     /* Forgot Password */
-    public function forgotPassword(){
+    public function forgotPassword()
+    {
         $pageTitle = 'Forgot Password';
         return view('admin.auth.forgot')
-                ->with('pageTitle', $pageTitle);
+            ->with('pageTitle', $pageTitle);
     }
 
     /* forgot action */
-    public function forgot(Request $request){
-        try{
+    public function forgot(Request $request)
+    {
+        try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required',
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
@@ -142,20 +159,21 @@ class AuthController extends Controller
             Mail::to($request->input('email'))->send(new ForgotPassword($user));
 
             return redirect()->back()->with('success', 'Forgot Password link sent on your mail.');
-
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return redirect::back()->with('error',  $e->getMessage());
         }
     }
 
-    public function resetPassword($id = null){
+    public function resetPassword($id = null)
+    {
         $pageTitle = 'Reset Password';
         return view('admin.auth.resetPassword')
-                ->with('pageTitle', $pageTitle)
-                ->with('id', $id);
+            ->with('pageTitle', $pageTitle)
+            ->with('id', $id);
     }
 
-    public function reset(Request $request){
+    public function reset(Request $request)
+    {
         try {
             $customMessages = [
                 'password.required' => 'The password field is required.',
@@ -177,18 +195,19 @@ class AuthController extends Controller
             $user->update();
 
             return redirect('login')->with('success', 'Your Password is updated. Login Here.');
-
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
-        }    
+        }
     }
 
-    public function googleLogin(){
+    public function googleLogin()
+    {
         return Socialite::driver('google')->redirect();
     }
 
-    public function googleCallback(){
+    public function googleCallback()
+    {
         // $user = Socialite::driver('google')->user();
         // $data = User::where('email', $user->email)->first();
 
@@ -202,10 +221,11 @@ class AuthController extends Controller
         // return redirect('dashboard');
     }
 
-    public function dashboard(Request $request){
+    public function dashboard(Request $request)
+    {
         $pageTitle = 'Dashboard';
         return view('admin.dashboard.dashboard')
-                ->with('pageTitle', $pageTitle);
+            ->with('pageTitle', $pageTitle);
     }
 
     public function logout()
@@ -214,5 +234,4 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('login')->with('success', 'Logout Successfully.');
     }
-
 }

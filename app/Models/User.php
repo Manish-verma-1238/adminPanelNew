@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getUser(array $data)
+    {
+        return $this->where($data)->get();
+    }
 }

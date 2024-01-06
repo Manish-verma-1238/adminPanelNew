@@ -178,15 +178,17 @@
                                 </div>
                             </div>
                             <div class="dropdown-list-content dropdown-list-icons">
+                                @foreach(auth()->user()->notifications as $notification)
                                 <a href="#" class="dropdown-item dropdown-item-unread">
                                     <div class="dropdown-item-icon bg-primary text-white">
                                         <i class="fas fa-code"></i>
                                     </div>
                                     <div class="dropdown-item-desc">
-                                        Template update is available now!
-                                        <div class="time text-primary">2 Min Ago</div>
+                                        <b>"{{ $notification->data['name'] }}" started following Jimeet Blogs.</b>
+                                        <div class="time text-primary">{{ $notification->created_at }} Min Ago</div>
                                     </div>
                                 </a>
+                                @endforeach
                                 <a href="#" class="dropdown-item">
                                     <div class="dropdown-item-icon bg-info text-white">
                                         <i class="far fa-user"></i>
