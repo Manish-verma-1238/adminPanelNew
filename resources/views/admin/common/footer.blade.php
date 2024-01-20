@@ -1,7 +1,8 @@
     <div>
     <footer class="main-footer">
         <div class="footer-left">
-          Copyright &copy; 2023 Jimeet Blogs
+          <!-- Get user profile from the appServiceProvider -->
+          Copyright &copy; {{ucwords($userProfile['panel_name']) ?? 'Admin Panel'}}
         </div>
       </footer>
     </div>

@@ -58,7 +58,7 @@
             </div><br>
             <p class="reset-text">If you didn't request a password reset, please ignore this email.</p>
             <p>Best regards,</p>
-            <p>Jimeet Blogs Team</p>
+            <p>{{ucwords($userProfile['panel_name']) ?? 'Admin Panel'}} Team</p>
         </div>
     </div>
 </body>

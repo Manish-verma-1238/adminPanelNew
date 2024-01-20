@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>{{$pageTitle ?? ''}} &mdash; Jimeet Blogs</title>
+  <title>{{$pageTitle ?? ''}} &mdash; {{ucwords($userProfile['panel_name']) ?? 'Admin Panel'}}</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('assets/admin/assets/modules/bootstrap/css/bootstrap.min.css')}}">

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegistration;
 use App\Mail\ForgotPassword;
 use App\Notifications\NewUserNotification;
+use App\Events\ShowNotifications;
 
 class AuthController extends Controller
 {
@@ -233,5 +234,10 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
         return redirect('login')->with('success', 'Logout Successfully.');
+    }
+
+    public function manish()
+    {
+        event(new ShowNotifications('msd'));
     }
 }

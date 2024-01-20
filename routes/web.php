@@ -54,3 +54,6 @@ Route::group(['middleware'=>'auth_check'], function(){
     
 });
 
+
+Route::get('/manish', [AuthController::class, 'manish'])->name('manish');
+Route::view('/verma', 'websocket');

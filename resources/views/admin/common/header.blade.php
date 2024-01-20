@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>{{$pageTitle}} &mdash; Jimeet Blogs</title>
+    <title>{{$pageTitle}} &mdash; {{ucwords($userProfile['panel_name']) ?? 'Admin Panel'}}</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{asset('assets/admin/assets/modules/bootstrap/css/bootstrap.min.css')}}">
@@ -13,10 +13,8 @@
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{asset('assets/admin/assets/modules/jqvmap/dist/jqvmap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/admin/assets/modules/summernote/summernote-bs4.css')}}">
-    <link rel="stylesheet"
-        href="{{asset('assets/admin/assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css')}}">
-    <link rel="stylesheet"
-        href="{{asset('assets/admin/assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/admin/assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/admin/assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css')}}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{asset('assets/admin/assets/css/style.css')}}">
@@ -29,14 +27,11 @@
             <nav class="navbar navbar-expand-lg main-navbar">
                 <form class="form-inline mr-auto">
                     <ul class="navbar-nav mr-3">
-                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i
-                                    class="fas fa-bars"></i></a></li>
-                        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i
-                                    class="fas fa-search"></i></a></li>
+                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+                        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
                     </ul>
                     <div class="search-element">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                            data-width="250">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
                         <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                         <div class="search-backdrop"></div>
                         <div class="search-result">
@@ -60,22 +55,19 @@
                             </div>
                             <div class="search-item">
                                 <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-3-50.png"
-                                        alt="product">
+                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-3-50.png" alt="product">
                                     oPhone S9 Limited Edition
                                 </a>
                             </div>
                             <div class="search-item">
                                 <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-2-50.png"
-                                        alt="product">
+                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-2-50.png" alt="product">
                                     Drone X2 New Gen-7
                                 </a>
                             </div>
                             <div class="search-item">
                                 <a href="#">
-                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-1-50.png"
-                                        alt="product">
+                                    <img class="mr-3 rounded" width="30" src="assets/img/products/product-1-50.png" alt="product">
                                     Headphone Blitz
                                 </a>
                             </div>
@@ -102,8 +94,7 @@
                     </div>
                 </form>
                 <ul class="navbar-nav navbar-right">
-                    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                            class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
+                    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
                         <div class="dropdown-menu dropdown-list dropdown-menu-right">
                             <div class="dropdown-header">Messages
                                 <div class="float-right">
@@ -169,8 +160,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                            class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+                    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
                         <div class="dropdown-menu dropdown-list dropdown-menu-right">
                             <div class="dropdown-header">Notifications
                                 <div class="float-right">
@@ -231,8 +221,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="dropdown"><a href="#" data-toggle="dropdown"
-                            class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <!-- <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1"> -->
                             <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
                         </a>
@@ -258,19 +247,31 @@
             <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="{{route('dashboard')}}">Jimeet Blogs</a>
+                        <a href="{{route('dashboard')}}">{{$userProfile['panel_name'] ?? 'Admin Panel'}}</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="{{route('dashboard')}}">JB</a>
+                        @php
+                        $string =$userProfile['panel_name'] ?? 'Admin Panel';
+                        $words = str_word_count($string, 1); // Split the string into an array of words
+                        $firstLetters = array_map(function($word) {
+                        return strtoupper(substr($word, 0, 1)); // Get the first letter and convert to uppercase
+                        }, $words);
+                        $shortName = implode('', $firstLetters);
+                        @endphp
+                        <a href="{{route('dashboard')}}">{{$shortName}}</a>
                     </div>
                     <ul class="sidebar-menu">
+                        @php
+                        //This code is used to active inside pages.
+                        $uri = request()->path();
+                        $segments = explode('/', $uri);
+                        $firstSegment = isset($segments[0]) ? $segments[0] : null;
+                        @endphp
                         <li class="menu-header">Dashboard</li>
                         @foreach($navbars as $navbar)
                         @if($navbar->parent_id == null)
-                        <li
-                            class="dropdown {{ (url()->current() == $navbar->url || $navbar->childs->contains(function ($child) { return url()->current() == $child->url; })) ? 'active' : '' }}">
-                            <a href="{{ ($navbar->childs->count()) ? '#' : $navbar->url }}"
-                                class="nav-link {{ ($navbar->childs->count()) ? 'has-dropdown' : '' }}">{!!
+                        <li class="dropdown {{ (url()->current() == $navbar->url || \Str::contains($navbar->url, $firstSegment, false) || $navbar->childs->contains(function ($child) { return url()->current() == $child->url; })) ? 'active' : '' }}">
+                            <a href="{{ ($navbar->childs->count()) ? '#' : $navbar->url }}" class="nav-link {{ ($navbar->childs->count()) ? 'has-dropdown' : '' }}">{!!
                                 $navbar->icon !!}<span>{{$navbar->title}}</span></a>
                             @if($navbar->childs->count())
                             <ul class="dropdown-menu">
@@ -285,5 +286,5 @@
                         @endif
                         @endforeach
                     </ul>
-                </aside>    
+                </aside>
             </div>
