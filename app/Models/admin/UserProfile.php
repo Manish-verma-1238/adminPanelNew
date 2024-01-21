@@ -9,7 +9,7 @@ class UserProfile extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_profiles';
+    protected $table = 'users_profiles';
 
      /**
      * The attributes that are mass assignable.
@@ -17,7 +17,6 @@ class UserProfile extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'phone',
         'panel_name',
         'panel_logo',

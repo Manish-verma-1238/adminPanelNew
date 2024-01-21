@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
             $userProfile = $userProfileObj->getUserProfile(['user_id' => auth()->id()]);
             if (empty($userProfile)) {
                 $user = new User();
-                $user = $user->getUser(['user_type' => 'admin'])->first();
+                $user = $user->getUser(['user_type' => 'super-admin'])->first();
                 $userProfile = $userProfileObj->getUserProfile(['user_id' => $user->id]);
             }
             $view->with('navbars', $navbars)->with('userProfile', $userProfile);

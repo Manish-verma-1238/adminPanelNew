@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\admin\AdminNavbarSeeder;
 use Database\Seeders\admin\UserSeeder;
+use Database\Seeders\admin\UserProfileSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AdminNavbarSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(UserProfileSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
