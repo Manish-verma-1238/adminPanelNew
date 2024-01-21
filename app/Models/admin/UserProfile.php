@@ -4,6 +4,7 @@ namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use app\Models\User;
 
 class UserProfile extends Model
 {
@@ -21,6 +22,11 @@ class UserProfile extends Model
         'panel_name',
         'panel_logo',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function getUserProfile(array $data)
     {

@@ -32,7 +32,10 @@ class AppServiceProvider extends ServiceProvider
                 $user = $user->getUser(['user_type' => 'super-admin'])->first();
                 $userProfile = $userProfileObj->getUserProfile(['user_id' => $user->id]);
             }
-            $view->with('navbars', $navbars)->with('userProfile', $userProfile);
+            $user = User::find(auth()->id());
+            $view->with('navbars', $navbars)
+                ->with('userProfile', $userProfile)
+                ->with('user', $user);
         });
     }
 }
