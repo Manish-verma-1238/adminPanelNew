@@ -13,14 +13,10 @@ class UserProfileSeeder extends Seeder
      */
     public function run(): void
     {
-        $publicPath = public_path();
-        // Concatenate the relative path to your image
-        $imagePath = $publicPath . '\assets\admin\assets\img\avatar\avatar-5.png';
-
         DB::table('users_profiles')->insert([
             'phone' => '9988776655',
             'panel_name' => 'Admins Panel',
-            'panel_logo' => $imagePath,
+            'panel_logo' => 'avatar-5.png',
             'about' => 'I am the owner of this admin panel.',
             'user_id' => 1
         ]);

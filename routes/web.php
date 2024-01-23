@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\AuthController;
-use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\BlogsController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\UserProfileController;
 
 
 /*
@@ -51,7 +51,10 @@ Route::group(['middleware'=>'auth_check'], function(){
     Route::get('/category/create/{id?}', [CategoryController::class, 'create'])->name('category.create');
     Route::post('/category/store', [CategoryController::class, 'store'])->name('category.save');
     Route::get('/category/delete/{id?}', [CategoryController::class, 'delete'])->name('category.delete');
-    
+
+    /* Profile route */
+    Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user.profile');
+    Route::post('/save-user-profile', [UserProfileController::class, 'save'])->name('save.user.profile');
 });
 
 
