@@ -33,4 +33,12 @@ class TaxiController extends Controller
             return redirect::back()->with('error',  $e->getMessage());
         }
     }
+
+    public function create()
+    {
+        $pageTitle = 'Add Cabs & Taxis';
+
+        return view('admin.taxis.add_edit')
+            ->with('pageTitle', $pageTitle);
+    }
 }

@@ -6,7 +6,7 @@
         <div class="section-header">
             <h1>Cabs & Taxis</h1>
             <div class="section-header-button">
-                <a href="{{route('blogs.create')}}" class="btn btn-primary">Add New</a>
+                <a href="{{route('taxis.create')}}" class="btn btn-primary">Add New</a>
             </div>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{route('dashboard')}}">Dashboard</a></div>

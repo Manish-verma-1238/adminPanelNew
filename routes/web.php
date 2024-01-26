@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth_check'], function () {
 
     /**State Route */
     Route::get('taxis/index', [TaxiController::class, 'index'])->name('taxis.index');
+    Route::get('taxis/create/{id?}', [TaxiController::class, 'create'])->name('taxis.create');
+
 });
 
 
