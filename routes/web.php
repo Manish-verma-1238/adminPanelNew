@@ -5,7 +5,7 @@ use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\BlogsController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\UserProfileController;
-
+use App\Http\Controllers\admin\StateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +56,10 @@ Route::group(['middleware' => 'auth_check'], function () {
     /* Profile route */
     Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user.profile');
     Route::post('/save-user-profile', [UserProfileController::class, 'save'])->name('save.user.profile');
+
+    /**State Route */
+    Route::get('states/index', [StateController::class, 'index'])->name('states.index');
+    Route::post('states/update', [StateController::class, 'update'])->name('states.update');
 });
 
 

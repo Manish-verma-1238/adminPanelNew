@@ -21,8 +21,8 @@ class AdminNavbarSeeder extends Seeder
 
         AdminNavbar::create([
             'icon' => '<i class="fas fa-th-large"></i>',
-            'title' => 'Category',
-            'url' => '/category/index',
+            'title' => 'States & UTs',
+            'url' => '/states/index',
         ]);
 
         AdminNavbar::create([
