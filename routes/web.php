@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\BlogsController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\UserProfileController;
 use App\Http\Controllers\admin\StateController;
+use App\Http\Controllers\admin\TaxiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,6 @@ Route::get('/', function () {
 });
 
 /* Admin routes */
-
 Route::group(['middleware' => 'auth_loggin'], function () {
     Route::get('/login', [AuthController::class, 'loginView'])->name('view.login');
     Route::post('/login/admin', [AuthController::class, 'login'])->name('login');
@@ -60,6 +60,9 @@ Route::group(['middleware' => 'auth_check'], function () {
     /**State Route */
     Route::get('states/index', [StateController::class, 'index'])->name('states.index');
     Route::post('states/update', [StateController::class, 'update'])->name('states.update');
+
+    /**State Route */
+    Route::get('taxis/index', [TaxiController::class, 'index'])->name('taxis.index');
 });
 
 

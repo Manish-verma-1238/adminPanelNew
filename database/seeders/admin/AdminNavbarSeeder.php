@@ -26,9 +26,9 @@ class AdminNavbarSeeder extends Seeder
         ]);
 
         AdminNavbar::create([
-            'icon' => '<i class="fas fa-pencil-ruler"></i>',
-            'title' => 'Blogs',
-            'url' => '/blogs/index',
+            'icon' => '<i class="fas fa-car"></i>',
+            'title' => 'Cabs & Taxis',
+            'url' => '/taxis/index',
         ]);
 
         // $services = AdminNavbar::create([
