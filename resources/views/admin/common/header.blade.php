@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>{{$pageTitle}} &mdash; {{ucwords($userProfile['panel_name']) ?? 'Admin Panel'}}</title>
+    <link rel="icon" href="{{asset('/assets/admin/assets/img/upload/user-profile/').'/'.$user->userProfile->panel_logo ?? asset('/assets/admin/assets/img/avatar/avatar-1.png')}}" type="image/icon type">
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{asset('assets/admin/assets/modules/bootstrap/css/bootstrap.min.css')}}">
@@ -222,7 +223,7 @@
                         </div>
                     </li>
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <!-- <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1"> -->
+                            <img alt="image" src="{{asset('/assets/admin/assets/img/upload/user-profile/').'/'.$user->userProfile->panel_logo ?? asset('/assets/admin/assets/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, {{$user->name ?? 'User'}}</div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">

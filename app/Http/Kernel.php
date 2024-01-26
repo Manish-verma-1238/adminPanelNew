@@ -47,6 +47,10 @@ class Kernel extends HttpKernel
         'auth_check' => [
             \App\Http\Middleware\AuthCheck::class,
         ],
+
+        'auth_loggin' => [
+            \App\Http\Middleware\AuthLoggin::class,
+        ],
     ];
 
     /**

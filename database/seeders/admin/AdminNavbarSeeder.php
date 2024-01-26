@@ -16,19 +16,19 @@ class AdminNavbarSeeder extends Seeder
         AdminNavbar::create([
             'icon' => '<i class="fas fa-fire"></i>',
             'title' => 'Dashboard',
-            'url' => route('dashboard'),
+            'url' => '/dashboard',
         ]);
 
         AdminNavbar::create([
             'icon' => '<i class="fas fa-th-large"></i>',
             'title' => 'Category',
-            'url' => route('category.index'),
+            'url' => '/category/index',
         ]);
 
         AdminNavbar::create([
             'icon' => '<i class="fas fa-pencil-ruler"></i>',
             'title' => 'Blogs',
-            'url' => route('blogs.index'),
+            'url' => '/blogs/index',
         ]);
 
         // $services = AdminNavbar::create([

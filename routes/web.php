@@ -24,21 +24,22 @@ Route::get('/', function () {
 
 /* Admin routes */
 
-Route::get('/login', [AuthController::class, 'loginView'])->name('view.login');
-Route::post('/login/admin', [AuthController::class, 'login'])->name('login');
-Route::get('google/login', [AuthController::class, 'googleLogin'])->name('google.login.view');
-Route::get('/google/callback', [AuthController::class, 'googleCallback'])->name('google.login');
+Route::group(['middleware' => 'auth_loggin'], function () {
+    Route::get('/login', [AuthController::class, 'loginView'])->name('view.login');
+    Route::post('/login/admin', [AuthController::class, 'login'])->name('login');
+    Route::get('google/login', [AuthController::class, 'googleLogin'])->name('google.login.view');
+    Route::get('/google/callback', [AuthController::class, 'googleCallback'])->name('google.login');
 
-Route::get('/registration', [AuthController::class, 'registration'])->name('registration');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::get('/registration', [AuthController::class, 'registration'])->name('registration');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-Route::get('/forgot/password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
-Route::post('/forgot', [AuthController::class, 'forgot'])->name('forgot');
-Route::get('/reset-password/{id?}', [AuthController::class, 'resetPassword'])->name('resetPassword');
-Route::post('/reset-password', [AuthController::class, 'reset'])->name('reset');
+    Route::get('/forgot/password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
+    Route::post('/forgot', [AuthController::class, 'forgot'])->name('forgot');
+    Route::get('/reset-password/{id?}', [AuthController::class, 'resetPassword'])->name('resetPassword');
+    Route::post('/reset-password', [AuthController::class, 'reset'])->name('reset');
+});
 
-
-Route::group(['middleware'=>'auth_check'], function(){
+Route::group(['middleware' => 'auth_check'], function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
