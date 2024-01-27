@@ -1,4 +1,48 @@
 @include('admin.common.header')
+<style>
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+    }
+
+    .toggle-slider {
+        position: absolute;
+        /* cursor: pointer; */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+    }
+
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+    }
+
+    input:checked+.toggle-slider {
+        background-color: #2196F3;
+    }
+
+    input:checked+.toggle-slider:before {
+        transform: translateX(26px);
+    }
+
+    .toggle-switch input {
+        display: none;
+    }
+</style>
 
 <!-- Main Content -->
 <div class="main-content">
@@ -18,17 +62,17 @@
             <p class="section-lead">
                 You can manage all Cabs & Taxis, such as editing, deleting and more.
             </p>
-
+            @include('admin.common.message')
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="float-right">
-                                <form>
+                                <form action="{{route('taxis.index')}}" method="Get">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
+                                        <input type="text" class="form-control" name="search" placeholder="Search" value="{{$search}}">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
                                 </form>
@@ -48,33 +92,43 @@
                                         <th>Status</th>
                                     </tr>
                                     @if(isset($taxis) && count($taxis) > 0)
+                                    @foreach($taxis as $key => $taxi)
                                     <tr>
-                                        <td>1.</td>
-                                        <td>Laravel 5 Introduction Laravel 5 Tutorial: Introduction
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$taxi->name}}<br>( {{$taxi->similar_cars}} )
                                             <div class="table-links">
                                                 <a href="#">View</a>
                                                 <div class="bullet"></div>
                                                 <a href="#">Edit</a>
                                                 <div class="bullet"></div>
-                                                <a href="#" class="text-danger">Trash</a>
+                                                <a class="text-danger" data-toggle="tooltip" title="Delete" data-confirm-yes="{{route('category.delete',[encrypt($taxi->id)])}}" data-confirm="Are You Sure?|Do you want to Delete '<b>{{$taxi->name}}</b>'?" style="cursor:pointer;">Delete</a>
                                             </div>
                                         </td>
                                         <td>
-                                            <a href="#">Web Developer</a>,
-                                            <a href="#">Tutorial</a>
+                                            <img alt="image" src="{{asset('/assets/admin/assets/img/upload/taxis/').'/'.$taxi->image}}" width="80" data-toggle="title" title="{{$taxi->name}}">
                                         </td>
+                                        <td>{{$taxi->passengers}} Members</td>
+                                        <td>{{$taxi->bags}}</td>
+                                        <td>{{$taxi->price}} ₹ Per Km</td>
                                         <td>
-                                            <a href="#">
-                                                <img alt="image" src="assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="title" title="">
-                                                <div class="d-inline-block ml-1">Rizal Fakhri</div>
+                                            @if($taxi->status == 'show')
+                                            <a data-confirm-yes="{{route('taxis.status', [encrypt($taxi->id), encrypt('hide')])}}" data-confirm="Are You Sure?|Want to hide cab to the user?">
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" checked>
+                                                    <span class="toggle-slider"></span>
+                                                </label>
                                             </a>
+                                            @else
+                                            <a data-confirm-yes="{{route('taxis.status', [encrypt($taxi->id), encrypt('show')])}}" data-confirm="Are You Sure?|Want to show cab to the user?">
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox">
+                                                    <span class="toggle-slider"></span>
+                                                </label>
+                                            </a>
+                                            @endif
                                         </td>
-                                        <td>2018-01-20</td>
-                                        <td>
-                                            <div class="badge badge-primary">Published</div>
-                                        </td>
-                                        <td> Show </td>
                                     </tr>
+                                    @endforeach
                                     @else
                                     <tr>
                                         <td colspan="7" class="text-center">No record found</td>
