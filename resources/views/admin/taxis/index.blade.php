@@ -97,11 +97,11 @@
                                         <td>{{$key+1}}</td>
                                         <td>{{$taxi->name}}<br>( {{$taxi->similar_cars}} )
                                             <div class="table-links">
-                                                <a href="#">View</a>
+                                                <a href="Javascript::void(0)" data-toggle="modal" data-target="#viewCabDetails">View</a>
                                                 <div class="bullet"></div>
-                                                <a href="#">Edit</a>
+                                                <a href="{{route('taxis.create', [encrypt($taxi->id)])}}">Edit</a>
                                                 <div class="bullet"></div>
-                                                <a class="text-danger" data-toggle="tooltip" title="Delete" data-confirm-yes="{{route('category.delete',[encrypt($taxi->id)])}}" data-confirm="Are You Sure?|Do you want to Delete '<b>{{$taxi->name}}</b>'?" style="cursor:pointer;">Delete</a>
+                                                <a class="text-danger" data-toggle="tooltip" title="Delete" data-confirm-yes="{{route('taxis.delete',[encrypt($taxi->id)])}}" data-confirm="Are You Sure?|Do you want to Delete '<b>{{$taxi->name}}</b>'?" style="cursor:pointer;">Delete</a>
                                             </div>
                                         </td>
                                         <td>
@@ -190,6 +190,46 @@
             </div>
         </div>
     </section>
+
+    @if(isset($taxis) && count($taxis) > 0)
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="viewCabDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{$taxi->name ?? ''}} ( {{$taxi->similar_cars ?? ''}} )</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <img alt="image" src="{{ asset('/assets/admin/assets/img/upload/taxis/') . '/' . ($taxi->image ?? '') }}" width="300" data-toggle="title" title="{{ $taxi->name ?? '' }}">
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h5>Passengers:</h5>
+                            <h5>Bags:</h5>
+                            <h5>Price:</h5>
+                            <h5>Other details:</h5>
+                        </div>
+                        <div class="col-8">
+                            <h5>{{$taxi->passengers ?? ''}} Members</h5>
+                            <h5>{{$taxi->bags ?? ''}}</h5>
+                            <h5>{{$taxi->price ?? ''}} ₹ Per Km</h5>
+                            <h5>{!!$taxi->other_details ?? '' !!}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <a href="{{route('taxis.create', [encrypt($taxi->id ?? '')])}}"><button type="button" class="btn btn-primary">Edit</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
 </div>
 
 @include('admin.common.footer')

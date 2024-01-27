@@ -1,8 +1,7 @@
 <script>
     $(document).ready(function() {
-        $('#taxiForm').validate({
-            rules: {
-                name: {
+        var validationRules = {
+            name: {
                     required: true,
                 },
                 similar_cars: {
@@ -22,15 +21,19 @@
                     required: true,
                     number: true,
                 },
-                image: {
-                    required: true,
-                    extension: "jpg|jpeg|png|gif",
-                    filesize: 2048000 // 2048000 bytes = 2 MB
-                },
                 about: {
                     required: true,
                 },
-            },
+        };
+        @if (!isset($taxi->image) || $taxi->image === null)
+            validationRules.image = {
+                required: true,
+                extension: "jpg|jpeg|png|gif",
+                filesize: 2048000 // 2048000 bytes = 2 MB
+            };
+        @endif
+        $('#taxiForm').validate({
+            rules: validationRules,
             messages: {
                 name:{
                     required: "Please enter the cab type name. (Eg. Sedan, Crista)",
