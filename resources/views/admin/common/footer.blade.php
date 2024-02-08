@@ -32,9 +32,12 @@
     <script src="{{asset('assets/admin/assets/js/custom.js')}}"></script>
 
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    @if(request()->is('location/add/*') || request()->is('location/add'))
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcTmELSehXo7fqusqkvu4FKYtkQM_5--8&libraries=places&loading=async&callback=initMap"></script>
+    @endif
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <script>
       $(document).ready(function() {
         // This is used to hide the success message
@@ -43,6 +46,15 @@
         }, 5000); // 5000 milliseconds = 5 seconds
       });
     </script>
+
+    @if(!request()->is('location/add/*') || !request()->is('location/add'))
+    <script>
+      $(document).ready(function() {
+        localStorage.removeItem('selectedItems');
+      });
+    </script>
+    @endif
+
     </body>
 
     </html>

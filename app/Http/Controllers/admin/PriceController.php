@@ -140,7 +140,10 @@ class PriceController extends Controller
                 $locationDetailObj->save();
             }
 
-            return redirect()->route('location.index')->with('success', "Locations added successfully.");
+            if (isset($id) && !empty($id)) {
+                return redirect()->route('location.index')->with('success', "{$locationObj->name} Location for price updated successfully.");
+            }
+            return redirect()->route('location.index')->with('success', "{$locationObj->name} Location for price added successfully.");
         } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
