@@ -193,7 +193,7 @@
 
         $("#priceForm").submit(function(e) {
             if ($("#selected-locations li").length < 1) {
-                e.preventDefault();
+                // e.preventDefault();
                 $(".selected-location-div").css({
                     "border": "1px solid red",
                     "border-radius": "5px",

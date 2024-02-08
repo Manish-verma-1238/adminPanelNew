@@ -12,6 +12,7 @@ use App\Models\admin\Taxi;
 use App\Models\admin\Location;
 use App\Models\admin\LocationDetail;
 use App\Models\admin\Price;
+use Illuminate\Support\Facades\DB;
 
 class PriceController extends Controller
 {
@@ -154,6 +155,9 @@ class PriceController extends Controller
     {
         try {
             $id = decrypt($id);
+            if (Price::where('location_id', $id)->exists()) {
+                return redirect()->route('location.index')->with('error', 'Location is used with the price.');
+            }
             LocationDetail::where('location_id', $id)->delete();
             Location::find($id)->delete();
             return redirect()->route('location.index')->with('success', 'Location for price deleted successfully.');
@@ -170,14 +174,23 @@ class PriceController extends Controller
             $resultsPerPage = 10;
             $pageTitle = 'Price';
             // $query = Location::with('details','prices.taxi')->find(2);
-            $query = Location::query();
+            $query = DB::table('prices')
+                ->join('taxis', 'prices.car_id', '=', 'taxis.id')
+                ->join('locations', 'prices.location_id', '=', 'locations.id')
+                ->select('taxis.*', 'locations.name as location_name', 'locations.id as location_id', 'prices.trip');
 
             if (isset($request['search']) && !empty($request['search'])) {
                 $search = $request['search'];
-                $query->where('name', 'like', "%$search%");
+                $query->where(function ($query) use ($search) {
+                    $query->where('taxis.name', 'like', "%$search%")
+                        ->orWhere('locations.name', 'like', "%$search%");
+                });
             }
 
-            $locations = $query->paginate($resultsPerPage);
+            $query->distinct()->orderBy('prices.trip');
+            $locations = DB::table(DB::raw("({$query->toSql()}) as sub"))
+                ->mergeBindings($query) // Bind the subquery's bindings to the outer query
+                ->paginate($resultsPerPage);
             return view('admin.price.index')
                 ->with('pageTitle', $pageTitle)
                 ->with('locations', $locations)
@@ -190,8 +203,13 @@ class PriceController extends Controller
     public function create($id = '')
     {
         $taxi = Taxi::get();
-        if (isset($taxi) && count($taxi) < 0) {
+        $location = Location::get();
+        if (isset($taxi) && count($taxi) < 0 && isset($location) && count($location) < 0) {
+            return redirect()->route('taxis.index')->with('error', "Add cab & price locations before adding price.");
+        } elseif (isset($taxi) && count($taxi) < 0) {
             return redirect()->route('taxis.index')->with('error', "Add cab before adding price.");
+        } elseif (isset($location) && count($location) < 0) {
+            return redirect()->route('location.index')->with('error', "Add price locations before adding price.");
         }
         $pageTitle = 'Add Cabs Price';
         if (isset($id) && !empty($id)) {
@@ -201,33 +219,30 @@ class PriceController extends Controller
 
         return view('admin.price.add_edit')
             ->with('pageTitle', $pageTitle)
-            ->with('taxi', $taxi);
+            ->with('taxi', $taxi)
+            ->with('location', $location);
     }
 
     public function save(Request $request)
     {
         try {
-            $locationObj = new Location();
 
-            //saved and get the location id
-            $locationObj->name = $request['price_name'];
-            $locationObj->priority = $request['priority'];
-            $locationObj->save();
-            $locationId = $locationObj->id;
+            $rules = [
+                'car' => 'required|numeric',
+                'location' => 'required|numeric',
+                'trip' => 'required',
+            ];
 
-            //save the cities on the particular location
-            foreach ($request['selectedLocations'] as $value) {
-                $locationDetailObj = new LocationDetail();
-                $locationDetailObj->name = $value;
-                $locationDetailObj->location_id = $locationId;
-                $locationDetailObj->save();
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
             }
-
             //save the price
             foreach ($request['price'] as $price) {
                 $priceObj = new Price();
                 $range = $price['range']['from'] . '-' . $price['range']['to'];
-                $priceObj->location_id = $locationId;
+                $priceObj->location_id = $request['location'];
                 $priceObj->car_id = $request['car'];
                 $priceObj->range = $range;
                 $priceObj->price = $price['price'];
@@ -235,7 +250,7 @@ class PriceController extends Controller
                 $priceObj->save();
             }
 
-            return redirect()->route('taxis.index')->with('success', "{$locationObj->name} price with location added successfully.");
+            return redirect()->route('price.index')->with('success', "Price added successfully.");
         } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());

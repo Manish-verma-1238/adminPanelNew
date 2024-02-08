@@ -36,7 +36,7 @@
                             <form id="priceForm" action="{{route('price.save')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="form-group col-md-6 col-12">
+                                    <div class="form-group col-md-4 col-12">
                                         <label>Cab & Taxi</label>
                                         <select class="form-control" name="car">
                                             <option>Select a cab</option>
@@ -47,33 +47,22 @@
                                             @endif
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-6 col-12">
-                                        <label>Trip type</label>
+                                    <div class="form-group col-md-4 col-12">
+                                        <label>Price Location type</label>
                                         <select class="form-control" name="trip">
                                             <option value="oneway" selected>Oneway</option>
                                             <option value="round-trip">Round Trip</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group col-md-4 col-12">
-                                        <label>Price type Name</label>
-                                        <input type="text" name="price_name" class="form-control" value="" placeholder="Enter a name Eg. Plane" required>
-                                    </div>
-                                    <div class="form-group col-md-4 col-12">
-                                        <label>Search cities & locations</label>
-                                        <input type="text" id="location-input" class="form-control search-input">
-                                    </div>
-                                    <div class="form-group col-md-4 col-12">
-                                        <label>Give priority for rate calculation</label>
-                                        <input type="tel" name="priority" class="form-control" value="" placeholder="Enter a priority. Eg. 4" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-12" required>
-                                        <label>Selected locations</label>
-                                        <ul id="selected-locations" class="selected-locations"></ul>
-                                        <div id="selected-hidden-inputs"></div>
+                                        <label>Trip type</label>
+                                        <select class="form-control" name="location">
+                                            @if(isset($location) && count($location) > 0)
+                                            @foreach($location as $loc)
+                                            <option value="{{$loc['id'] ?? ''}}">{{ucwords($loc['name']) ?? ''}}</option>
+                                            @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row price">

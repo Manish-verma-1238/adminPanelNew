@@ -33,7 +33,7 @@
 
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     @if(request()->is('location/add/*') || request()->is('location/add'))
-    <script async src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&loading=async&callback=initMap"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcTmELSehXo7fqusqkvu4FKYtkQM_5--8&libraries=places&loading=async&callback=initMap"></script>
     @endif
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
