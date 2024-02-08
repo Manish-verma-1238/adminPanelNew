@@ -226,7 +226,6 @@ class PriceController extends Controller
     public function save(Request $request)
     {
         try {
-
             $rules = [
                 'car' => 'required|numeric',
                 'location' => 'required|numeric',
@@ -236,8 +235,46 @@ class PriceController extends Controller
             $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray(),
+                    'input' => $request->all()
+                ]);
             }
+
+            $cabLoc = Price::where('car_id', $request['car'])->where('location_id', $request['location'])->exists();
+            if ($cabLoc) {
+                $responseData = [
+                    'status' => 'error',
+                    'message' => "Cab with this price range is already present."
+                ];
+                return response()->json($responseData);
+            }
+
+            $startig = [];
+            foreach ($request['price'] as $price) {
+                $startig[] = $price['range']['from'];
+                $startig[] = $price['range']['to'];
+            }
+
+            $results = $this->findRangesForNumbers($startig, $request['car'], $request['location']);
+
+            $existingNumbers = [];
+            foreach ($results as $number => $found) {
+                if ($found) {
+                    $existingNumbers[] = $number;
+                }
+            }
+
+            if (isset($existingNumbers) && !empty($existingNumbers)) {
+                $number = implode(', ', $existingNumbers);
+                $responseData = [
+                    'status' => 'error',
+                    'message' => "Numbers(s) {$number} is already covered in the range."
+                ];
+                return response()->json($responseData);
+            }
+
             //save the price
             foreach ($request['price'] as $price) {
                 $priceObj = new Price();
@@ -250,10 +287,86 @@ class PriceController extends Controller
                 $priceObj->save();
             }
 
-            return redirect()->route('price.index')->with('success', "Price added successfully.");
+            $responseData = [
+                'status' => 'success',
+                'message' => 'Price added successfully.',
+                'url' => route('price.index')
+            ];
+            Session::flash('success', 'Price added successfully.');
+            return response()->json($responseData);
         } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
         }
+    }
+
+    public function viewPrice(Request $request, $car_id, $location_id)
+    {
+        try {
+            $car_id = decrypt($car_id);
+            $location_id = decrypt($location_id);
+            $pageTitle = "Detailed Price";
+            $priceWithRange = DB::table('prices')
+                ->join('taxis', 'prices.car_id', '=', 'taxis.id')
+                ->join('locations', 'prices.location_id', '=', 'locations.id')
+                ->select('taxis.name as car_name', 'taxis.id as car_id', 'locations.name as location_name', 'locations.id as location_id', 'prices.trip', 'prices.*')
+                ->where('prices.car_id', $car_id)
+                ->where('prices.location_id', $location_id)
+                ->get();
+
+            $cabWithLocation = DB::table('prices')
+                ->join('taxis', 'prices.car_id', '=', 'taxis.id')
+                ->join('locations', 'prices.location_id', '=', 'locations.id')
+                ->select('taxis.name as car_name', 'locations.name as location_name', 'prices.trip')
+                ->where('prices.car_id', $car_id)
+                ->where('prices.location_id', $location_id)
+                ->first();
+
+            return view('admin.price.priceDetail')
+                ->with('pageTitle', $pageTitle)
+                ->with('priceWithRange', $priceWithRange)
+                ->with('cabWithLocation', $cabWithLocation);
+        } catch (\Exception $e) {
+            // Handle the exception, log the error, or return an error response
+            return redirect::back()->with('error',  $e->getMessage());
+        }
+    }
+
+    public function delete($car_id, $location_id)
+    {
+        try {
+            $car_id = decrypt($car_id);
+            $location_id = decrypt($location_id);
+            if (Price::where('car_id', $car_id)->where('location_id', $location_id)->delete()) {
+                return redirect()->route('price.index')->with('success', "Price deleted successfully.");
+            }
+            return redirect()->route('price.index')->with('error', "There is some issue, whiel deleting Price.");
+        } catch (\Exception $e) {
+            // Handle the exception, log the error, or return an error response
+            return redirect::back()->with('error',  $e->getMessage());
+        }
+    }
+
+    public function findRangesForNumbers($numbers, $car_id, $location_id)
+    {
+        $ranges = Price::where('car_id', $car_id)->where('location_id', $location_id)->get(); // Fetch all ranges from the database
+        $result = [];
+
+        foreach ($numbers as $number) {
+            $found = false;
+            foreach ($ranges as $range) {
+                $ran = explode("-", $range->range);
+                if ($number >= $ran[0] && $number <= $ran[1]) {
+                    $result[$number] = true; // Number falls within this range
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                $result[$number] = false; // Number doesn't fall within any range
+            }
+        }
+
+        return $result;
     }
 }

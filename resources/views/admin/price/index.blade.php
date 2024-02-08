@@ -4,19 +4,19 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Cabs & Taxis</h1>
+            <h1>Cabs Price</h1>
             <div class="section-header-button">
                 <a href="{{route('price.add')}}" class="btn btn-primary">Add New</a>
             </div>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{route('dashboard')}}">Dashboard</a></div>
-                <div class="breadcrumb-item">All Cabs & Taxis</div>
+                <div class="breadcrumb-item">Cabs Price</div>
             </div>
         </div>
         <div class="section-body">
-            <h2 class="section-title">Cabs & Taxis</h2>
+            <h2 class="section-title">Cabs Price</h2>
             <p class="section-lead">
-                You can manage all Cabs & Taxis, such as editing, deleting and more.
+                You can manage all Cabs Price, such as editing, deleting and more.
             </p>
             @include('admin.common.message')
             <div class="row mt-4">
@@ -51,8 +51,12 @@
                                         <td>{{$key+1}}</td>
                                         <td>{{$location->name}} ( {{$location->location_name}} )</td>
                                         <td>{{ucwords($location->trip)}}</td>
-                                        <td><a href="#viewCabDetails">View all</a></td>
-                                        <td><a href="">View all</a></td>
+                                        <td><a href="{{route('price.viewDetailed', ['car_id' => encrypt($location->id), 'location_id' => encrypt($location->location_id)])}}">View all</a></td>
+                                        <td>
+                                            <a href="{{route('location.add', [encrypt($location->id)])}}">Edit</a>
+                                            <div class="bullet"></div>
+                                            <a class="text-danger" data-toggle="tooltip" title="Delete" data-confirm-yes="{{route('price.delete',['car_id'=>encrypt($location->id), 'location_id'=> encrypt($location->location_id)])}}" data-confirm="Are You Sure?|Do you want to Delete '<b>{{$location->name}} ( {{$location->location_name}} )</b>'?" style="cursor:pointer;">Delete</a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                     @else

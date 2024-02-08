@@ -6,12 +6,12 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{route('taxis.index')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{route('price.index')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>@if(isset($taxi) && !empty($taxi)) Edit Cab @else Add New Cab @endif</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{route('dashboard')}}">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="{{route('taxis.index')}}">Cabs & Taxis</a></div>
+                <div class="breadcrumb-item"><a href="{{route('price.index')}}">Cabs & Taxis</a></div>
                 <div class="breadcrumb-item">@if(isset($taxi) && !empty($taxi)) Edit Cab @else Add New Cab @endif</div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 On this page you can add a new cab and fill in all fields.
                 @endif
             </p>
-
+            @include('admin.common.message')
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -33,7 +33,7 @@
                             <h4>@if(isset($taxi) && !empty($taxi)) Edit Cab & Taxi @else Add Cab & Taxi @endif</h4>
                         </div>
                         <div class="card-body">
-                            <form id="priceForm" action="{{route('price.save')}}" method="POST" enctype="multipart/form-data">
+                            <form id="priceForm" action="" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-md-4 col-12">
@@ -99,4 +99,4 @@
 </div>
 
 @include('admin.common.footer')
-@include('admin.assets.pricejs')
+@include('admin.assets.cabPricejs')

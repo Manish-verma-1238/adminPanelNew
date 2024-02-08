@@ -10,3 +10,7 @@
     </button>
 </div>
 @endif
+<div class="alert alert-success success-messages" style="display: none;">
+</div>
+<div class="error-msg" style="display: none;">
+</div>
