@@ -85,63 +85,33 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>Name</th>
-                                        <th>Image</th>
-                                        <th>Passengers</th>
-                                        <th>Bags</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
+                                        <th>Priority</th>
+                                        <th>States & Cities</th>
+                                        <th>Actions</th>
                                     </tr>
-                                    @if(isset($taxis) && count($taxis) > 0)
-                                    @foreach($taxis as $key => $taxi)
+                                    @if(isset($locations) && count($locations) > 0)
+                                    @foreach($locations as $key => $location)
                                     <tr>
                                         <td>{{$key+1}}</td>
-                                        <td>{{$taxi->name}}<br>( {{$taxi->similar_cars}} )
-                                            <div class="table-links">
-                                                <a href="Javascript::void(0)" data-toggle="modal" data-target="#viewCabDetails">View</a>
-                                                <div class="bullet"></div>
-                                                <a href="{{route('taxis.create', [encrypt($taxi->id)])}}">Edit</a>
-                                                <div class="bullet"></div>
-                                                <a class="text-danger" data-toggle="tooltip" title="Delete" data-confirm-yes="{{route('taxis.delete',[encrypt($taxi->id)])}}" data-confirm="Are You Sure?|Do you want to Delete '<b>{{$taxi->name}}</b>'?" style="cursor:pointer;">Delete</a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <img alt="image" src="{{asset('/assets/admin/assets/img/upload/taxis/').'/'.$taxi->image}}" width="80" data-toggle="title" title="{{$taxi->name}}">
-                                        </td>
-                                        <td>{{$taxi->passengers}} Members</td>
-                                        <td>{{$taxi->bags}}</td>
-                                        <td>{{$taxi->price}} ₹ Per Km</td>
-                                        <td>
-                                            @if($taxi->status == 'show')
-                                            <a data-confirm-yes="{{route('taxis.status', [encrypt($taxi->id), encrypt('hide')])}}" data-confirm="Are You Sure?|Want to hide cab to the user?">
-                                                <label class="toggle-switch">
-                                                    <input type="checkbox" checked>
-                                                    <span class="toggle-slider"></span>
-                                                </label>
-                                            </a>
-                                            @else
-                                            <a data-confirm-yes="{{route('taxis.status', [encrypt($taxi->id), encrypt('show')])}}" data-confirm="Are You Sure?|Want to show cab to the user?">
-                                                <label class="toggle-switch">
-                                                    <input type="checkbox">
-                                                    <span class="toggle-slider"></span>
-                                                </label>
-                                            </a>
-                                            @endif
-                                        </td>
+                                        <td>{{$location->name}}</td>
+                                        <td>{{$location->priority}}</td>
+                                        <td><a href="#viewCabDetails">View all</a></td>
+                                        <td><a href="">View all</a></td>
                                     </tr>
                                     @endforeach
                                     @else
                                     <tr>
-                                        <td colspan="7" class="text-center">No record found</td>
+                                        <td colspan="5" class="text-center">No record found</td>
                                     </tr>
                                     @endif
                                 </table>
                             </div>
-                            @if (isset($taxis) && $taxis->hasPages())
+                            @if (isset($locations) && $locations->hasPages())
                             <div class="float-right">
                                 <nav>
                                     <ul class="pagination">
                                         {{-- Previous Page Link --}}
-                                        @if ($taxis->onFirstPage())
+                                        @if ($locations->onFirstPage())
                                         <li class="page-item disabled">
                                             <span class="page-link" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
@@ -150,7 +120,7 @@
                                         </li>
                                         @else
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ $taxis->previousPageUrl() }}" aria-label="Previous">
+                                            <a class="page-link" href="{{ $locations->previousPageUrl() }}" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                                 <span class="sr-only">Previous</span>
                                             </a>
@@ -158,16 +128,16 @@
                                         @endif
 
                                         {{-- Page Number Links --}}
-                                        @foreach ($taxis->getUrlRange(1, $taxis->lastPage()) as $page => $url)
-                                        <li class="page-item {{ $taxis->currentPage() === $page ? 'active' : '' }}">
+                                        @foreach ($locations->getUrlRange(1, $locations->lastPage()) as $page => $url)
+                                        <li class="page-item {{ $locations->currentPage() === $page ? 'active' : '' }}">
                                             <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                         </li>
                                         @endforeach
 
                                         {{-- Next Page Link --}}
-                                        @if ($taxis->hasMorePages())
+                                        @if ($locations->hasMorePages())
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ $taxis->nextPageUrl() }}" aria-label="Next">
+                                            <a class="page-link" href="{{ $locations->nextPageUrl() }}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                                 <span class="sr-only">Next</span>
                                             </a>
@@ -191,20 +161,20 @@
         </div>
     </section>
 
-    @if(isset($taxis) && count($taxis) > 0)
+    @if(isset($locations) && count($locations) > 0)
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="viewCabDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{$taxi->name ?? ''}} ( {{$taxi->similar_cars ?? ''}} )</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{$location->name ?? ''}} ( {{$location->similar_cars ?? ''}} )</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="text-center mb-4">
-                        <img alt="image" src="{{ asset('/assets/admin/assets/img/upload/taxis/') . '/' . ($taxi->image ?? '') }}" width="300" data-toggle="title" title="{{ $taxi->name ?? '' }}">
+                        <img alt="image" src="{{ asset('/assets/admin/assets/img/upload/taxis/') . '/' . ($location->image ?? '') }}" width="300" data-toggle="title" title="{{ $location->name ?? '' }}">
                     </div>
                     <div class="row">
                         <div class="col-4">
@@ -214,16 +184,16 @@
                             <h5>Other details:</h5>
                         </div>
                         <div class="col-8">
-                            <h5>{{$taxi->passengers ?? ''}} Members</h5>
-                            <h5>{{$taxi->bags ?? ''}}</h5>
-                            <h5>{{$taxi->price ?? ''}} ₹ Per Km</h5>
-                            <h5>{!!$taxi->other_details ?? '' !!}</h5>
+                            <h5>{{$location->passengers ?? ''}} Members</h5>
+                            <h5>{{$location->bags ?? ''}}</h5>
+                            <h5>{{$location->price ?? ''}} ₹ Per Km</h5>
+                            <h5>{!!$location->other_details ?? '' !!}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <a href="{{route('taxis.create', [encrypt($taxi->id ?? '')])}}"><button type="button" class="btn btn-primary">Edit</button></a>
+                    <a href="{{route('taxis.create', [encrypt($location->id ?? '')])}}"><button type="button" class="btn btn-primary">Edit</button></a>
                 </div>
             </div>
         </div>

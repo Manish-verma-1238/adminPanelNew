@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\UserProfileController;
 use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\TaxiController;
+use App\Http\Controllers\admin\PriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,13 +62,23 @@ Route::group(['middleware' => 'auth_check'], function () {
     Route::get('states/index', [StateController::class, 'index'])->name('states.index');
     Route::post('states/update', [StateController::class, 'update'])->name('states.update');
 
-    /**State Route */
+    /**Taxis Route */
     Route::get('taxis/index', [TaxiController::class, 'index'])->name('taxis.index');
     Route::get('taxis/create/{id?}', [TaxiController::class, 'create'])->name('taxis.create');
     Route::post('taxis/save', [TaxiController::class, 'save'])->name('taxis.save');
     Route::get('taxis/status/{id?}/{status?}', [TaxiController::class, 'status'])->name('taxis.status');
     Route::get('/taxis/delete/{id?}', [TaxiController::class, 'delete'])->name('taxis.delete');
 
+    /**Location Route */
+    Route::get('location/index', [PriceController::class, 'locationIndex'])->name('location.index');
+    Route::get('location/add/{id?}', [PriceController::class, 'locationCreate'])->name('location.add');
+    Route::post('location/save', [PriceController::class, 'locationSave'])->name('location.save');
+    Route::get('location/delete/{id?}', [PriceController::class, 'locationDelete'])->name('location.delete');
+
+    /**Price Route */
+    Route::get('price/index', [PriceController::class, 'index'])->name('price.index');
+    Route::get('price/add', [PriceController::class, 'create'])->name('price.add');
+    Route::post('price/save', [PriceController::class, 'save'])->name('price.save');
 });
 
 

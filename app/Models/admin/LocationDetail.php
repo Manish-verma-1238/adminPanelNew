@@ -4,30 +4,27 @@ namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\admin\LocationDetail;
-use App\Models\admin\Price;
 use App\Models\admin\Location;
+use App\Models\admin\Price;
 
-class Taxi extends Model
+class LocationDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'taxis';
+    protected $table = 'location_details';
 
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
         'name',
-        'image',
-        'bags',
-        'price',
+        'location_id'
     ];
 
-    public function rangePrice()
+    public function location()
     {
-        return $this->hasMany(Price::class, 'car_id');
+        return $this->belongsTo(Location::class, 'location_id');
     }
 }

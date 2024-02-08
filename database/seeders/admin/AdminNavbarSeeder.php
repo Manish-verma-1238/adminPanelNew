@@ -31,6 +31,18 @@ class AdminNavbarSeeder extends Seeder
             'url' => '/taxis/index',
         ]);
 
+        AdminNavbar::create([
+            'icon' => '<i class="fas fa-box"></i>',
+            'title' => 'Price locations',
+            'url' => '/location/index',
+        ]);
+
+        AdminNavbar::create([
+            'icon' => '<i class="fas fa-money-bill"></i>',
+            'title' => 'Cab Prices',
+            'url' => '/price/index',
+        ]);
+
         // $services = AdminNavbar::create([
         //     'icon' => '<i class="fas fa-fire"></i>',
         //     'title' => 'Services',
