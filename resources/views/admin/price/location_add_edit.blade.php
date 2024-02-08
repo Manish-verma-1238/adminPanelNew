@@ -96,29 +96,3 @@
 
 @include('admin.common.footer')
 @include('admin.assets.pricejs')
-<script>
-    $(document).ready(function() {
-        $("#priceForm").submit(function(e) {
-            if ($("#selected-locations li").length < 1) {
-                e.preventDefault();
-                $(".selected-location-div").css({
-                    "border": "1px solid red",
-                    "border-radius": "5px",
-                    "padding": "5px"
-                });
-                $(".error-selected-locations").css({
-                    "display": "block"
-                });
-                $(".error-selected-locations").text("Locations are required");
-            } else {
-                $(".selected-location-div").css({
-                    "border": "none"
-                });
-                $(".error-selected-locations").css({
-                    "display": "none"
-                });
-                $(".error-selected-locations").text('');
-            }
-        });
-    });
-</script>

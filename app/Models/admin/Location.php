@@ -23,6 +23,10 @@ class Location extends Model
         'priority'
     ];
 
+    protected $casts = [
+        'priority' => 'integer',
+    ];
+
     public function details()
     {
         return $this->hasMany(LocationDetail::class, 'location_id');

@@ -191,6 +191,29 @@
             // updateLocalStorage();
         });
 
+        $("#priceForm").submit(function(e) {
+            if ($("#selected-locations li").length < 1) {
+                e.preventDefault();
+                $(".selected-location-div").css({
+                    "border": "1px solid red",
+                    "border-radius": "5px",
+                    "padding": "5px"
+                });
+                $(".error-selected-locations").css({
+                    "display": "block"
+                });
+                $(".error-selected-locations").text("Locations are required");
+            } else {
+                $(".selected-location-div").css({
+                    "border": "none"
+                });
+                $(".error-selected-locations").css({
+                    "display": "none"
+                });
+                $(".error-selected-locations").text('');
+            }
+        });
+
     });
 
     function updateHiddenInputs() {
@@ -252,42 +275,6 @@
         function isLocationAlreadySelected(locationName) {
             return $('.selected-location:contains("' + locationName + '")').length > 0;
         }
-
-        // function addSelectedLocation(locationName) {
-        //     const selectedLocationsList = $('#selected-locations');
-        //     const listItem = $(' <li class = "selected-location"> ' + locationName + '</li>');
-
-        //     listItem.on('click', function() {
-        //         $('#selected-hidden-inputs input[value="' + locationName + '"]').remove();
-        //         $(this).remove();
-        //         $('.exists-error').hide();
-
-        //         if ($("#selected-locations li").length < 1) {
-        //             $(".selected-location-div").css({
-        //                 "border": "1px solid red",
-        //                 "border-radius": "5px",
-        //                 "padding": "5px"
-        //             });
-        //             $(".error-selected-locations").css({
-        //                 "display": "block"
-        //             });
-        //             $(".error-selected-locations").text("Locations are required");
-        //         }
-        //         updateLocalStorage();
-        //     });
-
-        //     $(".selected-location-div").css({
-        //         "border": "none"
-        //     });
-        //     $(".error-selected-locations").css({
-        //         "display": "none"
-        //     });
-        //     $(".error-selected-locations").text('');
-
-        //     selectedLocationsList.append(listItem);
-        //     updateHiddenInputs();
-        //     updateLocalStorage();
-        // }
 
         function addSelectedLocation(locationName) {
             const selectedLocationsList = $('#selected-locations');
@@ -352,15 +339,6 @@
             });
             localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
         }
-
-        // Load selected items from localStorage on page load
-        // function loadSelectedItems() {
-        //     const selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
-        //     console.log(selectedItems);
-        //     selectedItems.forEach(function(item) {
-        //         addSelectedLocation(item);
-        //     });
-        // }
 
         function loadSelectedItems() {
             const selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
