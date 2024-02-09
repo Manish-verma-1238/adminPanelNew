@@ -1,155 +1,9 @@
 @include('frontend.common.header')
-<script src="{{asset('assets/frontend//assets/frontuser/js/jquery.min.js')}}"></script>
-<script src="{{asset('assets/frontend//assets/code.jquery.com/jquery-ui.min.js')}}" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-
-<script type="text/javascript">
-    $(function() {
-        var localcity = {
-            "data": 0
-        };
-        $(".localcity").autocomplete({
-            source: localcity,
-            messages: {
-                noResults: '',
-                results: function() {}
-            },
-            select: function(e, ui) {
-                e.preventDefault()
-
-                $(".localcity").val(ui.item.label);
-                return false;
-            },
-            focus: function(e, ui) {
-                e.preventDefault();
-                return false;
-            },
-            autoFocus: true,
-            minLength: 0,
-            delay: 0,
-        });
-    });
-
-
-
-    $(function() {
-        var transcity = {
-            "data": 0
-        };
-        $(".transcity").autocomplete({
-            source: transcity,
-            messages: {
-                noResults: '',
-                results: function() {}
-            },
-            select: function(e, ui) {
-                e.preventDefault()
-
-                $(".transcity").val(ui.item.label);
-                return false;
-            },
-            focus: function(e, ui) {
-                e.preventDefault();
-                return false;
-            },
-            autoFocus: true,
-            minLength: 0,
-            delay: 0,
-        });
-    });
-
-
-
-
-
-
-
-
-    function initAutocomplete() {
-        $("input[id*='location']").each(function() {
-            autocomplete = new google.maps.places.Autocomplete((this));
-            autocomplete.setComponentRestrictions({
-                'country': 'IN'
-            });
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
-
-                var dest = $('#location').val();
-                var sour = $('#location101').val();
-                if ((dest === sour) && (dest != '') && (sour != '')) {
-                    $('#location').val('');
-                    alert('Pickup City and Drop City Should Be different !');
-                }
-
-                var destr = $('#location1001').val();
-                var sourr = $('#location102').val();
-                if ((sourr === destr) && (destr != '') && (sourr != '')) {
-                    $('#location1001').val('');
-                    alert('Pickup City and Drop City Should Be different !');
-                }
-
-                var destr = $('#location2100').val();
-                var sourr = $('#location1010').val();
-                if ((sourr === destr) && (destr != '') && (sourr != '')) {
-                    $('#location2100').val('');
-                    alert('Pickup City and Drop City Should Be different !');
-                }
-
-            });
-        });
-    }
-</script>
-
-<div class="main fixed-top">
-    <nav class="navbar navbar-expand-md header_bg sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand logo-img" href="index.html">
-                <img src="{{asset('assets/frontend/uploads/logo nav.png')}}" height="75px">
-            </a>
-            <button class="navbar-toggler leftNavbarToggler bg-size" type="button" style="background-image: url('{{asset('assets/frontend/assets/frontuser/images/icons/menu.png')}}');" data-toggle="collapse" data-target="#menu_bar" aria-controls="menu_bar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse " id="menu_bar">
-                <ul class="nav navbar-nav nav-flex-icons m-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about-us.html">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="rides.html">Rides</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="hotels.html">hotels</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link br_n" href="contact-us.html">Contact Us</a>
-                    </li>
-
-                </ul>
-                <div class="top_btn">
-                    <a href="tel:9054865866" class="singup_btn sign ">
-                        BOOK NOW</a>
-
-                </div>
-
-            </div>
-        </div>
-    </nav>
-
-</div><!---Header Page-->
-
-<!-- <div class="banner-block1 cc">
-                <img src="uploads/block-bg.png" loading="lazy">
-        </div> -->
 <div class="center_search">
     <div class="container-fluid">
         <div class="form-center">
             <div class="row">
-                <div class="col-md-7 col-lg-7 col-12">
+                <div class="col-md-6 col-lg-6 col-12">
                     <div class="center_txt">
                         <div class=" d-flex align-items-center justify-content-start">
                             <div style="width: 30px; margin-bottom: 2px; height: 2px;margin-right: 5px; background-color: var(--main-color);">
@@ -158,8 +12,7 @@
                                 NEED A RIDE? JUST CALL
                             </P>
                         </div>
-                        <h1 class="d-sm-block d-none"><span class="text-dark ">Your Taxi Booking</span> <br>App On
-                            Demand</h1>
+                        <h1 class="d-sm-block d-none"><span class="text-dark ">Book your cab</span> <br>With ZipZap Taxi</h1>
                         <p class="d-sm-block d-none">Whether you enjoy city breaks or
                             extended holidays <br> in
                             the sun, you can always
@@ -172,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 col-lg-5 col-12 wow" data-wow-delay="0.1s" data-wow-duration="2s" style=" animation-name: feInTopRight">
+                <div class="col-md-6 col-lg-6 col-12 wow" data-wow-delay="0.1s" data-wow-duration="2s" style=" animation-name: feInTopRight">
 
 
                     <section class="buzz_search">
@@ -218,7 +71,7 @@
                                 <div class="buzz_header">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item w-50 text-center">
-                                            <a class="nav-link active br-l" id="outstation-tab" data-toggle="tab" href="#outstation" role="tab" aria-controls="outstation-tab" aria-selected="true">Oneway / Roundway</a>
+                                            <a class="nav-link active br-l" id="outstation-tab" data-toggle="tab" href="#outstation" role="tab" aria-controls="outstation-tab" aria-selected="true">Oneway/ <br> RoundTrip</a>
                                         </li>
                                         <li class="nav-item w-50 text-center" onclick="showlocal();">
                                             <a class="nav-link br-r" id="local-tab" onclick="tabcheck();return false;" data-toggle="tab" href="#local" role="tab" aria-controls="local" aria-selected="false">Local/Airport/<br>Railway Station
@@ -235,51 +88,42 @@
                                                     Way</a>
                                                 <a class="nav-item nav-link " id="round-trip-tab" data-toggle="tab" href="#round-trip" role="tab" aria-controls="round-trip" aria-selected="false">Round
                                                     Trip</a>
-                                                <!-- <a class="nav-item nav-link "
-                                                                                                                id="multi-city-tab"
-                                                                                                                data-toggle="tab"
-                                                                                                                href="#multi-city"
-                                                                                                                role="tab"
-                                                                                                                aria-controls="multi-city"
-                                                                                                                aria-selected="false">Multi
-                                                                                                                City</a> -->
                                             </div>
                                         </nav>
                                         <div class="tab-content" id="nav-tabContent">
                                             <div class="tab-pane fade show show active" id="one-way" role="tabpanel" aria-labelledby="one-way-tab">
                                                 <div class="cab_search">
                                                     <div class="container">
-                                                        <form method="get" action="#cab-list">
+                                                        <form id="onewayForm" action="{{route('cabs-view')}}" method="POST">
+                                                            @csrf
                                                             <div class="row">
-
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <!-- <i
-                                                                                                                                                                class="material-icons">
-                                                                                                                                                                room
-                                                                                                                                                        </i> -->
-                                                                        <label for="city" class="ha-screen-reader">From
-                                                                            City</label>
-                                                                        <input id="location101" name="source" class="field__input" placeholder="">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Location</label>
+                                                                        <input id="location101" name="source" class="field__input" placeholder="" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">From
-                                                                                City</span>
+                                                                            <span class="field__label">Pick-up Location</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">To
-                                                                            City</label>
-                                                                        <input id="location" name="destination" class="field__input" placeholder="">
+                                                                        <label for="city" class="ha-screen-reader">Drop Location</label>
+                                                                        <input id="location" name="destination" class="field__input" placeholder="" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">To
-                                                                                City</span>
+                                                                            <span class="field__label">Drop Location</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-
+                                                                <div class="col-11 pr-0 mb-3">
+                                                                    <div class="field field_v3">
+                                                                        <label for="city" class="ha-screen-reader">Contact Number</label>
+                                                                        <input class="field__input" type="tel" name="phone" id="phone" placeholder="" maxlength="10" required>
+                                                                        <span class="field__label-wrap" aria-hidden="true">
+                                                                            <span class="field__label">Contact Number</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader"></label>
@@ -288,10 +132,8 @@
                                                                             <span class="field__label"></span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
                                                                 <div class="col-11 pr-0 ">
-
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader"></label>
                                                                         <input id="datetimepickernew" style="color: white;" name="pickuptime" value="02:15 AM" class="field__input br-none timeON" placeholder="" data-dtp="dtp_9bkxX">
@@ -299,53 +141,39 @@
                                                                             <span class="field__label"></span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
                                                                 <input type="hidden" name="triptype" value="oneway">
-                                                                <input type="hidden" name="tripmode" value="oneway">
-                                                                <input type="hidden" name="ptype" value="rent">
                                                                 <div class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
                                                                     <input type="submit" class="search_cb form-control" value="Search Cab">
                                                                 </div>
-
                                                             </div>
                                                         </form>
-
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="tab-pane fade " id="round-trip" role="tabpanel" aria-labelledby="round-trip-tab">
                                                 <div class="cab_search cab_100">
                                                     <div class="container">
                                                         <form method="get" action="https://buzzway.in/cab-list">
                                                             <div class="row">
-
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">From
-                                                                            City</label>
+                                                                        <label for="city" class="ha-screen-reader">From City</label>
                                                                         <input id="location102" name="source" class="field__input">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">From
-                                                                                City</span>
+                                                                            <span class="field__label">From City</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">To
-                                                                            City</label>
+                                                                        <label for="city" class="ha-screen-reader">To City</label>
                                                                         <input id="location1001" name="destination" class="field__input">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">To
-                                                                                City</span>
+                                                                            <span class="field__label">To City</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader"></label>
@@ -354,7 +182,6 @@
                                                                             <span class="field__label"></span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
@@ -373,7 +200,6 @@
                                                                             <span class="field__label"></span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
                                                                 <input type="hidden" name="triptype" value="outstation">
                                                                 <input type="hidden" name="tripmode" value="roundtrip">
@@ -381,176 +207,13 @@
                                                                 <div class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
                                                                     <input type="submit" class="search_cb form-control" value="Search Cab">
                                                                 </div>
-
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
-
                                             </div>
-                                            <!-- <div class="tab-pane fade "
-                                                                                                        id="multi-city"
-                                                                                                        role="tabpanel"
-                                                                                                        aria-labelledby="multi-city-tab">
-                                                                                                        <div
-                                                                                                                class="cab_search cab_100">
-                                                                                                                <div
-                                                                                                                        class="container">
-                                                                                                                        <form method="get"
-                                                                                                                                action="https://buzzway.in/cab-list">
-                                                                                                                                <div
-                                                                                                                                        class="row">
-
-                                                                                                                                        <div
-                                                                                                                                                class="col-11 pr-0 mb-3">
-                                                                                                                                                <div
-                                                                                                                                                        class="city_records">
-                                                                                                                                                        <div
-                                                                                                                                                                class="field field_v3">
-                                                                                                                                                                <label for="city"
-                                                                                                                                                                        class="ha-screen-reader">From
-                                                                                                                                                                        City</label>
-                                                                                                                                                                <input id="location1010"
-                                                                                                                                                                        name="source"
-                                                                                                                                                                        class="field__input">
-                                                                                                                                                                <span class="field__label-wrap"
-                                                                                                                                                                        aria-hidden="true">
-                                                                                                                                                                        <span
-                                                                                                                                                                                class="field__label">From
-                                                                                                                                                                                City</span>
-                                                                                                                                                                </span>
-                                                                                                                                                        </div>
-                                                                                                                                                </div>
-
-                                                                                                                                        </div>
-                                                                                                                                        <div
-                                                                                                                                                class="col-11 pr-0 mb-3">
-
-                                                                                                                                                <div
-                                                                                                                                                        class="city_records">
-                                                                                                                                                        <div
-                                                                                                                                                                class="field field_v3">
-                                                                                                                                                                <label for="city"
-                                                                                                                                                                        class="ha-screen-reader">To
-                                                                                                                                                                        City</label>
-                                                                                                                                                                <input id="location2100"
-                                                                                                                                                                        name="destination[]"
-                                                                                                                                                                        class="field__input">
-                                                                                                                                                                <span class="field__label-wrap"
-                                                                                                                                                                        aria-hidden="true">
-                                                                                                                                                                        <span
-                                                                                                                                                                                class="field__label">To
-                                                                                                                                                                                City</span>
-                                                                                                                                                                </span>
-                                                                                                                                                        </div>
-                                                                                                                                                </div>
-
-                                                                                                                                                <a class="extra-fields-city heading-add"
-                                                                                                                                                        href="#"
-                                                                                                                                                        id="airids">
-                                                                                                                                                        <span
-                                                                                                                                                                class="material-icons f-16">
-                                                                                                                                                                add
-                                                                                                                                                        </span>
-                                                                                                                                                        Add
-                                                                                                                                                        More
-                                                                                                                                                        City</a>
-                                                                                                                                                <div
-                                                                                                                                                        class="city_records_dynamic">
-                                                                                                                                                </div>
-                                                                                                                                        </div>
-
-                                                                                                                                        <div
-                                                                                                                                                class="col-11 pr-0 mb-3">
-                                                                                                                                                <div
-                                                                                                                                                        class="field field_v3">
-                                                                                                                                                        <label for="city"
-                                                                                                                                                                class="ha-screen-reader"></label>
-                                                                                                                                                        <input id="datepicker5"
-                                                                                                                                                                style="color: white;"
-                                                                                                                                                                name="pickupdate"
-                                                                                                                                                                class="field__input dateMC"
-                                                                                                                                                                data-dtp="dtp_te2B6">
-                                                                                                                                                        <span class="field__label-wrap"
-                                                                                                                                                                aria-hidden="true">
-                                                                                                                                                                <span
-                                                                                                                                                                        class="field__label"></span>
-                                                                                                                                                        </span>
-                                                                                                                                                </div>
-
-                                                                                                                                        </div>
-                                                                                                                                        <div
-                                                                                                                                                class="col-11 pr-0 mb-3">
-                                                                                                                                                <div
-                                                                                                                                                        class="field field_v3">
-                                                                                                                                                        <label for="city"
-                                                                                                                                                                class="ha-screen-reader"></label>
-                                                                                                                                                        <input name="pickuptime"
-                                                                                                                                                                style="color: white;"
-                                                                                                                                                                class="field__input br-none timeMC"
-                                                                                                                                                                value="02:15 AM"
-                                                                                                                                                                id="datetimepickernew2"
-                                                                                                                                                                type="text"
-                                                                                                                                                                placeholder="Choose Time"
-                                                                                                                                                                data-dtp="dtp_9bkxX">
-                                                                                                                                                        <span class="field__label-wrap"
-                                                                                                                                                                aria-hidden="true">
-                                                                                                                                                                <span
-                                                                                                                                                                        class="field__label"></span>
-                                                                                                                                                        </span>
-                                                                                                                                                </div>
-
-                                                                                                                                        </div>
-                                                                                                                                        <div
-                                                                                                                                                class="col-11 pr-0 mb-3">
-                                                                                                                                                <div
-                                                                                                                                                        class="field field_v3">
-                                                                                                                                                        <label for="city"
-                                                                                                                                                                class="ha-screen-reader"></label>
-                                                                                                                                                        <input class="field__input dateMC"
-                                                                                                                                                                style="color: white;"
-                                                                                                                                                                name="returndate"
-                                                                                                                                                                required=""
-                                                                                                                                                                value="21-01-2024"
-                                                                                                                                                                id="datepicker6"
-                                                                                                                                                                type="text"
-                                                                                                                                                                placeholder="End Date"
-                                                                                                                                                                data-dtp="dtp_te2B6">
-                                                                                                                                                        <span class="field__label-wrap"
-                                                                                                                                                                aria-hidden="true">
-                                                                                                                                                                <span
-                                                                                                                                                                        class="field__label"></span>
-                                                                                                                                                        </span>
-                                                                                                                                                </div>
-
-                                                                                                                                        </div>
-                                                                                                                                        <input type="hidden"
-                                                                                                                                                name="triptype"
-                                                                                                                                                value="outstation">
-                                                                                                                                        <input type="hidden"
-                                                                                                                                                name="tripmode"
-                                                                                                                                                value="multicity">
-                                                                                                                                        <input type="hidden"
-                                                                                                                                                name="ptype"
-                                                                                                                                                value="rent">
-
-                                                                                                                                        <div
-                                                                                                                                                class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
-                                                                                                                                                <input type="submit"
-                                                                                                                                                        class="search_cb form-control"
-                                                                                                                                                        value="Search Cab">
-                                                                                                                                        </div>
-
-                                                                                                                                </div>
-                                                                                                                        </form>
-                                                                                                                </div>
-                                                                                                        </div>
-
-
-                                                                                                </div> -->
                                         </div>
                                     </div>
-
 
                                     <!--Local-->
                                     <div class="tab-pane fade  " id="local" role="tabpanel" aria-labelledby="local">
