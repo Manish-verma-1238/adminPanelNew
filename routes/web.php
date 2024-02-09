@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth_check'], function () {
 
     /**Price Route */
     Route::get('price/index', [PriceController::class, 'index'])->name('price.index');
-    Route::get('price/add', [PriceController::class, 'create'])->name('price.add');
+    Route::get('price/add/{car_id?}/{location_id?}', [PriceController::class, 'create'])->name('price.add');
     Route::post('price/save', [PriceController::class, 'save'])->name('price.save');
     Route::get('price/cab-price/{car_id?}/{location_id?}', [PriceController::class, 'viewPrice'])->name('price.viewDetailed');
     Route::get('price/delete/{car_id?}/{location_id?}', [PriceController::class, 'delete'])->name('price.delete');

@@ -46,7 +46,7 @@
                                     @endif
                                 </table>
                                 <div class="text-center">
-                                    <a href="{{route('price.index')}}" class="btn btn-primary">Edit</a>
+                                    <a href="{{route('price.add', ['car_id'=>encrypt($price->car_id), 'location_id'=>encrypt($price->location_id)])}}" class="btn btn-primary">Edit</a>
                                     <a href="{{route('price.index')}}" class="btn btn-danger">Back</a>
                                 </div>
                             </div>

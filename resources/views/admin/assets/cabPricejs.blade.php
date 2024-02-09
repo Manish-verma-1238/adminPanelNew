@@ -1,40 +1,33 @@
 <script>
     $(document).ready(function() {
+        // Custom validator method for consecutive numbers
         $.validator.addMethod("consecutiveNumbers", function(value, element, params) {
             var isValid = true;
-
-            // Loop through each pair of starting and ending inputs
             $('.price').each(function() {
                 var startingInput = $(this).find('.price-range-starting');
                 var endingInput = $(this).find('.price-range-ending');
                 var startingValue = parseInt(startingInput.val());
                 var endingValue = parseInt(endingInput.val());
-
-                // Check if ending value is less than starting value
                 if (endingValue < startingValue) {
                     isValid = false;
-                    return false; // Exit the loop early
+                    return false;
                 }
-
-                // Check if there are overlapping ranges
                 $('.price').not($(this)).each(function() {
                     var otherStartingValue = parseInt($(this).find('.price-range-starting').val());
                     var otherEndingValue = parseInt($(this).find('.price-range-ending').val());
-
                     if ((startingValue >= otherStartingValue && startingValue <= otherEndingValue) ||
                         (endingValue >= otherStartingValue && endingValue <= otherEndingValue) ||
                         (startingValue <= otherStartingValue && endingValue >= otherEndingValue)) {
                         isValid = false;
-                        return false; // Exit the loop early
+                        return false;
                     }
                 });
             });
-
             return isValid;
         }, "Please enter valid consecutive numbers without overlapping ranges.");
 
-        $(".add-more").click(function() {
-            // Create a new div element with specified HTML content
+        // Function to add new price range
+        function addPriceRange() {
             var currentDate = Date.now();
             var newDiv = $("<div class='row position-relative price'>" +
                 "<div class='form-group col-md-3 col-12'>" +
@@ -52,11 +45,13 @@
                 "<a class='position-absolute cross-button' title='Remove'>X</a>" +
                 "</div>");
 
-            // Append the new div to the container with class "more-price-range"
             $(".more-price-range").append(newDiv);
+            addValidation(newDiv);
+        }
 
-            // Add validation rules to the newly added input fields
-            newDiv.find('.price-range-starting').rules("add", {
+        // Function to add validation to new price range inputs
+        function addValidation(element) {
+            element.find('.price-range-starting').rules("add", {
                 required: true,
                 number: true,
                 consecutiveNumbers: true,
@@ -66,7 +61,7 @@
                 }
             });
 
-            newDiv.find('.price-range-ending').rules("add", {
+            element.find('.price-range-ending').rules("add", {
                 required: true,
                 number: true,
                 consecutiveNumbers: true,
@@ -76,7 +71,7 @@
                 }
             });
 
-            newDiv.find('.price-of-range').rules("add", {
+            element.find('.price-of-range').rules("add", {
                 required: true,
                 number: true,
                 messages: {
@@ -84,21 +79,27 @@
                     number: "Please enter a valid number"
                 }
             });
+        }
+
+        // Click event for adding more price range
+        $(".add-more").click(function() {
+            addPriceRange();
         });
 
-        $('#name').on('keyup', function() {
-            $('.name-error').hide();
-        });
-
-        $('#priority').on('keyup', function() {
-            $('.priority-error').hide();
-        });
-
+        // Remove price range when cross button is clicked
         $(document).on('click', '.cross-button', function() {
-            // Remove the parent div when cross button is clicked
+            var closestDivOrRow = $(this).closest('div, .row');
+            console.log(closestDivOrRow);
+            $(".deleted-items").append(closestDivOrRow);
             $(this).closest('.row').remove();
         });
 
+        // Keyup event to hide errors
+        $('#name, #priority').on('keyup', function() {
+            $('.' + $(this).attr('id') + '-error').hide();
+        });
+
+        // Form validation
         $('#priceForm').validate({
             rules: {
                 car: {
@@ -129,80 +130,38 @@
                     required: "Please enter priority",
                     number: "Please enter a valid number"
                 }
+            },
+            submitHandler: function(form) {
+                // Form submission via AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('price.save')}}",
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if (response.status == 'error') {
+                            $('.error-msg').html('<div class="alert alert-danger alert-dismissible" role="alert">' +
+                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                '<span aria-hidden="true">&times;</span></button>' +
+                                response.message + '</div>').show();
+                            $('html, body').animate({
+                                scrollTop: 0
+                            }, 'slow');
+                        } else if (response.status == 'success') {
+                            window.location.href = response.url;
+                        } else {
+                            $('.error-msg').hide();
+                            $('.success-messages').hide();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
             }
         });
 
-        // Adding validation for each element with the class .price-range-starting
-        $(".price-range-starting").each(function() {
-            $(this).rules("add", {
-                required: true,
-                number: true,
-                consecutiveNumbers: true,
-                messages: {
-                    required: "Starting Price Range is required",
-                    number: "Enter a valid number"
-                }
-            });
-        });
-
-        $(".price-range-ending").each(function() {
-            $(this).rules("add", {
-                required: true,
-                number: true,
-                consecutiveNumbers: true,
-                messages: {
-                    required: "Ending Price Range is required",
-                    number: "Enter a valid number"
-                }
-            });
-        });
-
-        $(".price-of-range").each(function() {
-            $(this).rules("add", {
-                required: true,
-                number: true,
-                messages: {
-                    required: "Price is required",
-                    number: "Enter a valid number"
-                }
-            });
-        });
-
-        $("#priceForm").submit(function(e) {
-            e.preventDefault(); // Prevent the form from submitting normally
-
-            // Get the form data
-            var formData = $(this).serialize();
-
-            // Send an AJAX request
-            $.ajax({
-                type: 'POST',
-                url: "{{route('price.save')}}",
-                data: formData,
-                success: function(response) {
-                    // Handle the response from the server
-                    if (response.status == 'error') {
-                        $('.error-msg').html('<div class="alert alert-danger alert-dismissible" role="alert">' +
-                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                            '<span aria-hidden="true">&times;</span></button>' +
-                            response.message + '</div>');
-                        $('.error-msg').show();
-                        $('html, body').animate({
-                            scrollTop: 0
-                        }, 'slow');
-                    } else if (response.status == 'success') {
-                        window.location.href = response.url;
-                    } else {
-                        $('.error-msg').hide();
-                        $('.success-messages').hide();
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                    console.error(error);
-                }
-            });
-        });
+        // Add initial validation
+        addValidation($('.price'));
 
     });
 </script>

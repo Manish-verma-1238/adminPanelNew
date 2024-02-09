@@ -53,7 +53,7 @@
                                         <td>{{ucwords($location->trip)}}</td>
                                         <td><a href="{{route('price.viewDetailed', ['car_id' => encrypt($location->id), 'location_id' => encrypt($location->location_id)])}}">View all</a></td>
                                         <td>
-                                            <a href="{{route('location.add', [encrypt($location->id)])}}">Edit</a>
+                                            <a href="{{route('price.add', ['car_id'=>encrypt($location->id), 'location_id'=>encrypt($location->location_id)])}}">Edit</a>
                                             <div class="bullet"></div>
                                             <a class="text-danger" data-toggle="tooltip" title="Delete" data-confirm-yes="{{route('price.delete',['car_id'=>encrypt($location->id), 'location_id'=> encrypt($location->location_id)])}}" data-confirm="Are You Sure?|Do you want to Delete '<b>{{$location->name}} ( {{$location->location_name}} )</b>'?" style="cursor:pointer;">Delete</a>
                                         </td>
