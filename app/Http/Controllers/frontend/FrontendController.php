@@ -22,7 +22,7 @@ class FrontendController extends Controller
     }
 
     public function cabs(Request $request)
-    {
+    {dd($request->all());
         $source = $this->alloweStates($request['source']);
         $destination = $this->alloweStates($request['destination']);
 

@@ -159,16 +159,17 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcTmELSehXo7fqusqkvu4FKYtkQM_5--8&amp;libraries=places&loading=async&amp;callback=initAutocomplete"></script>
 
+<script src="{{asset('assets/frontend/assets/frontuser/js/jquery.datetimepicker.full.js')}}"></script>
+<script src="{{asset('assets/frontend/assets/frontuser/js/datevalidation.js')}}"></script>
+
 <script src="{{asset('assets/frontend/assets/cdnjs.cloudflare.com/popper.min.js')}}"></script>
 <script src="{{asset('assets/frontend/assets/maxcdn.bootstrapcdn.com/bootstrap/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/frontend/assets/frontuser/js/owl.carousel.min2.js')}}"></script>
 <script src="{{asset('assets/frontend/assets/frontuser/js/wow.js')}}"></script>
 
-<script src="{{asset('assets/frontend/assets/frontuser/js/jquery.datetimepicker.full.js')}}"></script>
+<!-- <script async defer src="{{asset('assets/frontend/assets/frontuser/js/validation.js')}}"></script> -->
+<!-- <script src="{{asset('assets/frontend/assets/frontuser/js/custom.js')}}"></script> -->
 
-<script async defer src="{{asset('assets/frontend/assets/frontuser/js/validation.js')}}"></script>
-<script src="{{asset('assets/frontend/assets/frontuser/js/custom.js')}}"></script>
-<!-- <script src="{{asset('assets/frontend/assets/frontuser/js/datevalidation.js')}}"></script> -->
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

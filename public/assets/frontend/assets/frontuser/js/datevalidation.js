@@ -6,345 +6,98 @@ function formattedDate(e) {
     return r.length < 2 && (r = "0" + r), a.length < 2 && (a = "0" + a), [a, r, i].join("-");
 }
 
-function formattedTime(e) {
-    var t = Number(e.match(/^(\d+)/)[1]),
-        r = Number(e.match(/:(\d+)/)[1]),
-        a = e.match(/\s(.*)$/)[1];
-    "PM" == a && t < 12 && (t += 12), "AM" == a && 12 == t && (t -= 12);
-    var i = t.toString(),
-        m = r.toString();
-    return t < 10 && (i = "0" + i), r < 10 && (m = "0" + m), i + ":" + m;
-}
-$(window).on("load", function() {
-        var e = new Date(),
-            t = e.getHours() + 2 + ":" + e.getMinutes();
-        jQuery("#datetimepickernew").datetimepicker({ minTime: t, maxTime: "23:45", format: "h:i A", step: 15 }),
-            jQuery("#datetimepickernew1").datetimepicker({ minTime: t, maxTime: "23:45", format: "h:i A", step: 15 }),
-            jQuery("#datetimepickernew2").datetimepicker({ minTime: t, maxTime: "23:45", format: "h:i A", step: 15 }),
-            jQuery("#datetimepickernew3").datetimepicker({ minTime: t, maxTime: "23:45", format: "h:i A", step: 15 }),
-            jQuery("#datetimepickernew4").datetimepicker({ minTime: t, maxTime: "23:45", format: "h:i A", step: 15 });
-    }),
-    $("#datepicker").on("change", function() {
-        var e = new Date();
-        if (formattedDate(e.toISOString().substring(0, 10)) == $("#datepicker").val()) var t = e.getHours() + 2 + ":" + e.getMinutes();
-        else t = "00:00";
-        jQuery("#datetimepickernew").datetimepicker({ datepicker: !1, minTime: t, maxTime: "23:45", format: "h:i A", step: 15 });
-    }),
-    // $("#datepicker3").on("change", function() {
-    //     var e = new Date();
-    //     if (formattedDate(e.toISOString().substring(0, 10)) == $("#datepicker3").val()) var t = e.getHours() + 2 + ":" + e.getMinutes();
-    //     else t = "00:00";
-    //     jQuery("#datetimepickernew1").datetimepicker({ datepicker: !1, minTime: t, maxTime: "23:45", format: "h:i A", step: 15 });
+$("#datepicker").on("change", function() {
+    var selectedDate = $(this).val(); // Get the selected date from the datepicker
+    var currentDate = new Date();
 
-    // }),
-    $("#datepicker3").on("change", function() {
-        var e = new Date;
-        if (formattedDate(e.toISOString().substring(0, 10)) == $("#datepicker3").val()) var t = e.getHours() + 2 + ":" + e.getMinutes();
-        else t = "00:00";
-        jQuery("#datetimepickernew1").datetimepicker({
-            datepicker: !1,
-            minTime: t,
-            maxTime: "23:45",
-            format: "h:i A",
-            step: 15
-        })
-        var string = $("#datepicker3").val();
-        var dd = string.split('-');
-        var datdd = dd[0];
-        var mm = dd[1];
-        var yyy = dd[2];
-        // alert(string);
-        jQuery("#datepicker4").datetimepicker({
-            i18n: {
-                en: {
-                    months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"],
-                    dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"]
-                }
-            },
-            timepicker: !1,
-            value: $("#datepicker3").val(),
-            format: "d-m-Y",
-            closeOnDateSelect: !0,
-            minDate: new Date(yyy, mm - 1, datdd),
-            weeks: !1
-        })
-
-
-    }),
-    
-      $("#datepicker5").on("change", function() {
-        var e = new Date;
-        if (formattedDate(e.toISOString().substring(0, 10)) == $("#datepicker5").val()) var t = e.getHours() + 2 + ":" + e.getMinutes();
-        else t = "00:00";
-        jQuery("#datetimepickernew1").datetimepicker({
-            datepicker: !1,
-            minTime: t,
-            maxTime: "23:45",
-            format: "h:i A",
-            step: 15
-        })
-        var string = $("#datepicker5").val();
-        var dd = string.split('-');
-        var datdd = dd[0];
-        var mm = dd[1];
-        var yyy = dd[2];
-        // alert(string);
-        jQuery("#datepicker6").datetimepicker({
-            i18n: {
-                en: {
-                    months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"],
-                    dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"]
-                }
-            },
-            timepicker: !1,
-            value: $("#datepicker5").val(),
-            format: "d-m-Y",
-            closeOnDateSelect: !0,
-            minDate: new Date(yyy, mm - 1, datdd),
-            weeks: !1
-        })
-
-
-    }),
-    
-    // $("#datepicker5").on("change", function() {
-    //     var e = new Date();
-    //     if (formattedDate(e.toISOString().substring(0, 10)) == $("#datepicker5").val()) var t = e.getHours() + 2 + ":" + e.getMinutes();
-    //     else t = "00:00";
-    //     jQuery("#datetimepickernew2").datetimepicker({ datepicker: !1, minTime: t, maxTime: "23:45", format: "h:i A", step: 15 });
-    // }),
-    $("#datepicker1").on("change", function() {
-        var e = new Date();
-        if (formattedDate(e.toISOString().substring(0, 10)) == $("#datepicker1").val()) var t = e.getHours() + 2 + ":" + e.getMinutes();
-        else t = "00:00";
-        jQuery("#datetimepickernew3").datetimepicker({ datepicker: !1, minTime: t, maxTime: "23:45", format: "h:i A", step: 15 });
-    }),
-    $("#datepicker2").on("change", function() {
-        var e = new Date();
-        if (formattedDate(e.toISOString().substring(0, 10)) == $("#datepicker2").val()) var t = e.getHours() + 2 + ":" + e.getMinutes();
-        else t = "00:00";
-        jQuery("#datetimepickernew4").datetimepicker({ datepicker: !1, minTime: t, maxTime: "23:45", format: "h:i A", step: 15 });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".timeON").datetimepicker({
-            formatTime: "h:i A",
-            datepicker: !1,
-            format: "h:i A",
-            step: 15,
-            onClose: function(e) {
-                var a = $("#datepicker").val(),
-                    i = formattedTime($("#datetimepickernew").val());
-                return a == t && r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-            validateOnBlur: !1,
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".datetimepickerON").datetimepicker({
-            formatDate: "d-m-Y",
-            timepicker: !1,
-            format: "d-m-Y",
-            onClose: function(e) {
-                var a = $("#datepicker").val(),
-                    i = formattedTime($("#datetimepickernew").val());
-                return a == t && r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".timeOU").datetimepicker({
-            formatTime: "h:i A",
-            datepicker: !1,
-            format: "h:i A",
-            step: 15,
-            onClose: function(e) {
-                var a = $("#datepicker3").val(),
-                    i = formattedTime($("#datetimepickernew1").val());
-                return a == t && r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-            validateOnBlur: !1,
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".dateOU").datetimepicker({
-            formatDate: "d-m-Y",
-            timepicker: !1,
-            format: "d-m-Y",
-            onClose: function(e) {
-                var a = $("#datepicker3").val(),
-                    i = formattedTime($("#datetimepickernew1").val());
-                return a == t && r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".timeMC").datetimepicker({
-            formatTime: "h:i A",
-            datepicker: !1,
-            format: "h:i A",
-            step: 15,
-            onClose: function(e) {
-                var a = $("#datepicker5").val(),
-                    i = formattedTime($("#datetimepickernew2").val());
-                if (a == t) return r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-            validateOnBlur: !1,
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".dateMC").datetimepicker({
-            formatDate: "d-m-Y",
-            timepicker: !1,
-            format: "d-m-Y",
-            onClose: function(e) {
-                var a = $("#datepicker5").val(),
-                    i = formattedTime($("#datetimepickernew2").val());
-                return a == t && r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".timeLL").datetimepicker({
-            formatTime: "h:i A",
-            datepicker: !1,
-            format: "h:i A",
-            step: 15,
-            onClose: function(e) {
-                var a = $("#datepicker1").val(),
-                    i = formattedTime($("#datetimepickernew3").val());
-                if (a == t) return r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-            validateOnBlur: !1,
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".dateLL").datetimepicker({
-            formatDate: "d-m-Y",
-            timepicker: !1,
-            format: "d-m-Y",
-            onClose: function(e) {
-                var a = $("#datepicker1").val(),
-                    i = formattedTime($("#datetimepickernew3").val());
-                return a == t && r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".timeTF").datetimepicker({
-            formatTime: "h:i A",
-            datepicker: !1,
-            format: "h:i A",
-            step: 15,
-            onClose: function(e) {
-                var a = $("#datepicker2").val(),
-                    i = formattedTime($("#datetimepickernew4").val());
-                if (a == t) return r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-            validateOnBlur: !1,
-        });
-    }),
-    $(function() {
-        var e = new Date(),
-            t = formattedDate(e.toISOString().substring(0, 10)),
-            r = e.getHours() + 2 + ":" + e.getMinutes();
-        $(".dateTF").datetimepicker({
-            formatDate: "d-m-Y",
-            timepicker: !1,
-            format: "d-m-Y",
-            onClose: function(e) {
-                var a = $("#datepicker2").val(),
-                    i = formattedTime($("#datetimepickernew4").val());
-                return a == t && r > i ? ($("#DatTimeError").show(), $("#errorMsgs").modal("show"), $("#errorhtml").html("PickupTime should be greater 2 hours from currentTime!"), !1) : ($("#errorMsgs").modal("hide"), !0);
-            },
-        });
-    }),
-    jQuery("#datepicker").datetimepicker({
-        i18n: { en: { months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"], dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"] } },
-        timepicker: !1,
-        value: "today",
-        format: "d-m-Y",
-        closeOnDateSelect: !0,
-        minDate: 0,
-        weeks: !1,
-    }),
-    jQuery("#datepicker1").datetimepicker({
-        i18n: { en: { months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"], dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"] } },
-        timepicker: !1,
-        value: "today",
-        format: "d-m-Y",
-        closeOnDateSelect: !0,
-        minDate: 0,
-        weeks: !1,
-    }),
-    jQuery("#datepicker2").datetimepicker({
-        i18n: { en: { months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"], dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"] } },
-        timepicker: !1,
-        value: "today",
-        format: "d-m-Y",
-        closeOnDateSelect: !0,
-        minDate: 0,
-        weeks: !1,
-    }),
-    jQuery("#datepicker3").datetimepicker({
-        i18n: { en: { months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"], dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"] } },
-        timepicker: !1,
-        value: "today",
-        format: "d-m-Y",
-        closeOnDateSelect: !0,
-        minDate: 0,
-        weeks: !1,
-    }),
-    jQuery("#datepicker4").datetimepicker({
-        i18n: { en: { months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"], dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"] } },
-        timepicker: !1,
-        value: "today",
-        format: "d-m-Y",
-        closeOnDateSelect: !0,
-        minDate: 0,
-        weeks: !1,
-    }),
-    jQuery("#datepicker5").datetimepicker({
-        i18n: { en: { months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"], dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"] } },
-        timepicker: !1,
-        value: "today",
-        format: "d-m-Y",
-        closeOnDateSelect: !0,
-        minDate: 0,
-        weeks: !1,
-    }),
-    jQuery("#datepicker6").datetimepicker({
-        i18n: { en: { months: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"], dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thus", "Fri", "Sat"] } },
-        timepicker: !1,
-        value: "today",
-        format: "d-m-Y",
-        closeOnDateSelect: !0,
-        minDate: 0,
-        weeks: !1,
+    // Convert currentDate to the format expected by the datepicker
+    var currentDateString = ('0' + currentDate.getDate()).slice(-2) + "-" + ('0' + (currentDate.getMonth() + 1)).slice(-2) + "-" + currentDate.getFullYear();
+    if (selectedDate === currentDateString) {
+        // If the selected date is today, set the minimum time to current time + 1 hour and 30 minutes
+        var hours = currentDate.getHours() + 1;
+        var minutes = currentDate.getMinutes() + 30;
+        if (minutes >= 60) {
+            hours += 1;
+            minutes -= 60;
+        }
+        var minTime = (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
+    } else {
+        // If the selected date is not today, set the minimum time to "00:00"
+        var minTime = "09:00";
+    }
+    // Set the datetimepickernew with the calculated minTime and other options
+    $("#datetimepickernew").datetimepicker({
+        formatTime: "h:i A",
+        datepicker: false,
+        format: "h:i A",
+        value: minTime,
+        minTime: minTime,
+        maxTime: "23:45",
+        step: 15
     });
+}),
+$(function() {
+    // Get current date and time
+    var currentDate = new Date();
+    var currentHour = currentDate.getHours();
+    var currentMinute = currentDate.getMinutes();
+
+    // Add 1.5 hours to the current time
+    var addedHours = 1;
+    var addedMinutes = 30;
+    currentHour += addedHours;
+    currentMinute += addedMinutes;
+
+    // Adjust if minutes exceed 60
+    if (currentMinute >= 60) {
+        currentMinute -= 60;
+        currentHour += 1;
+    }
+
+    // Check if time moves to the next date
+    if (currentHour >= 24) {
+        currentHour -= 24;
+        currentDate.setDate(currentDate.getDate() + 1); // Move to the next date
+    }
+
+    // Set the maximum time to 11:59 PM
+    var maxHour = 23;
+    var maxMinute = 59;
+
+    // Format the adjusted time
+    var adjustedTime = (currentHour < 10 ? "0" : "") + currentHour + ":" + (currentMinute < 10 ? "0" : "") + currentMinute;
+    
+    // Show the adjusted time above the datepicker
+    $("#timeDisplay").text("Adjusted Time: " + adjustedTime);
+
+    // Set the datepicker with the adjusted date
+    $("#datepicker").datetimepicker({
+        i18n: {
+            en: {
+                months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                dayOfWeek: ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"]
+            }
+        },
+        timepicker: false,
+        value: currentDate,
+        format: "d-m-Y",
+        closeOnDateSelect: true,
+        minDate: currentDate, // Set minDate to the adjusted date
+        weeks: false,
+    });
+
+    // Format the adjusted time
+    var currentTime = (currentHour < 10 ? "0" : "") + currentHour + ":" + (currentMinute < 10 ? "0" : "") + currentMinute;
+
+    // Set the timepicker with the adjusted time
+    $(".timeON").datetimepicker({
+        formatTime: "h:i A",
+        datepicker: false,
+        format: "h:i A",
+        step: 15,
+        value: currentTime, // Set the value to the adjusted time
+        minTime: currentTime, // Set the minimum time to the adjusted time
+        maxTime: "23:59", // Set the maximum time to 11:59 PM
+        validateOnBlur: false,
+    });
+});

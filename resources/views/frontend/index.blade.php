@@ -126,19 +126,19 @@
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Date</label>
                                                                         <input id="datepicker" style="color: white;" name="pickupdate" class="field__input datetimepickerON" placeholder="" data-dtp="dtp_te2B6">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Pick-up Date</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-11 pr-0 ">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input id="datetimepickernew" style="color: white;" name="pickuptime" value="02:15 AM" class="field__input br-none timeON" placeholder="" data-dtp="dtp_9bkxX">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Time</label>
+                                                                        <input id="datetimepickernew" style="color: white;" name="pickuptime" class="field__input br-none timeON"type="text" placeholder="Choose Time" data-dtp="dtp_9bkxX">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Pick-up Time</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
