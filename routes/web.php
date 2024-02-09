@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\UserProfileController;
 use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\TaxiController;
 use App\Http\Controllers\admin\PriceController;
+use App\Http\Controllers\frontend\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,9 @@ use App\Http\Controllers\admin\PriceController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 /* Admin routes */
 Route::group(['middleware' => 'auth_loggin'], function () {
@@ -83,6 +84,9 @@ Route::group(['middleware' => 'auth_check'], function () {
     Route::get('price/delete/{car_id?}/{location_id?}', [PriceController::class, 'delete'])->name('price.delete');
 });
 
+
+/* Frontend routes */
+Route::get('/', [FrontendController::class, 'index'])->name('main');
 
 Route::get('/manish', [AuthController::class, 'manish'])->name('manish');
 Route::view('/verma', 'websocket');
