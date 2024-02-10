@@ -242,17 +242,18 @@
                                             <div class="tab-pane fade " id="airport" role="tabpanel" aria-labelledby="airport-tab">
                                                 <div class="cab_search cab_100">
                                                     <div class="container">
-                                                        <form>
+                                                        <form id="airportForm" action="{{route('cabs-view')}}" method="POST" onsubmit="storeFormData('airportForm')">
+                                                            @csrf
                                                             <div class="row">
                                                                 <div class="col-6 pr-0 mb-3">
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="airportDrop" checked>
+                                                                        <input type="checkbox" name="airport" class="custom-control-input" value="drop" id="airportDrop" checked>
                                                                         <label class="custom-control-label" for="airportDrop" style="color:#ffcc00;">Drop off?</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6 pr-0 mb-3">
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="airportPick">
+                                                                        <input type="checkbox" name="airport" class="custom-control-input" value="pick" id="airportPick">
                                                                         <label class="custom-control-label" for="airportPick" style="color:#ffcc00;">Pick up?</label>
                                                                     </div>
                                                                 </div>
@@ -260,17 +261,17 @@
                                                                 <div id="airport-destination" class="mb-3 col-11 pr-0" style="display: none;"></div>
                                                                 <div class="mb-3 col-11 pr-0 airport-input">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Pick up Loaction</label>
-                                                                        <input type="text" name="source" placeholder="" class="field__input transcity">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Loaction</label>
+                                                                        <input type="text" id="location301" name="source" placeholder="" class="field__input transcity">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Pick up Loaction</span>
+                                                                            <span class="field__label">Pick-up Loaction</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 col-11 pr-0 airport-input">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Drop off Airport</label>
-                                                                        <input type="text" name="destination" id="transpackage" placeholder="" class="field__input">
+                                                                        <input type="text" name="destination" id="drops-airport" placeholder="" class="field__input">
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Drop off Airport</span>
                                                                         </span>

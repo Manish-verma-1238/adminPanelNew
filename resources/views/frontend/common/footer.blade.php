@@ -149,6 +149,10 @@
         if (formId == "roundTripForm") {
             localStorage.setItem('appendedStopHtml', $('#more-stops').html());
         }
+        if (formId == "airportForm") {
+            localStorage.setItem('airport-source', $('#airport-source').html());
+            localStorage.setItem('airport-destination', $('#airport-destination').html());
+        }
         localStorage.setItem('latestFormData', JSON.stringify({
             formId: formId,
             formData: formDataObject
@@ -157,9 +161,29 @@
 
     // Function to initialize form data restoration
     function initializeForm() {
+        // append incase of round-trip
         const storedAppendedStopHtml = localStorage.getItem('appendedStopHtml');
         if (storedAppendedStopHtml) {
+            $('.airport-input').hide();
+            $('#airport-source').html('');
+            $('#airport-destination').html('');
+            $('.airport-input').html('');
             $('#more-stops').html(storedAppendedStopHtml);
+        }
+
+        // append incase of airport
+        const storedAirportSource = localStorage.getItem('airport-source');
+        if (storedAppendedStopHtml) {
+            $('.airport-input').hide();
+            $('#airport-source').html('');
+            $('#airport-destination').html('');
+            $('.airport-input').html('');
+            $('#airport-source').html(storedAppendedStopHtml);
+        }
+
+        const storedAirportDestination = localStorage.getItem('airport-destination');
+        if (storedAppendedStopHtml) {
+            $('#airport-destination').html(storedAppendedStopHtml);
         }
 
         const storedData = localStorage.getItem('latestFormData');
@@ -187,6 +211,26 @@
                 $('#one-way-tab').addClass('active');
                 $('#round-trip').removeClass('show active');
                 $('#one-way').addClass('show active');
+            } else if (formId == "airportForm") {
+                $('#outstation-tab').removeClass('active');
+                $('#local-tab').addClass('active');
+                $('#outstation').removeClass('show active');
+                $('#local').addClass('show active');
+                $('#hourly-tab').removeClass('active');
+                $('#railway-tab').removeClass('active');
+                $('#airport-tab').addClass('active');
+                $('#hourly').removeClass('show active');
+                $('#railway').removeClass('show active');
+                $('#airport').addClass('show active');
+                var jsonObject = JSON.parse(storedData);
+                console.log(jsonObject.formData.airport);
+                if(jsonObject.formData.airport == 'pick'){
+                    $('#airportDrop').prop('checked', false);
+                    $('#airportPick').prop('checked', true);
+                }else{
+                    $('#airportDrop').prop('checked', true);
+                    $('#airportPick').prop('checked', false);
+                }
             }
 
             if (formId) {
@@ -208,7 +252,6 @@
 </script>
 <script>
     $(document).ready(function() {
-
         $(".add-more-stops").on("click", function() {
             if ($('#location1').val() !== '') {
                 var lastInput = $('#more-stops input:last');
@@ -249,6 +292,7 @@
         $('#airportPick').on('change', function() {
             if ($(this).prop('checked')) {
                 $('#airportDrop').prop('checked', false);
+                $('#airportPick').prop('checked', true);
                 $('.airport-input').hide();
                 $('#airport-source').html('');
                 $('#airport-destination').html('');
@@ -274,6 +318,7 @@
         $('#airportDrop').on('change', function() {
             if ($(this).prop('checked')) {
                 $('#airportPick').prop('checked', false);
+                $('#airportDrop').prop('checked', true);
                 $('.airport-input').hide();
                 $('#airport-source').html('');
                 $('#airport-destination').html('');
@@ -358,7 +403,7 @@
 
             var id = document.getElementById(inputId);
             var autocompleteOnewayFrom = new google.maps.places.Autocomplete(id, options);
-            $('#'+inputId).change(function() {
+            $('#' + inputId).change(function() {
 
                 autocompleteOnewayFrom.addListener('place_changed', function() {
                     var place = autocompleteOnewayFrom.getPlace();
@@ -379,7 +424,7 @@
 
             var id = document.getElementById(inputId);
             var autocompleteOnewayFrom = new google.maps.places.Autocomplete(id, options);
-            $('#'+inputId).change(function() {
+            $('#' + inputId).change(function() {
 
                 autocompleteOnewayFrom.addListener('place_changed', function() {
                     var place = autocompleteOnewayFrom.getPlace();
@@ -389,7 +434,7 @@
                 });
             });
         }
-
+        airportSearch('drops-airport');
     });
 </script>
 </body>
