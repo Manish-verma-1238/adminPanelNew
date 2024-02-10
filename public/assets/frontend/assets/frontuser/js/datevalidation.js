@@ -6,7 +6,7 @@ function formattedDate(e) {
     return r.length < 2 && (r = "0" + r), a.length < 2 && (a = "0" + a), [a, r, i].join("-");
 }
 
-$("#datepicker").on("change", function() {
+$(".datepicker").on("change", function() {
     var selectedDate = $(this).val(); // Get the selected date from the datepicker
     var currentDate = new Date();
 
@@ -26,7 +26,7 @@ $("#datepicker").on("change", function() {
         var minTime = "09:00";
     }
     // Set the datetimepickernew with the calculated minTime and other options
-    $("#datetimepickernew").datetimepicker({
+    $(".datetimepickernew").datetimepicker({
         formatTime: "h:i A",
         datepicker: false,
         format: "h:i A",
@@ -71,7 +71,7 @@ $(function() {
     $("#timeDisplay").text("Adjusted Time: " + adjustedTime);
 
     // Set the datepicker with the adjusted date
-    $("#datepicker").datetimepicker({
+    $(".datepicker").datetimepicker({
         i18n: {
             en: {
                 months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -82,8 +82,12 @@ $(function() {
         value: currentDate,
         format: "d-m-Y",
         closeOnDateSelect: true,
-        minDate: currentDate, // Set minDate to the adjusted date
+        minDate: "today", // Set minDate to the adjusted date
         weeks: false,
+        onSelectDate: function(ct, $i) {
+            // Close the datepicker when a date is selected
+            this.hide();
+        }
     });
 
     // Format the adjusted time

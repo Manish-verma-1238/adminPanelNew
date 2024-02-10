@@ -10,11 +10,11 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="{{asset('assets/frontend/uploads/logo nav.png')}}" type="image/x-icon" />
     <link rel="preload" href="{{asset('assets/frontend/assets/maxcdn.bootstrapcdn.com/bootstrap/bootstrap.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/style.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{asset('assets/frontend/assets/maxcdn.bootstrapcdn.com/font-awesome/font-awesome.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="{{asset('assets/frontend/assets/frontuser/css/owl.carousel.min2.css')}}" as="style">
     <link rel="stylesheet" href="{{asset('assets/frontend/assets/cdnjs.cloudflare.com/owl.theme.default.min.css')}}" as="style">
     <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/animate.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/style.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/date-picker.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/jquery.datetimepicker.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
@@ -25,35 +25,17 @@
     <!-- Third party links -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" style="font-display: swap;">
     <style>
-        @media only screen and (min-width: 769px) {
-            .pac-container {
-                border-radius: 5px;
-                padding: 5px;
-                margin-top: -150px;
-            }
-        }
-
-        .pac-container:after {
-            content: none !important;
-        }
-
-        .pac-item,
-        .pac-item-query {
-            font-size: 1em;
-            font-family: 'Nunito Sans', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
+        .remove-stop {
+            color: red;
+            cursor: pointer;
+            right: 12px;
+            top: 0px;
+            font-size: 30px;
         }
     </style>
 </head>
 
 <body>
-
-    <script src="{{asset('assets/frontend//assets/frontuser/js/jquery.min.js')}}"></script>
-    <script src="{{asset('assets/frontend//assets/code.jquery.com/jquery-ui.min.js')}}" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-
     <div class="main fixed-top">
         <nav class="navbar navbar-expand-md header_bg sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
             <div class="container-fluid">

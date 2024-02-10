@@ -1,4 +1,5 @@
 @include('frontend.common.header')
+@include('frontend.indexCss')
 <div class="center_search">
     <div class="container-fluid">
         <div class="form-center">
@@ -26,39 +27,8 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-12 wow" data-wow-delay="0.1s" data-wow-duration="2s" style=" animation-name: feInTopRight">
-
-
                     <section class="buzz_search">
                         <div class="container">
-
-                            <script>
-                                function searchlocal(cityid) {
-                                    $.ajax({
-                                        type: 'post',
-
-                                        url: 'https://buzzway.in/ajax/Localpackage/index?city=' + cityid + '&type=cab',
-                                        dataType: "html",
-                                        success: function(response) {
-                                            $('#localpackage').html(response);
-                                            $('#packloader').html('');
-                                        }
-                                    });
-                                }
-                            </script>
-                            <script>
-                                function searchtransfer(cityid) {
-                                    $.ajax({
-                                        type: 'post',
-
-                                        url: 'https://buzzway.in/ajax/Localpackage/transfer?city=' + cityid + '&type=airport',
-                                        dataType: "html",
-                                        success: function(response) {
-                                            $('#transpackage').html(response);
-                                            $('#packloader').html('');
-                                        }
-                                    });
-                                }
-                            </script>
                             <script>
                                 function showlocal() {
                                     $('#hourly-tab').addClass('active');
@@ -74,7 +44,7 @@
                                             <a class="nav-link active br-l" id="outstation-tab" data-toggle="tab" href="#outstation" role="tab" aria-controls="outstation-tab" aria-selected="true">Oneway/ <br> RoundTrip</a>
                                         </li>
                                         <li class="nav-item w-50 text-center" onclick="showlocal();">
-                                            <a class="nav-link br-r" id="local-tab" onclick="tabcheck();return false;" data-toggle="tab" href="#local" role="tab" aria-controls="local" aria-selected="false">Local/Airport/<br>Railway Station
+                                            <a class="nav-link br-r" id="local-tab" data-toggle="tab" href="#local" role="tab" aria-controls="local" aria-selected="false">Local/Airport/<br>Railway Station
                                             </a>
                                         </li>
                                     </ul>
@@ -94,7 +64,7 @@
                                             <div class="tab-pane fade show show active" id="one-way" role="tabpanel" aria-labelledby="one-way-tab">
                                                 <div class="cab_search">
                                                     <div class="container">
-                                                        <form id="onewayForm" action="{{route('cabs-view')}}" method="POST">
+                                                        <form id="onewayForm" action="{{route('cabs-view')}}" method="POST" onsubmit="storeFormData('onewayForm')">
                                                             @csrf
                                                             <div class="row">
                                                                 <div class="col-11 pr-0 mb-3">
@@ -127,7 +97,7 @@
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Pick-up Date</label>
-                                                                        <input id="datepicker" style="color: white;" name="pickupdate" class="field__input datetimepickerON" placeholder="" data-dtp="dtp_te2B6">
+                                                                        <input id="datepicker" style="color: white;" name="pickupdate" class="field__input datetimepickerON datepicker" placeholder="" data-dtp="dtp_te2B6">
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Pick-up Date</span>
                                                                         </span>
@@ -136,7 +106,7 @@
                                                                 <div class="col-11 pr-0 ">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Pick-up Time</label>
-                                                                        <input id="datetimepickernew" style="color: white;" name="pickuptime" class="field__input br-none timeON"type="text" placeholder="Choose Time" data-dtp="dtp_9bkxX">
+                                                                        <input id="datetimepickernew" style="color: white;" name="pickuptime" class="field__input br-none timeON datetimepickernew" type="text" placeholder="Choose Time" data-dtp="dtp_9bkxX">
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Pick-up Time</span>
                                                                         </span>
@@ -154,56 +124,50 @@
                                             <div class="tab-pane fade " id="round-trip" role="tabpanel" aria-labelledby="round-trip-tab">
                                                 <div class="cab_search cab_100">
                                                     <div class="container">
-                                                        <form method="get" action="https://buzzway.in/cab-list">
+                                                        <form id="roundTripForm" onsubmit="storeFormData('roundTripForm')">
                                                             <div class="row">
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">From City</label>
-                                                                        <input id="location102" name="source" class="field__input">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Location</label>
+                                                                        <input id="location201" name="source" class="field__input" placeholder="" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">From City</span>
+                                                                            <span class="field__label">Pick-up Location</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">To City</label>
-                                                                        <input id="location1001" name="destination" class="field__input">
+                                                                        <label for="city" class="ha-screen-reader">Stop Location</label>
+                                                                        <input id="location1" name="stops[0]" class="field__input location1" placeholder="" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">To City</span>
+                                                                            <span class="field__label">Stop Location</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="more-stops" class="col-11 pr-0 mb-3">
+                                                                </div>
+                                                                <div class="col-11 pr-0 mb-3">
+                                                                    <div class="float-right add-more-stops"><a href="javascript::void()">+ Add more stops</a></div>
+                                                                </div>
+                                                                <div class="col-11 pr-0 mb-3">
+                                                                    <div class="field field_v3">
+                                                                        <label for="city" class="ha-screen-reader">Drop Location</label>
+                                                                        <input id="location2" name="destination" class="field__input" placeholder="" required>
+                                                                        <span class="field__label-wrap" aria-hidden="true">
+                                                                            <span class="field__label">Drop Location</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input id="datepicker3" style="color: white;" name="pickupdate" class="field__input dateOU" placeholder="" data-dtp="dtp_te2B6">
+                                                                        <label for="city" class="ha-screen-reader">Contact Number</label>
+                                                                        <input class="field__input" type="tel" name="phone" id="phone" placeholder="" maxlength="10" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Contact Number</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-11 pr-0 mb-3">
-                                                                    <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input id="datetimepickernew1" style="color: white;" name="pickuptime" value="02:15 AM" class="field__input br-none timeOU" placeholder="" data-dtp="dtp_9bkxX">
-                                                                        <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-11 pr-0 mb-3">
-                                                                    <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input id="datepicker4" style="color: white;" name="pickupdate" class="field__input" placeholder="" data-dtp="dtp_te2B6">
-                                                                        <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <input type="hidden" name="triptype" value="outstation">
-                                                                <input type="hidden" name="tripmode" value="roundtrip">
-                                                                <input type="hidden" name="ptype" value="rent">
+                                                                <input type="hidden" name="triptype" value="roundtrip">
                                                                 <div class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
                                                                     <input type="submit" class="search_cb form-control" value="Search Cab">
                                                                 </div>
@@ -216,277 +180,185 @@
                                     </div>
 
                                     <!--Local-->
-                                    <div class="tab-pane fade  " id="local" role="tabpanel" aria-labelledby="local">
+                                    <div class="tab-pane fade" id="local" role="tabpanel" aria-labelledby="local">
                                         <nav class="tab_cen">
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                                 <a class="nav-item nav-link " id="hourly-tab" data-toggle="tab" href="#hourly" role="tab" aria-controls="hourly" aria-selected="true">Local</a>
                                                 <a class="nav-item nav-link " id="airport-tab" data-toggle="tab" href="#airport" role="tab" aria-controls="airport" aria-selected="false">Airport</a>
-                                                <a class="nav-item nav-link " id="railway-tab" data-toggle="tab" href="#railway" role="tab" aria-controls="airport" aria-selected="false">Railway
-                                                    Station</a>
-
+                                                <a class="nav-item nav-link " id="railway-tab" data-toggle="tab" href="#railway" role="tab" aria-controls="railway" aria-selected="false">Railway Station</a>
                                             </div>
                                         </nav>
                                         <div class="tab-content" id="nav-tabContent1">
                                             <div class="tab-pane fade show " id="hourly" role="tabpanel" aria-labelledby="hourly-tab">
                                                 <div class="cab_search">
                                                     <div class="container">
-                                                        <form method="get" action="https://buzzway.in/cab-list">
+                                                        <form>
                                                             <div class="row">
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Pick
-                                                                            a
-                                                                            city</label>
-
-                                                                        <input type="text" name="source" required="" value="" onblur="searchlocal(this.value);" placeholder="" class="field__input localcity">
-
+                                                                        <label for="city" class="ha-screen-reader">Pick a city</label>
+                                                                        <input type="text" name="source" required="" value="" placeholder="" class="field__input localcity">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Pick
-                                                                                a
-                                                                                city</span>
+                                                                            <span class="field__label">Pick a city</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Enter
-                                                                            Hours/Kms</label>
-
+                                                                        <label for="city" class="ha-screen-reader">Enter Hours/Kms</label>
                                                                         <input type="text" id="localpackage" placeholder="" class="field__input">
-
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Enter
-                                                                                Hours/Kms</span>
+                                                                            <span class="field__label">Enter Hours/Kms</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input name="pickupdate" style="color: white;" required="" value="21-01-2024" id="datepicker1" class="field__input dateLL" data-dtp="dtp_te2B6">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Date</label>
+                                                                        <input id="datepicker" style="color: white;" name="pickupdate" class="field__input datetimepickerON datepicker" placeholder="" data-dtp="dtp_te2B6">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Pick-up Date</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="col-11 pr-0 ">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input name="pickuptime" style="color: white;" class="field__input br-none timeLL" value="02:15 AM" id="datetimepickernew3" type="text" placeholder="Choose Time" data-dtp="dtp_9bkxX">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Time</label>
+                                                                        <input id="datetimepickernew" style="color: white;" name="pickuptime" class="field__input br-none timeON datetimepickernew" type="text" placeholder="Choose Time" data-dtp="dtp_9bkxX">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Pick-up Time</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
                                                                 <input type="hidden" name="triptype" value="local">
-                                                                <input type="hidden" name="tripmode" value="local">
-                                                                <input type="hidden" name="ptype" value="local">
-
                                                                 <div class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
                                                                     <input type="submit" class="search_cb form-control" value="Search Cab">
                                                                 </div>
                                                             </div>
                                                         </form>
-
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="tab-pane fade " id="airport" role="tabpanel" aria-labelledby="airport-tab">
                                                 <div class="cab_search cab_100">
                                                     <div class="container">
-                                                        <form method="get" action="https://buzzway.in/cab-list">
+                                                        <form>
                                                             <div class="row">
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="col-6 pr-0 mb-3">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="airportDrop" checked>
+                                                                        <label class="custom-control-label" for="airportDrop" style="color:#ffcc00;">Drop off?</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6 pr-0 mb-3">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="airportPick">
+                                                                        <label class="custom-control-label" for="airportPick" style="color:#ffcc00;">Pick up?</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="airport-source" class="mb-3 col-11 pr-0" style="display: none;"></div>
+                                                                <div id="airport-destination" class="mb-3 col-11 pr-0" style="display: none;"></div>
+                                                                <div class="mb-3 col-11 pr-0 airport-input">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Pick
-                                                                            a
-                                                                            city</label>
-
-                                                                        <input type="text" name="source" required="" value="" onblur="searchlocal(this.value);" placeholder="" class="field__input transcity">
-
+                                                                        <label for="city" class="ha-screen-reader">Pick up Loaction</label>
+                                                                        <input type="text" name="source" placeholder="" class="field__input transcity">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Pick
-                                                                                a
-                                                                                city</span>
+                                                                            <span class="field__label">Pick up Loaction</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="mb-3 col-11 pr-0 airport-input">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Enter
-                                                                            Airport</label>
-
+                                                                        <label for="city" class="ha-screen-reader">Drop off Airport</label>
                                                                         <input type="text" name="destination" id="transpackage" placeholder="" class="field__input">
-
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Enter
-                                                                                Airport</span>
+                                                                            <span class="field__label">Drop off Airport</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input name="pickupdate" style="color: white;" required="" value="21/01/2024" id="datepicker2" type="text" placeholder="" class="field__input dateLL" data-dtp="dtp_te2B6">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Date</label>
+                                                                        <input id="datepicker" style="color: white;" name="pickupdate" class="field__input datetimepickerON datepicker" placeholder="" data-dtp="dtp_te2B6">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Pick-up Date</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="col-11 pr-0 ">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input name="pickuptime" style="color: white;" class="field__input br-none timeTF" value="02:15 AM" id="datetimepickernew4" data-dtp="dtp_9bkxX">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Time</label>
+                                                                        <input id="datetimepickernew" style="color: white;" name="pickuptime" class="field__input br-none timeON datetimepickernew" type="text" placeholder="Choose Time" data-dtp="dtp_9bkxX">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Pick-up Time</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-
-
-                                                                <input type="hidden" name="triptype" value="transfer">
-                                                                <input type="hidden" name="tripmode" value="transfer">
-                                                                <input type="hidden" name="ptype" value="transfer">
+                                                                <input type="hidden" name="triptype" value="oneway">
                                                                 <div class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
                                                                     <input type="submit" class="search_cb form-control" value="Search Cab">
                                                                 </div>
-
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                             <div class="tab-pane fade " id="railway" role="tabpanel" aria-labelledby="railway-tab">
                                                 <div class="cab_search cab_100">
                                                     <div class="container">
-                                                        <form method="get" action="https://buzzway.in/cab-list">
+                                                        <form>
                                                             <div class="row">
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Pick
-                                                                            a
-                                                                            city</label>
-
-                                                                        <input type="text" name="source" required="" value="" onblur="searchlocal(this.value);" placeholder="" class="field__input transcity">
-
+                                                                        <label for="city" class="ha-screen-reader">Pick</label>
+                                                                        <input type="text" name="source" required="" value="" placeholder="" class="field__input transcity">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Pick
-                                                                                a
-                                                                                city</span>
+                                                                            <span class="field__label">Pick a city</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Enter
-                                                                            Railway Station</label>
-
+                                                                        <label for="city" class="ha-screen-reader">Enter Railway Station</label>
                                                                         <input type="text" name="destination" id="transpackage" placeholder="" class="field__input">
-
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Enter
-                                                                                Railway Station</span>
+                                                                            <span class="field__label">Enter Railway Station</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input name="pickupdate" style="color: white;" required="" value="21/01/2024" id="datepicker2" type="text" placeholder="" class="field__input dateLL" data-dtp="dtp_te2B6">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Date</label>
+                                                                        <input id="datepicker" style="color: white;" name="pickupdate" class="field__input datetimepickerON datepicker" placeholder="" data-dtp="dtp_te2B6">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Pick-up Date</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="col-11 pr-0 ">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader"></label>
-                                                                        <input name="pickuptime" style="color: white;" class="field__input br-none timeTF" value="02:15 AM" id="datetimepickernew4" data-dtp="dtp_9bkxX">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Time</label>
+                                                                        <input id="datetimepickernew" style="color: white;" name="pickuptime" class="field__input br-none timeON datetimepickernew" type="text" placeholder="Choose Time" data-dtp="dtp_9bkxX">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label"></span>
+                                                                            <span class="field__label">Pick-up Time</span>
                                                                         </span>
                                                                     </div>
-
                                                                 </div>
-
-
-                                                                <input type="hidden" name="triptype" value="transfer">
-                                                                <input type="hidden" name="tripmode" value="transfer">
-                                                                <input type="hidden" name="ptype" value="transfer">
+                                                                <input type="hidden" name="triptype" value="oneway">
                                                                 <div class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
                                                                     <input type="submit" class="search_cb form-control" value="Search Cab">
                                                                 </div>
-
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                         </div>
                                     </div>
-                                    <!--Local-->
-
-
-
-
                                 </div>
                             </div>
-
-
-
-
-                            <!-- /. error modal-content start -->
-                            <div class="modal fade" tabindex="1" role="dialog" id="errorMsgs">
-                                <div class="modal-dialog text-center" style="width:93% !important">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <span class="modal-title phone_number">
-                                                <span id="errorhtml"></span>
-                                                <span style="display:none" id="DatTimeError"><br />Please
-                                                    call our
-                                                    Customer
-                                                    Care no.
-                                                    &nbsp;
-                                                    <a href="tel:9054865866" style="font-size:17px; color:#fcaf21">123456789</a></span>
-                                                <span style="display:none" id="otperror">&nbsp;
-                                                    <a href="tel:9054865866" style="font-size:25px; color:#fcaf21">You
-                                                        can
-                                                        contact
-                                                        us
-                                                        24x7
-                                                        Hours.
-                                                        Help
-                                                        Line
-                                                        No.123456789
-                                                    </a></span>
-                                            </span>
-                                        </div>
-
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div>
-                            <!-- /. error modal-content start -->
                         </div>
                     </section>
-                    <!-- <img src="uploads/header-pic.png" loading="lazy"> -->
                 </div>
             </div>
         </div>
@@ -497,23 +369,18 @@
 <section class="about_us spacing-cus">
     <div class="container">
         <div class="row">
-
             <div class="col-md-6 col-lg-6 col-12">
                 <div class="about_txt">
                     <h2>About Us</h2>
-                    <p class="wow" data-wow-duration="1s" data-wow-delay="0.1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeInDown
-                                                ;">Experience the convenience of ZipZap, where prompt and secure
-                        transportation meets exceptional service. Our professional
-                        drivers and well-maintained fleet are dedicated to making every
-                        ride a smooth journey.&nbsp;</p>
-
-                    <a href="about-us.html" class="singup_btn sign">Know
-                        More</a>
+                    <p class="wow" data-wow-duration="1s" data-wow-delay="0.1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeInDown;">
+                        Experience the convenience of ZipZap, where prompt and secure transportation meets exceptional service. Our professional drivers and well-maintained fleet are dedicated to making every ride a smooth journey.&nbsp;
+                    </p>
+                    <a href="about-us.html" class="singup_btn sign">Know More</a>
                 </div>
             </div>
             <div class="col-md-6 col-lg-6 col-12 ">
                 <div class="about_img ">
-                    <img src="uploads/home-about-img.png" loading="lazy">
+                    <img src="{{asset('assets/frontend/uploads/home-about-img.png')}}" loading="lazy">
                 </div>
             </div>
         </div>
@@ -639,33 +506,30 @@
         </div>
         <div class="row">
             <div class="col-lg-4 single-service">
-                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="uploads/frontal-taxi-cab.png" alt="img">
+                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/frontal-taxi-cab.png')}}" alt="img">
                 <a href="#">
                     <h4>Taxi Service</h4>
                 </a>
                 <p>
-                    Usage of the Internet is becoming more common due to rapid advancement
-                    of technology and power.
+                    Usage of the Internet is becoming more common due to rapid advancement of technology and power.
                 </p>
             </div>
             <div class="col-lg-4 single-service">
-                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="uploads/location.png" alt="img">
+                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/location.png')}}" alt="img">
                 <a href="#">
                     <h4>Office Pick-ups</h4>
                 </a>
                 <p>
-                    Usage of the Internet is becoming more common due to rapid advancement
-                    of technology and power.
+                    Usage of the Internet is becoming more common due to rapid advancement of technology and power.
                 </p>
             </div>
             <div class="col-lg-4 single-service">
-                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="uploads/red-carpet.png" alt="img">
+                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/red-carpet.png')}}" alt="img">
                 <a href="#">
                     <h4>Event Transportation</h4>
                 </a>
                 <p>
-                    Usage of the Internet is becoming more common due to rapid advancement
-                    of technology and power.
+                    Usage of the Internet is becoming more common due to rapid advancement of technology and power.
                 </p>
             </div>
         </div>
@@ -675,17 +539,16 @@
 
 <!-- rating -->
 <div _ngcontent-wcm-c63="" class="row review-icons-bg mar-desk">
-    <div _ngcontent-wcm-c63="" class="text-center ng-star-inserted"><!---->
+    <div _ngcontent-wcm-c63="" class="text-center ng-star-inserted">
         <div _ngcontent-wcm-c63="" class="ng-star-inserted">
             <div _ngcontent-wcm-c63="" class="row align-items-center my-2 mx-0">
-                <div _ngcontent-wcm-c63="" class="px-2"><!---->
+                <div _ngcontent-wcm-c63="" class="px-2">
                     <div _ngcontent-wcm-c63="" class="tripadvisor-icon website-icon ng-star-inserted">
-                        <img src="./uploads/tripadvisor.png" width="70" alt="img">
+                        <img src="{{asset('assets/frontend/uploads/tripadvisor.png')}}" width="70" alt="img">
                     </div>
-                    <!---->
                 </div>
                 <div _ngcontent-wcm-c63="" class="px-2">
-                    <div _ngcontent-wcm-c63=""> TripAdvisor </div>
+                    <div _ngcontent-wcm-c63=""> Trip Advisor </div>
                     <div _ngcontent-wcm-c63="" class="tripadvisor-rating website-rating-image">
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
@@ -694,20 +557,19 @@
                         <span class="fa fa-star"></span>
                     </div>
                     <div _ngcontent-wcm-c63="">
-                        <div _ngcontent-wcm-c63="" class="reviews-text mt-1">(295
-                            reviews)</div>
+                        <div _ngcontent-wcm-c63="" class="reviews-text mt-1">(295 reviews)</div>
                     </div>
                 </div>
             </div>
-        </div><!---->
+        </div>
     </div>
-    <div _ngcontent-wcm-c63="" class="text-center ng-star-inserted"><!---->
+    <div _ngcontent-wcm-c63="" class="text-center ng-star-inserted">
         <div _ngcontent-wcm-c63="" class="ng-star-inserted">
             <div _ngcontent-wcm-c63="" class="row align-items-center my-2 mx-0">
-                <div _ngcontent-wcm-c63="" class="px-2"><!---->
+                <div _ngcontent-wcm-c63="" class="px-2">
                     <div _ngcontent-wcm-c63="" class="google-icon website-icon ng-star-inserted">
-                        <img src="./uploads/google.png" width="70" alt="img">
-                    </div><!---->
+                        <img src="{{asset('assets/frontend/uploads/google.png')}}" width="70" alt="img">
+                    </div>
                 </div>
                 <div _ngcontent-wcm-c63="" class="px-2">
                     <div _ngcontent-wcm-c63=""> Google </div>
@@ -719,21 +581,20 @@
                         <span class="fa fa-star checked"></span>
                     </div>
                     <div _ngcontent-wcm-c63="">
-                        <div _ngcontent-wcm-c63="" class="reviews-text mt-1">(3101
-                            reviews)</div>
+                        <div _ngcontent-wcm-c63="" class="reviews-text mt-1">(3101 reviews)</div>
                     </div>
                 </div>
             </div>
-        </div><!---->
+        </div>
     </div>
-    <div _ngcontent-wcm-c63="" class="text-center ng-star-inserted"><!---->
+    <div _ngcontent-wcm-c63="" class="text-center ng-star-inserted">
         <div _ngcontent-wcm-c63="" class="ng-star-inserted">
             <div _ngcontent-wcm-c63="" class="row align-items-center my-2 mx-0">
-                <div _ngcontent-wcm-c63="" class="px-2"><!---->
+                <div _ngcontent-wcm-c63="" class="px-2">
                     <div _ngcontent-wcm-c63="" class="playstore-icon website-icon ng-star-inserted">
-                        <img src="./uploads/playstore.png" width="70" alt="img">
+                        <img src="{{asset('assets/frontend/uploads/playstore.png')}}" width="70" alt="img">
                     </div>
-                    <!---->
+
                 </div>
                 <div _ngcontent-wcm-c63="" class="px-2">
                     <div _ngcontent-wcm-c63=""> Play Store </div>
@@ -745,13 +606,12 @@
                         <span class="fa fa-star"></span>
                     </div>
                     <div _ngcontent-wcm-c63="">
-                        <div _ngcontent-wcm-c63="" class="reviews-text mt-1">(7840
-                            reviews)</div>
+                        <div _ngcontent-wcm-c63="" class="reviews-text mt-1">(7840 reviews)</div>
                     </div>
                 </div>
             </div>
-        </div><!---->
-    </div><!---->
+        </div>
+    </div>
 </div>
 <!-- rating -->
 
@@ -774,7 +634,54 @@
                         <div class="row ">
                             <div class="col-sm-4">
                                 <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
+                                    <img src="{{asset('assets/frontend/uploads/cars-img.webp')}}" class="card-img-top" width="100%">
+                                    <div class="card-body pt-0 px-0">
+
+                                        <hr class="mt-2 mx-3">
+                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
+                                            <div class="d-flex flex-column">
+                                                <span class="text-muted">Fuel
+                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <h5 class="mb-0">
+                                                    Rs. 7/KM
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-between p-3 mid">
+                                            <div class="d-flex flex-column">
+                                                <small class="text-muted mb-1">BAG</small>
+                                                <div class="d-flex flex-row">
+                                                    <img src="{{asset('assets/frontend/uploads/bag.png')}}" width="35px" height="25px">
+                                                    <div class="d-flex flex-column ml-1">
+                                                        <h6 class="ml-1">
+                                                            4&ast;
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <small class="text-muted mb-2">SEATS</small>
+                                                <div class="d-flex flex-row">
+                                                    <img src="{{asset('assets/frontend/uploads/seat.png')}}">
+                                                    <h6 class="ml-1">
+                                                        8&ast;
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mx-3 mt-3 mb-2">
+                                            <button type="button" class="btn btn-block"><small>BOOK NOW</small></button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <img src="{{asset('assets/frontend/uploads/cars-img.webp')}}" class="card-img-top" width="100%">
                                     <div class="card-body pt-0 px-0">
 
                                         <hr class="mt-2 mx-3">
@@ -822,7 +729,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
+                                    <img src="{{asset('assets/frontend/uploads/cars-img.webp')}}" class="card-img-top" width="100%">
                                     <div class="card-body pt-0 px-0">
 
                                         <hr class="mt-2 mx-3">
@@ -841,7 +748,7 @@
                                             <div class="d-flex flex-column">
                                                 <small class="text-muted mb-1">BAG</small>
                                                 <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
+                                                    <img src="{{asset('assets/frontend/uploads/bag.png')}}" width="35px" height="25px">
                                                     <div class="d-flex flex-column ml-1">
                                                         <h6 class="ml-1">
                                                             4&ast;
@@ -852,203 +759,7 @@
                                             <div class="d-flex flex-column">
                                                 <small class="text-muted mb-2">SEATS</small>
                                                 <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item carousel-item">
-                        <div class="row ">
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
+                                                    <img src="{{asset('assets/frontend/uploads/seat.png')}}">
                                                     <h6 class="ml-1">
                                                         8&ast;
                                                     </h6>
@@ -1070,7 +781,7 @@
                         <div class="row ">
                             <div class="col-sm-4">
                                 <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
+                                    <img src="{{asset('assets/frontend/uploads/cars-img.webp')}}" class="card-img-top" width="100%">
                                     <div class="card-body pt-0 px-0">
 
                                         <hr class="mt-2 mx-3">
@@ -1089,7 +800,7 @@
                                             <div class="d-flex flex-column">
                                                 <small class="text-muted mb-1">BAG</small>
                                                 <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
+                                                    <img src="{{asset('assets/frontend/uploads/bag.png')}}" width="35px" height="25px">
                                                     <div class="d-flex flex-column ml-1">
                                                         <h6 class="ml-1">
                                                             4&ast;
@@ -1100,103 +811,7 @@
                                             <div class="d-flex flex-column">
                                                 <small class="text-muted mb-2">SEATS</small>
                                                 <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="uploads/cars-img.webp" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
+                                                    <img src="{{asset('assets/frontend/uploads/seat.png')}}">
                                                     <h6 class="ml-1">
                                                         8&ast;
                                                     </h6>
