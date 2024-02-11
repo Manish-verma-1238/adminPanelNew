@@ -24,15 +24,6 @@
 
     <!-- Third party links -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" style="font-display: swap;">
-    <style>
-        .remove-stop {
-            color: red;
-            cursor: pointer;
-            right: 12px;
-            top: 0px;
-            font-size: 30px;
-        }
-    </style>
 </head>
 
 <body>

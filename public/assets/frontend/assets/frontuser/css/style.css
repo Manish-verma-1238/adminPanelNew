@@ -15221,3 +15221,11 @@ textarea.form-control {
     order: 1;
     margin-top: -4px
 }
+
+.remove-stop {
+    color: red;
+    cursor: pointer;
+    right: 12px;
+    top: 0px;
+    font-size: 30px;
+}

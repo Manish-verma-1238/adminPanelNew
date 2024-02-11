@@ -23,7 +23,7 @@ $(".datepicker").on("change", function() {
         var minTime = (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
     } else {
         // If the selected date is not today, set the minimum time to "00:00"
-        var minTime = "09:00";
+        var minTime = "00:00";
     }
     // Set the datetimepickernew with the calculated minTime and other options
     $(".datetimepickernew").datetimepicker({

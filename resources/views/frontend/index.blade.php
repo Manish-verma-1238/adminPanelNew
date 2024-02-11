@@ -33,8 +33,10 @@
                                 function showlocal() {
                                     $('#hourly-tab').addClass('active');
                                     $('#airport-tab').removeClass('active');
+                                    $('#railway-tab').removeClass('active');
                                     $('#hourly').addClass('show active');
                                     $('#airport').removeClass('show active');
+                                    $('#railway').removeClass('show active');
                                 }
                             </script>
                             <div class="tab-card">
@@ -729,3 +731,4 @@
 </section>
 <!-- End home-calltoaction Area -->
 @include('frontend.common.footer')
+@include('frontend.assets.indexjs')
