@@ -24,6 +24,7 @@
 
     <!-- Third party links -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" style="font-display: swap;">
+
 </head>
 
 <body>

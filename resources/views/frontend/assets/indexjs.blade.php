@@ -1,4 +1,3 @@
-
 @if(session('not-found-error'))
 <script>
     Swal.fire({
@@ -41,8 +40,7 @@
             carousels();
         })(jQuery);
     })();
-</script>
-<script>
+
     // Function to store latest form data in local storage
     function storeFormData(formId) {
         localStorage.clear();
@@ -299,8 +297,7 @@
 
     // Call initializeForm function when the page loads
     window.onload = initializeForm;
-</script>
-<script>
+
     $(document).ready(function() {
         $(".add-more-stops").on("click", function() {
             if ($('#location1').val() !== '') {
@@ -331,7 +328,11 @@
                             // Do something with the selected place object (e.g. get its latitude and longitude)
                         });
                     });
+                } else {
+                    Swal.fire("Please fill the above stop location first.");
                 }
+            } else {
+                Swal.fire("Please fill the above stop location first.");
             }
         });
 
