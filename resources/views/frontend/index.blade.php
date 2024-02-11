@@ -192,7 +192,8 @@
                                             <div class="tab-pane fade show " id="hourly" role="tabpanel" aria-labelledby="hourly-tab">
                                                 <div class="cab_search">
                                                     <div class="container">
-                                                        <form>
+                                                        <form id="localForm" action="{{route('cabs-view')}}" method="POST" onsubmit="storeFormData('localForm')">
+                                                            @csrf
                                                             <div class="row">
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
@@ -206,7 +207,7 @@
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Enter Hours/Kms</label>
-                                                                        <input type="text" id="localpackage" placeholder="" class="field__input">
+                                                                        <input type="text" id="localpackage" name="package" placeholder="" class="field__input">
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Enter Hours/Kms</span>
                                                                         </span>
@@ -247,13 +248,13 @@
                                                             <div class="row">
                                                                 <div class="col-6 pr-0 mb-3">
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" name="airport" class="custom-control-input" value="drop" id="airportDrop" checked>
+                                                                        <input type="checkbox" name="airport-drop" class="custom-control-input" value="drop" id="airportDrop" checked>
                                                                         <label class="custom-control-label" for="airportDrop" style="color:#ffcc00;">Drop off?</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6 pr-0 mb-3">
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" name="airport" class="custom-control-input" value="pick" id="airportPick">
+                                                                        <input type="checkbox" name="airport-pick" class="custom-control-input" value="pick" id="airportPick">
                                                                         <label class="custom-control-label" for="airportPick" style="color:#ffcc00;">Pick up?</label>
                                                                     </div>
                                                                 </div>
@@ -307,23 +308,38 @@
                                             <div class="tab-pane fade " id="railway" role="tabpanel" aria-labelledby="railway-tab">
                                                 <div class="cab_search cab_100">
                                                     <div class="container">
-                                                        <form>
+                                                        <form id="railwayForm" action="{{route('cabs-view')}}" method="POST" onsubmit="storeFormData('railwayForm')">
+                                                            @csrf
                                                             <div class="row">
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="col-6 pr-0 mb-3">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" name="railway-drop" class="custom-control-input" value="drop" id="railwayDrop" checked>
+                                                                        <label class="custom-control-label" for="railwayDrop" style="color:#ffcc00;">Drop off?</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6 pr-0 mb-3">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" name="railway-pick" class="custom-control-input" value="pick" id="railwayPick">
+                                                                        <label class="custom-control-label" for="railwayPick" style="color:#ffcc00;">Pick up?</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="railway-source" class="mb-3 col-11 pr-0" style="display: none;"></div>
+                                                                <div id="railway-destination" class="mb-3 col-11 pr-0" style="display: none;"></div>
+                                                                <div class="mb-3 col-11 pr-0 railway-input">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Pick</label>
-                                                                        <input type="text" name="source" required="" value="" placeholder="" class="field__input transcity">
+                                                                        <label for="city" class="ha-screen-reader">Pick-up Loaction</label>
+                                                                        <input type="text" id="location401" name="source" placeholder="" class="field__input transcity">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Pick a city</span>
+                                                                            <span class="field__label">Pick-up Loaction</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="mb-3 col-11 pr-0">
+                                                                <div class="mb-3 col-11 pr-0 railway-input">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Enter Railway Station</label>
-                                                                        <input type="text" name="destination" id="transpackage" placeholder="" class="field__input">
+                                                                        <label for="city" class="ha-screen-reader">Drop-off railway station</label>
+                                                                        <input type="text" name="destination" id="drops-railway" placeholder="" class="field__input">
                                                                         <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Enter Railway Station</span>
+                                                                            <span class="field__label">Drop-off railway station</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -615,234 +631,6 @@
     </div>
 </div>
 <!-- rating -->
-
-<!-- cars -->
-<div class="container-xl">
-    <div class="row mar-desk">
-        <div class="col-md-12 cars">
-            <h1 class="text-center"><strong>Car Collection</strong></h1>
-            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
-                <!-- Carousel indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active">
-                    </li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
-                <!-- Wrapper for carousel items -->
-                <div class="carousel-inner">
-                    <div class="item carousel-item active">
-                        <div class="row ">
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="{{asset('assets/frontend/uploads/cars-img.webp')}}" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="{{asset('assets/frontend/uploads/bag.png')}}" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="{{asset('assets/frontend/uploads/seat.png')}}">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="{{asset('assets/frontend/uploads/cars-img.webp')}}" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/bag.png" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="uploads/seat.png">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="{{asset('assets/frontend/uploads/cars-img.webp')}}" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="{{asset('assets/frontend/uploads/bag.png')}}" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="{{asset('assets/frontend/uploads/seat.png')}}">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item carousel-item">
-                        <div class="row ">
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <img src="{{asset('assets/frontend/uploads/cars-img.webp')}}" class="card-img-top" width="100%">
-                                    <div class="card-body pt-0 px-0">
-
-                                        <hr class="mt-2 mx-3">
-                                        <div class="d-flex flex-row justify-content-between px-3 pb-4">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-muted">Fuel
-                                                    Price</span><small class="text-muted">L/100KM&ast;</small>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h5 class="mb-0">
-                                                    Rs. 7/KM
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-between p-3 mid">
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-1">BAG</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="{{asset('assets/frontend/uploads/bag.png')}}" width="35px" height="25px">
-                                                    <div class="d-flex flex-column ml-1">
-                                                        <h6 class="ml-1">
-                                                            4&ast;
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="text-muted mb-2">SEATS</small>
-                                                <div class="d-flex flex-row">
-                                                    <img src="{{asset('assets/frontend/uploads/seat.png')}}">
-                                                    <h6 class="ml-1">
-                                                        8&ast;
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-3 mt-3 mb-2">
-                                            <button type="button" class="btn btn-block"><small>BOOK
-                                                    NOW</small></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Carousel controls -->
-                <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- cars -->
 
 <!-- Start reviews Area -->
 <section class="reviews-area section-gap">

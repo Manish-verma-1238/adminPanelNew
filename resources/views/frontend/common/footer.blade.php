@@ -150,8 +150,12 @@
             localStorage.setItem('appendedStopHtml', $('#more-stops').html());
         }
         if (formId == "airportForm") {
-            localStorage.setItem('airport-source', $('#airport-source').html());
-            localStorage.setItem('airport-destination', $('#airport-destination').html());
+            localStorage.setItem('airportSource', $('#airport-source').html());
+            localStorage.setItem('airportDestination', $('#airport-destination').html());
+        }
+        if (formId == "railwayForm") {
+            localStorage.setItem('railwaySource', $('#railway-source').html());
+            localStorage.setItem('railwayDestination', $('#railway-destination').html());
         }
         localStorage.setItem('latestFormData', JSON.stringify({
             formId: formId,
@@ -172,18 +176,145 @@
         }
 
         // append incase of airport
-        const storedAirportSource = localStorage.getItem('airport-source');
-        if (storedAppendedStopHtml) {
+        const storedAirportSource = localStorage.getItem('airportSource');
+        if (storedAirportSource) {
             $('.airport-input').hide();
+            $('.airport-input').html('');
             $('#airport-source').html('');
             $('#airport-destination').html('');
-            $('.airport-input').html('');
-            $('#airport-source').html(storedAppendedStopHtml);
+            $('#airport-source').html(storedAirportSource);
+            $('#airport-source').show();
+
+            // Check if #pickupLocation exists
+            if ($('#pickupAirport').length > 0) {
+                var typesParam = ['airport'];
+                var inputId = "pickupAirport";
+            } else {
+                var typesParam = ['geocode'];
+                var inputId = "pickupLocation";
+            }
+
+            var options = {
+                types: typesParam,
+                componentRestrictions: {
+                    country: 'in'
+                }
+            };
+
+            var id = document.getElementById(inputId);
+            var autocompleteOnewayFrom = new google.maps.places.Autocomplete(id, options);
+            $('#' + inputId).change(function() {
+
+                autocompleteOnewayFrom.addListener('place_changed', function() {
+                    var place = autocompleteOnewayFrom.getPlace();
+                    var oneWayFromPlace = place.formatted_address;
+                    var oneWayFromLat = place.geometry.location.lat();
+                    var oneWayFromLng = place.geometry.location.lng();
+                });
+            });
         }
 
-        const storedAirportDestination = localStorage.getItem('airport-destination');
-        if (storedAppendedStopHtml) {
-            $('#airport-destination').html(storedAppendedStopHtml);
+        const storedAirportDestination = localStorage.getItem('airportDestination');
+        if (storedAirportDestination) {
+            $('#airport-destination').html(storedAirportDestination);
+            $('#airport-destination').show();
+            if ($('#dropoffAirport').length > 0) {
+                var typesParam = ['airport'];
+                var inputId = "dropoffAirport";
+            } else {
+                var typesParam = ['geocode'];
+                var inputId = "dropoffLocation";
+            }
+
+            var options = {
+                types: typesParam,
+                componentRestrictions: {
+                    country: 'in'
+                }
+            };
+
+            var id = document.getElementById(inputId);
+            var autocompleteOnewayFrom = new google.maps.places.Autocomplete(id, options);
+            $('#' + inputId).change(function() {
+
+                autocompleteOnewayFrom.addListener('place_changed', function() {
+                    var place = autocompleteOnewayFrom.getPlace();
+                    var oneWayFromPlace = place.formatted_address;
+                    var oneWayFromLat = place.geometry.location.lat();
+                    var oneWayFromLng = place.geometry.location.lng();
+                });
+            });
+        }
+
+        // append incase of railway
+        const storedRailwaySource = localStorage.getItem('railwaySource');
+        if (storedRailwaySource) {
+            $('.railway-input').hide();
+            $('.railway-input').html('');
+            $('#railway-source').html('');
+            $('#railway-destination').html('');
+            $('#railway-source').html(storedRailwaySource);
+            $('#railway-source').show();
+
+            // Check if #pickupLocation exists
+            if ($('#pickupRailway').length > 0) {
+                var typesParam = ['train_station'];
+                var inputId = "pickupRailway";
+            } else {
+                var typesParam = ['geocode'];
+                var inputId = "pickupLocationRailway";
+            }
+
+            var options = {
+                types: typesParam,
+                componentRestrictions: {
+                    country: 'in'
+                }
+            };
+
+            var id = document.getElementById(inputId);
+            var autocompleteOnewayFrom = new google.maps.places.Autocomplete(id, options);
+            $('#' + inputId).change(function() {
+
+                autocompleteOnewayFrom.addListener('place_changed', function() {
+                    var place = autocompleteOnewayFrom.getPlace();
+                    var oneWayFromPlace = place.formatted_address;
+                    var oneWayFromLat = place.geometry.location.lat();
+                    var oneWayFromLng = place.geometry.location.lng();
+                });
+            });
+        }
+
+        const storedRailwayDestination = localStorage.getItem('railwayDestination');
+        if (storedRailwayDestination) {
+            $('#railway-destination').html(storedRailwayDestination);
+            $('#railway-destination').show();
+            if ($('#dropoffRailway').length > 0) {
+                var typesParam = ['train_station'];
+                var inputId = "dropoffRailway";
+            } else {
+                var typesParam = ['geocode'];
+                var inputId = "pickupLocationRailway";
+            }
+
+            var options = {
+                types: typesParam,
+                componentRestrictions: {
+                    country: 'in'
+                }
+            };
+
+            var id = document.getElementById(inputId);
+            var autocompleteOnewayFrom = new google.maps.places.Autocomplete(id, options);
+            $('#' + inputId).change(function() {
+
+                autocompleteOnewayFrom.addListener('place_changed', function() {
+                    var place = autocompleteOnewayFrom.getPlace();
+                    var oneWayFromPlace = place.formatted_address;
+                    var oneWayFromLat = place.geometry.location.lat();
+                    var oneWayFromLng = place.geometry.location.lng();
+                });
+            });
         }
 
         const storedData = localStorage.getItem('latestFormData');
@@ -222,15 +353,28 @@
                 $('#hourly').removeClass('show active');
                 $('#railway').removeClass('show active');
                 $('#airport').addClass('show active');
-                var jsonObject = JSON.parse(storedData);
-                console.log(jsonObject.formData.airport);
-                if(jsonObject.formData.airport == 'pick'){
-                    $('#airportDrop').prop('checked', false);
-                    $('#airportPick').prop('checked', true);
-                }else{
-                    $('#airportDrop').prop('checked', true);
-                    $('#airportPick').prop('checked', false);
-                }
+            } else if (formId == "railwayForm") {
+                $('#outstation-tab').removeClass('active');
+                $('#local-tab').addClass('active');
+                $('#outstation').removeClass('show active');
+                $('#local').addClass('show active');
+                $('#hourly-tab').removeClass('active');
+                $('#railway-tab').addClass('active');
+                $('#airport-tab').removeClass('active');
+                $('#hourly').removeClass('show active');
+                $('#railway').addClass('show active');
+                $('#airport').removeClass('show active');
+            } else if (formId == "localForm") {
+                $('#outstation-tab').removeClass('active');
+                $('#local-tab').addClass('active');
+                $('#outstation').removeClass('show active');
+                $('#local').addClass('show active');
+                $('#hourly-tab').addClass('active');
+                $('#railway-tab').removeClass('active');
+                $('#airport-tab').removeClass('active');
+                $('#hourly').addClass('show active');
+                $('#railway').removeClass('show active');
+                $('#airport').removeClass('show active');
             }
 
             if (formId) {
@@ -341,6 +485,59 @@
             }
         });
 
+        //RAilway checkbox
+        $('#railwayPick').on('change', function() {
+            if ($(this).prop('checked')) {
+                $('#railwayDrop').prop('checked', false);
+                $('#railwayPick').prop('checked', true);
+                $('.railway-input').hide();
+                $('#railway-source').html('');
+                $('#railway-destination').html('');
+                $('.railway-input').html('');
+                $('#railway-source').show();
+                $('#railway-destination').show();
+                appendPickupRailway()
+                appendDropOffInRailway()
+            } else {
+                $('#railwayPick').prop('checked', false);
+                $('#railwayDrop').prop('checked', true);
+                $('.railway-input').hide();
+                $('#railway-source').html('');
+                $('#railway-destination').html('');
+                $('#railway-source').show();
+                $('#railway-destination').show();
+                $('.railway-input').html('');
+                appendDropOffRailway()
+                appendPickupInRailway()
+            }
+        });
+
+        $('#railwayDrop').on('change', function() {
+            if ($(this).prop('checked')) {
+                $('#railwayPick').prop('checked', false);
+                $('#railwayDrop').prop('checked', true);
+                $('.railway-input').hide();
+                $('#railway-source').html('');
+                $('#railway-destination').html('');
+                $('.railway-input').html('');
+                $('#railway-source').show();
+                $('#railway-destination').show();
+                appendDropOffRailway()
+                appendPickupInRailway()
+            } else {
+                $('#railwayDrop').prop('checked', false);
+                $('#railwayPick').prop('checked', true);
+                $('.railway-input').hide();
+                $('#railway-source').html('');
+                $('#railway-destination').html('');
+                $('#railway-source').show();
+                $('#railway-destination').show();
+                $('.railway-input').html('');
+                appendPickupRailway()
+                appendDropOffInRailway()
+            }
+        });
+
         function appendPickupLocation() {
             $('#airport-source').append(`
                 <div class="field field_v3">
@@ -393,9 +590,85 @@
             locationSearch('dropoffLocation');
         }
 
+        function appendDropOffRailway() {
+            $('#railway-destination').append(`
+                <div class="field field_v3">
+                    <label for="city" class="ha-screen-reader">Drop-off Railway station</label>
+                    <input type="text" name="destination" id="dropoffRailway" placeholder="" class="field__input" required>
+                    <span class="field__label-wrap" aria-hidden="true">
+                        <span class="field__label">Drop-off Railway station</span>
+                    </span>
+                </div>
+            `);
+            railwaySearch('dropoffRailway');
+        }
+
+        function appendPickupRailway() {
+            $('#railway-source').append(`
+                <div class="field field_v3">
+                    <label for="city" class="ha-screen-reader">Pick-up Railway station</label>
+                    <input type="text" name="source" id="pickupRailway" placeholder="" class="field__input" required>
+                    <span class="field__label-wrap" aria-hidden="true">
+                        <span class="field__label">Pick-up Railway station</span>
+                    </span>
+                </div>
+            `);
+            railwaySearch('pickupRailway');
+        }
+
+        function appendPickupInRailway() {
+            $('#railway-source').append(`
+                <div class="field field_v3">
+                    <label for="city" class="ha-screen-reader">Pick-up Location</label>
+                    <input type="text" name="source" id="pickupLocationRailway" placeholder="" class="field__input" required>
+                    <span class="field__label-wrap" aria-hidden="true">
+                        <span class="field__label">Pick-up Location</span>
+                    </span>
+                </div>
+            `);
+            locationSearch('pickupLocationRailway');
+        }
+
+        function appendDropOffInRailway() {
+            $('#railway-destination').append(`
+                <div class="field field_v3">
+                    <label for="city" class="ha-screen-reader">Drop off Location</label>
+                    <input type="text" name="destination" id="dropoffLocationRailway" placeholder="" class="field__input">
+                    <span class="field__label-wrap" aria-hidden="true">
+                        <span class="field__label">Drop off Location</span>
+                    </span>
+                </div>
+            `);
+            locationSearch('dropoffLocationRailway');
+        }
+
+        airportSearch('drops-airport');
+        railwaySearch('drops-railway');
+
         function airportSearch(inputId) {
             var options = {
                 types: ['airport'],
+                componentRestrictions: {
+                    country: 'in'
+                }
+            };
+
+            var id = document.getElementById(inputId);
+            var autocompleteOnewayFrom = new google.maps.places.Autocomplete(id, options);
+            $('#' + inputId).change(function() {
+
+                autocompleteOnewayFrom.addListener('place_changed', function() {
+                    var place = autocompleteOnewayFrom.getPlace();
+                    var oneWayFromPlace = place.formatted_address;
+                    var oneWayFromLat = place.geometry.location.lat();
+                    var oneWayFromLng = place.geometry.location.lng();
+                });
+            });
+        }
+
+        function railwaySearch(inputId) {
+            var options = {
+                types: ['train_station'],
                 componentRestrictions: {
                     country: 'in'
                 }
@@ -434,7 +707,6 @@
                 });
             });
         }
-        airportSearch('drops-airport');
     });
 </script>
 </body>
