@@ -31,7 +31,7 @@
     <div class="main fixed-top">
         <nav class="navbar navbar-expand-md header_bg sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand logo-img" href="#">
+                <a class="navbar-brand logo-img" href="{{route('main')}}">
                     <img src="{{asset('assets/frontend/uploads/logo nav.png')}}" height="75px">
                 </a>
                 <button class="navbar-toggler leftNavbarToggler bg-size" type="button" style="background-image: url('{{asset('assets/frontend/assets/frontuser/images/icons/menu.png')}}');" data-toggle="collapse" data-target="#menu_bar" aria-controls="menu_bar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
                 <div class="collapse navbar-collapse " id="menu_bar">
                     <ul class="nav navbar-nav nav-flex-icons m-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Home
+                            <a class="nav-link active" href="{{route('main')}}">Home
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>

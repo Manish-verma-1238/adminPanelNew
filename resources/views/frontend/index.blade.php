@@ -200,7 +200,7 @@
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Pick a city</label>
-                                                                        <input type="text" name="source" required="" value="" placeholder="" class="field__input localcity">
+                                                                        <input type="text" name="source" required="" value="" placeholder="" class="field__input localcity" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Pick a city</span>
                                                                         </span>
@@ -209,7 +209,7 @@
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Enter Hours/Kms</label>
-                                                                        <input type="text" id="localpackage" name="package" placeholder="" class="field__input">
+                                                                        <input type="text" id="localpackage" name="package" placeholder="" class="field__input" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Enter Hours/Kms</span>
                                                                         </span>
@@ -265,7 +265,7 @@
                                                                 <div class="mb-3 col-11 pr-0 airport-input">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Pick-up Loaction</label>
-                                                                        <input type="text" id="location301" name="source" placeholder="" class="field__input transcity">
+                                                                        <input type="text" id="location301" name="source" placeholder="" class="field__input transcity" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Pick-up Loaction</span>
                                                                         </span>
@@ -274,7 +274,7 @@
                                                                 <div class="mb-3 col-11 pr-0 airport-input">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Drop off Airport</label>
-                                                                        <input type="text" name="destination" id="drops-airport" placeholder="" class="field__input">
+                                                                        <input type="text" name="destination" id="drops-airport" placeholder="" class="field__input" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Drop off Airport</span>
                                                                         </span>
@@ -330,7 +330,7 @@
                                                                 <div class="mb-3 col-11 pr-0 railway-input">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Pick-up Loaction</label>
-                                                                        <input type="text" id="location401" name="source" placeholder="" class="field__input transcity">
+                                                                        <input type="text" id="location401" name="source" placeholder="" class="field__input transcity" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Pick-up Loaction</span>
                                                                         </span>
@@ -339,7 +339,7 @@
                                                                 <div class="mb-3 col-11 pr-0 railway-input">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Drop-off railway station</label>
-                                                                        <input type="text" name="destination" id="drops-railway" placeholder="" class="field__input">
+                                                                        <input type="text" name="destination" id="drops-railway" placeholder="" class="field__input" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Drop-off railway station</span>
                                                                         </span>

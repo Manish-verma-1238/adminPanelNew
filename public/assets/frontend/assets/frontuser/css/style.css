@@ -15229,3 +15229,54 @@ textarea.form-control {
     top: 0px;
     font-size: 30px;
 }
+
+/* datpicker */
+@media (min-width: 768px){
+.xdsoft_datetimepicker {
+    top: 306px !important;
+}
+}
+@media (max-width: 768px){
+.xdsoft_datetimepicker {
+    top:475px !important;
+}
+}
+/* datpicker */
+.modify {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0 0 0;
+        background-color: lightslategray;
+        padding: 10px;
+        flex-wrap: wrap;
+        border-radius: 5px;
+        color: white;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+@media (max-width: 768px) {
+    .modify{
+        flex-direction: column;
+        .box{
+                max-width: 100% !important;
+        }
+    }
+}
+
+.box {
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        gap: 10px;
+
+        p {
+                margin: 0;
+        }
+
+        span {
+                color: var(--main-color);
+                font-size: 12px;
+        }
+
+}

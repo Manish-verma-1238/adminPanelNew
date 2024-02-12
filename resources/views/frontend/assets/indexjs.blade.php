@@ -488,7 +488,7 @@
             $('#airport-destination').append(`
                 <div class="field field_v3">
                     <label for="city" class="ha-screen-reader">Drop off Location</label>
-                    <input type="text" name="destination" id="dropoffLocation" placeholder="" class="field__input">
+                    <input type="text" name="destination" id="dropoffLocation" placeholder="" class="field__input" required>
                     <span class="field__label-wrap" aria-hidden="true">
                         <span class="field__label">Drop off Location</span>
                     </span>
@@ -540,7 +540,7 @@
             $('#railway-destination').append(`
                 <div class="field field_v3">
                     <label for="city" class="ha-screen-reader">Drop off Location</label>
-                    <input type="text" name="destination" id="dropoffLocationRailway" placeholder="" class="field__input">
+                    <input type="text" name="destination" id="dropoffLocationRailway" placeholder="" class="field__input" required>
                     <span class="field__label-wrap" aria-hidden="true">
                         <span class="field__label">Drop off Location</span>
                     </span>

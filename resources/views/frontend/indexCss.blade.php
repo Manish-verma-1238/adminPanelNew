@@ -3,7 +3,13 @@
         .pac-container {
             border-radius: 5px;
             padding: 5px;
-            margin-top: -150px;
+            margin-top: -155px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .pac-container {
+            margin-top: -82px;
         }
     }
 
