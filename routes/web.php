@@ -87,7 +87,8 @@ Route::group(['middleware' => 'auth_check'], function () {
 
 /* Frontend routes */
 Route::get('/', [FrontendController::class, 'index'])->name('main');
-Route::get('/cab-services', [FrontendController::class, 'cabs'])->name('cabs-view');
+Route::post('/cab-services', [FrontendController::class, 'cabs'])->name('cabs-view');
+Route::post('/customer-details', [FrontendController::class, 'customerDetails'])->name('customer-details');
 
 Route::get('/manish', [AuthController::class, 'manish'])->name('manish');
 Route::view('/verma', 'websocket');

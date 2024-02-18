@@ -72,10 +72,8 @@
         // append incase of round-trip
         const storedAppendedStopHtml = localStorage.getItem('appendedStopHtml');
         if (storedAppendedStopHtml) {
-            $('.airport-input').hide();
             $('#airport-source').html('');
             $('#airport-destination').html('');
-            $('.airport-input').html('');
             $('#more-stops').html(storedAppendedStopHtml);
         }
 
@@ -287,7 +285,12 @@
                     for (let key in formData) {
                         const input = form.querySelector(`[name='${key}']`);
                         if (input) {
-                            input.value = formData[key];
+                            console.log(input.name);
+                            if(input.name == 'pickupdate' || input.name == 'pickuptime' || input.name == '_token'){
+                                // ignore the input fields to auto fill
+                            }else{
+                                input.value = formData[key];
+                            }
                         }
                     }
                 }

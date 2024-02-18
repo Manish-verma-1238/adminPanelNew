@@ -126,7 +126,8 @@
                                             <div class="tab-pane fade " id="round-trip" role="tabpanel" aria-labelledby="round-trip-tab">
                                                 <div class="cab_search cab_100">
                                                     <div class="container">
-                                                        <form id="roundTripForm" onsubmit="storeFormData('roundTripForm')">
+                                                        <form id="roundTripForm"  action="{{route('cabs-view')}}" method="POST" onsubmit="storeFormData('roundTripForm')">
+                                                            @csrf
                                                             <div class="row">
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
@@ -169,7 +170,7 @@
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <input type="hidden" name="triptype" value="roundtrip">
+                                                                <input type="hidden" name="triptype" value="round-trip">
                                                                 <div class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
                                                                     <input type="submit" class="search_cb form-control" value="Search Cab">
                                                                 </div>
@@ -200,7 +201,7 @@
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Pick a city</label>
-                                                                        <input type="text" name="source" required="" value="" placeholder="" class="field__input localcity" required>
+                                                                        <input type="text" id="location401" name="source" required="" value="" placeholder="" class="field__input localcity" required>
                                                                         <span class="field__label-wrap" aria-hidden="true">
                                                                             <span class="field__label">Pick a city</span>
                                                                         </span>

@@ -15255,6 +15255,16 @@ textarea.form-control {
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.modify-route {
+    margin: 20px 0 0 0;
+    background-color: lightslategray;
+    padding: 10px;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 @media (max-width: 768px) {
     .modify{
         flex-direction: column;
