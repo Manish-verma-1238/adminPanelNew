@@ -102,9 +102,11 @@
                                 <input type="hidden" name="stops" value="{{$stops}}"></input>
                                 @endif
                                 <input type="hidden" name="destinations" value="{{$destination}}"></input>
-                                <input type="hidden" name="time" value="{{$pickupdate}}"></input>
-                                <input type="hidden" name="date" value="{{$pickuptime}}"></input>
-                                <input type="hidden" name="car" value="{{encrypt($car->id)}}"></input>
+                                <input type="hidden" name="pickupdate" value="{{$pickupdate}}"></input>
+                                <input type="hidden" name="pickuptime" value="{{$pickuptime}}"></input>
+                                <input type="hidden" name="time" value="{{$time}}"></input>
+                                <input type="hidden" name="car" value="{{encrypt($car->taxi->id)}}"></input>
+                                <input type="hidden" name="distance" value="{{$distance}}"></input>
                                 <input type="hidden" name="price" value="{{encrypt(round($car->price * $distance))}}"></input>
                                 <button type="submit" class="btn btn-block"><small>BOOK NOW</small></button>
                             </form>
@@ -118,34 +120,5 @@
     </div>
 </div>
 <!-- Product End -->
-
-<!-- popup form  -->
-<div class="form-popup-bg">
-    <div class="form-container">
-        <button id="btnCloseForm" class="close-button">X</button>
-        <h1 class="text-white pb-4 text-center">Fill this Form to Book a Ride</h1>
-        <!-- <p>For more information. Please complete this form.</p> -->
-        <form action="">
-            <div class="form-group">
-                <!-- <label for="">Name</label> -->
-                <input type="text" placeholder="Name" class="form-control" />
-            </div>
-            <div class="form-group">
-                <!-- <label for="">Company Name</label> -->
-                <input class="form-control" placeholder="Email" type="text" />
-            </div>
-            <div class="form-group">
-                <!-- <label for="">E-Mail Address</label> -->
-                <input class="form-control" placeholder="Ph. Number" type="text" />
-            </div>
-            <div class="form-group">
-                <!-- <label for="">Phone Number</label> -->
-                <input class="form-control" placeholder="Pickup Address" type="text" />
-            </div>
-            <button class="butn px-3">Submit</button>
-        </form>
-    </div>
-</div>
-<!-- popup form  -->
 
 @include('frontend.common.footer')

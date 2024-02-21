@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\admin\State;
+use App\Models\admin\Taxi;
 use App\Models\admin\Price;
 use App\Models\admin\Location;
 use App\Models\admin\LocationDetail;
@@ -98,7 +99,7 @@ class FrontendController extends Controller
 
             if (empty($cars)) {
                 return redirect()->route('main')->with('not-found-error', 'Cab not available on this location.');
-            } 
+            }
 
             return view('frontend.cars')
                 ->with('cars', $cars)
@@ -110,7 +111,6 @@ class FrontendController extends Controller
                 ->with('pickuptime', $request['pickuptime'])
                 ->with('triptype', $request['triptype'])
                 ->with('stops', $request['stops']);
-
         } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
@@ -199,7 +199,29 @@ class FrontendController extends Controller
         return $response->json();
     }
 
-    public function customerDetails(Request $request){
+    public function customerDetails(Request $request)
+    {
+        try {
+            $car = Taxi::find(decrypt($request['car']));
+            $price = decrypt($request['price']);
+            return view('frontend.customerDetails')
+                ->with('source', $request['source'])
+                ->with('destination', $request['destinations'])
+                ->with('pickupdate', $request['pickupdate'])
+                ->with('pickuptime', $request['pickuptime'])
+                ->with('time', $request['time'])
+                ->with('triptype', $request['triptype'])
+                ->with('stops', $request['stops'])
+                ->with('car', $car)
+                ->with('price', $price);
+        } catch (\Exception $e) {
+            // Handle the exception, log the error, or return an error response
+            return redirect::back()->with('error',  $e->getMessage());
+        }
+    }
+
+    public function booking(Request $request)
+    {
         dd($request->all());
     }
 }

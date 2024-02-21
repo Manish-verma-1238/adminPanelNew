@@ -87,14 +87,8 @@
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-11 pr-0 mb-3">
-                                                                    <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Contact Number</label>
-                                                                        <input class="field__input" type="tel" name="phone" id="phone" placeholder="" maxlength="10" required>
-                                                                        <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Contact Number</span>
-                                                                        </span>
-                                                                    </div>
+                                                                <div class="col-11 pr-0 mb-3 form-group">
+                                                                    <input type="text" class="country-form-control mobile_code_input" placeholder="Contact Number" name="phone" maxlength="10" required>
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
@@ -126,7 +120,7 @@
                                             <div class="tab-pane fade " id="round-trip" role="tabpanel" aria-labelledby="round-trip-tab">
                                                 <div class="cab_search cab_100">
                                                     <div class="container">
-                                                        <form id="roundTripForm"  action="{{route('cabs-view')}}" method="POST" onsubmit="storeFormData('roundTripForm')">
+                                                        <form id="roundTripForm" action="{{route('cabs-view')}}" method="POST" onsubmit="storeFormData('roundTripForm')">
                                                             @csrf
                                                             <div class="row">
                                                                 <div class="col-11 pr-0 mb-3">
@@ -161,14 +155,8 @@
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-11 pr-0 mb-3">
-                                                                    <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Contact Number</label>
-                                                                        <input class="field__input" type="tel" name="phone" id="phone" placeholder="" maxlength="10" required>
-                                                                        <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Contact Number</span>
-                                                                        </span>
-                                                                    </div>
+                                                                <div class="col-11 pr-0 mb-3 form-group">
+                                                                    <input type="text" class="country-form-control mobile_code_input" placeholder="Contact Number" name="phone" maxlength="10" required>
                                                                 </div>
                                                                 <input type="hidden" name="triptype" value="round-trip">
                                                                 <div class="col-md-12 col-12 col-lg-12 d-flex justify-content-center align-items-center">
@@ -209,12 +197,18 @@
                                                                 </div>
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
-                                                                        <label for="city" class="ha-screen-reader">Enter Hours/Kms</label>
-                                                                        <input type="text" id="localpackage" name="package" placeholder="" class="field__input" required>
-                                                                        <span class="field__label-wrap" aria-hidden="true">
-                                                                            <span class="field__label">Enter Hours/Kms</span>
-                                                                        </span>
+                                                                        <select id="mySelect" class=" field__input selectpicker ">
+                                                                            <option value=""> Select Packages </option>
+                                                                            <option value="4-40"> 4 Hours 40 Km </option>
+                                                                            <option value="8-80"> 8 Hours 80 Km </option>
+                                                                            <option value="12-120"> 12 Hours 120 Km  </option>
+                                                                            <option value="24-250"> 12 Hours 120 Km  </option>
+                                                                        </select>
                                                                     </div>
+
+                                                                </div>
+                                                                <div class="col-11 pr-0 mb-3 form-group">
+                                                                    <input type="text" class="country-form-control mobile_code_input" placeholder="Contact Number" name="phone" maxlength="10" required>
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
@@ -281,6 +275,9 @@
                                                                         </span>
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-11 pr-0 mb-3 form-group">
+                                                                    <input type="text" class="country-form-control mobile_code_input" placeholder="Contact Number" name="phone" maxlength="10" required>
+                                                                </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">
                                                                         <label for="city" class="ha-screen-reader">Pick-up Date</label>
@@ -345,6 +342,9 @@
                                                                             <span class="field__label">Drop-off railway station</span>
                                                                         </span>
                                                                     </div>
+                                                                </div>
+                                                                <div class="col-11 pr-0 mb-3 form-group">
+                                                                    <input type="text" class="country-form-control mobile_code_input" placeholder="Contact Number" name="phone" maxlength="10" required>
                                                                 </div>
                                                                 <div class="col-11 pr-0 mb-3">
                                                                     <div class="field field_v3">

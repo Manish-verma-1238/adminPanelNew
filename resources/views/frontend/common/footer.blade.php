@@ -91,6 +91,7 @@
 <script src="{{asset('assets/frontend/assets/frontuser/js/wow.js')}}"></script>
 <script async defer src="{{asset('assets/frontend/assets/frontuser/js/validation.js')}}"></script>
 <script src="{{asset('assets/frontend/assets/frontuser/js/custom.js')}}"></script>
+<script src="{{asset('assets/frontend/assets/frontuser/js/intlTelInput.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>

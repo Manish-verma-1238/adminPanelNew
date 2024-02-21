@@ -286,9 +286,9 @@
                         const input = form.querySelector(`[name='${key}']`);
                         if (input) {
                             console.log(input.name);
-                            if(input.name == 'pickupdate' || input.name == 'pickuptime' || input.name == '_token'){
+                            if (input.name == 'pickupdate' || input.name == 'pickuptime' || input.name == '_token') {
                                 // ignore the input fields to auto fill
-                            }else{
+                            } else {
                                 input.value = formData[key];
                             }
                         }
@@ -617,5 +617,23 @@
                 });
             });
         }
+    });
+</script>
+<script>
+    var elements = document.querySelectorAll(".mobile_code_input");
+
+    // Loop through each element and apply the code
+    elements.forEach(function(element) {
+        window.intlTelInput(element, {
+            initialCountry: "in",
+            separateDialCode: true,
+            // utilsScript: "assets/frontuser/js/utils.js"
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const preloader = document.getElementById("preloader");
+        preloader.style.display = "none";
     });
 </script>

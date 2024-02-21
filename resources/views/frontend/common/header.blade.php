@@ -18,6 +18,7 @@
     <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/date-picker.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/jquery.datetimepicker.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link href="{{asset('assets/frontend/assets/frontuser/css/jquery.datetimepicker.min.css')}}" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="{{asset('assets/frontend/assets/frontuser/css/intlTelInput.css')}}" />
 </head>
 
 <body>
@@ -27,6 +28,9 @@
                 <a class="navbar-brand logo-img" href="{{route('main')}}">
                     <img src="{{asset('assets/frontend/uploads/logo nav.png')}}" height="75px">
                 </a>
+                <aside class="ribbon2 d-sm-none d-block">
+                    Hotel Coming Soon
+                </aside>
                 <button class="navbar-toggler leftNavbarToggler bg-size" type="button" style="background-image: url('{{asset('assets/frontend/assets/frontuser/images/icons/menu.png')}}');" data-toggle="collapse" data-target="#menu_bar" aria-controls="menu_bar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -42,7 +46,7 @@
                             <a class="nav-link" href="#">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cabs fleet</a>
+                            <a class="nav-link" href="#">Our Packages</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">hotels</a>
