@@ -29,24 +29,7 @@
             color: white;
             font-size: 15px
         }
-
-        input,
-        input[type="radio"]+label,
-        input[type="checkbox"]+label:before,
-        p {
-            width: 100%;
-            padding: 1em;
-            line-height: 1.4;
-            background-color: #f9f9f9;
-            border: 1px solid #e5e5e5;
-            border-radius: 3px;
-            -webkit-transition: 0.35s ease-in-out;
-            -moz-transition: 0.35s ease-in-out;
-            -o-transition: 0.35s ease-in-out;
-            transition: 0.35s ease-in-out;
-            transition: all 0.35s ease-in-out;
-        }
-
+        
         input:focus {
             outline: 0;
             border-color: #bd8200;
@@ -81,41 +64,6 @@
 
         .input-group-icon input {
             padding-left: 4.4em;
-        }
-
-        .input-group-icon .input-icon {
-            position: absolute;
-            top: 32px;
-            left: 0;
-            width: 4.4em;
-            height: 3.4em;
-            line-height: 3.4em;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        .input-group-icon .input-icon:after {
-            position: absolute;
-            top: 0.6em;
-            bottom: 0.6em;
-            left: 3.4em;
-            display: block;
-            border-right: 1px solid var(--main-color);
-            content: "";
-            -webkit-transition: 0.35s ease-in-out;
-            -moz-transition: 0.35s ease-in-out;
-            -o-transition: 0.35s ease-in-out;
-            transition: 0.35s ease-in-out;
-            transition: all 0.35s ease-in-out;
-        }
-
-        .input-group-icon .input-icon i {
-            -webkit-transition: 0.35s ease-in-out;
-            -moz-transition: 0.35s ease-in-out;
-            -o-transition: 0.35s ease-in-out;
-            transition: 0.35s ease-in-out;
-            transition: all 0.35s ease-in-out;
-            color: var(--main-color);
         }
 
         .container {
@@ -292,6 +240,16 @@
             border-top-left-radius: calc(0.3rem - 1px);
             border-top-right-radius: calc(0.3rem - 1px);
         }
+
+        #termsDiv{
+            position: relative;
+        }
+
+        #termsCheckbox{
+            position: absolute;
+            left: 30px!important;
+            border: 3px solid #73AD21;
+        }
     }
 </style>
 
@@ -418,6 +376,22 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="terms" id="gstCheckbox">
+                                <label class="form-check-label" for="gstCheckbox">
+                                    GST Number
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: none;" id="gstDiv">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-money"></i></span>
+                                </div>
+                                <input type="text" name="gst" class="form-control" placeholder="Enter GST number">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -432,21 +406,21 @@
                     <div class="card-body">
                         <dl class="dlist-align">
                             <dt>Price:</dt>
-                            <dd class="text-right ml-3">{{$price}} Rs</dd>
+                            <dd class="text-right ml-3">{{round($price)}} Rs</dd>
                         </dl>
                         <dl class="dlist-align">
                             @php
-                            $gst = $price*0.18;
+                            $gst = $price*0.05;
                             @endphp
-                            <dt>GST (18%)</dt>
-                            <dd class="text-right ml-3">{{$gst}} Rs</dd>
+                            <dt>GST (5%)</dt>
+                            <dd class="text-right ml-3">{{round($gst)}} Rs</dd>
                         </dl>
                         <dl class="dlist-align">
                             @php
-                            $total = $price + $price*0.18;
+                            $total = $price + $price*0.05;
                             @endphp
                             <dt>Total:</dt>
-                            <dd class="text-right ml-3">{{$total}} Rs</dd>
+                            <dd class="text-right ml-3">{{round($total)}} Rs</dd>
                         </dl>
                         <dl class="dlist-align">
                             <dt>
@@ -456,12 +430,18 @@
                                     <option value="25">Pay 25% </option>
                                 </select>
                             </dt>
-                            <input type="hidden" name="price" value="{{encrypt($total)}}"></input>
-                            <dd class="text-right text-dark b ml-3"><strong>{{$total}} Rs</strong></dd>
+                            <input type="hidden" name="price" id="encryptPrice" value="{{encrypt(round($total))}}"></input>
+                            <dd class="text-right text-dark b ml-3"><strong  id="totalPrice">{{round($total)}} Rs</strong></dd>
                         </dl>
                         <hr>
+                        <div class="form-check" id="termsDiv">
+                            <input class="form-check-input" type="checkbox" name="terms" id="termsCheckbox" required>
+                            <label class="form-check-label" for="termsCheckbox">
+                                I agree to the <a href="#">Terms & Conditions</a>
+                            </label>
+                        </div>
                         <div class="text-center">
-                            <button type="button" style="background-color: var(--main-color);" class="btn btn-out btn-square btn-main" data-abc="true" data-toggle="modal" data-target="#exampleModal">
+                            <button type="submit" style="background-color: var(--main-color);" class="btn btn-out btn-square btn-main" data-abc="true" data-toggle="modal" data-target="#exampleModal">
                                 Submit Booking
                             </button>
                         </div>
@@ -500,3 +480,30 @@
 </div>
 
 @include('frontend.common.footer')
+
+<script>
+    $(document).ready(function() {
+        $('#pay_percentage').on('change', function() {
+            var percentage = $(this).val();
+            var total = {{round($total)}};
+
+            if (percentage == 25) {
+                total = Math.ceil(total/4);
+                $('#totalPrice').html(total+' Rs');
+            } else if (percentage == 50) {
+                total = Math.ceil(total/2);
+                $('#totalPrice').html(total+' Rs');
+            } else {
+                $('#totalPrice').html(total+' Rs');
+            }
+        });
+
+        $('#gstCheckbox').on('change', function(){
+            if($(this).prop('checked')){
+                $('#gstDiv').show();
+            }else{
+                $('#gstDiv').hide();
+            }
+        });
+    });
+</script>
