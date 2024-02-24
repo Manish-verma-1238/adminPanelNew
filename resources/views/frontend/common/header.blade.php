@@ -18,7 +18,8 @@
     <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/date-picker.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{asset('assets/frontend/assets/frontuser/css/jquery.datetimepicker.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link href="{{asset('assets/frontend/assets/frontuser/css/jquery.datetimepicker.min.css')}}" rel="stylesheet" type="text/css" media="all">
-    <link rel="stylesheet" href="{{asset('assets/frontend/assets/frontuser/css/intlTelInput.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/frontend/assets/frontuser/css/intlTelInput.css')}}">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"> -->
 </head>
 
 <body>

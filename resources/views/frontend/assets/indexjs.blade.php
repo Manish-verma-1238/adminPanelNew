@@ -285,11 +285,29 @@
                     for (let key in formData) {
                         const input = form.querySelector(`[name='${key}']`);
                         if (input) {
-                            console.log(input.name);
                             if (input.name == 'pickupdate' || input.name == 'pickuptime' || input.name == '_token') {
                                 // ignore the input fields to auto fill
                             } else {
                                 input.value = formData[key];
+                            }
+
+                            if (input.name == 'countryName') {
+                                localStorage.setItem('countryCodeName', input.value);
+                                var elements = document.querySelectorAll(".mobile_code_input");
+                                elements.forEach(function(element) {
+                                    var iti = window.intlTelInput(element, {
+                                        initialCountry: input.value,
+                                        separateDialCode: true
+                                    });
+
+                                    // Listen for the countrychange event
+                                    element.addEventListener('countrychange', function() {
+                                        // Get the selected country's dial code
+                                        var countryCode = iti.getSelectedCountryData().dialCode;
+                                        var initialCountryName = iti.getSelectedCountryData().iso2;
+                                        updateCountryCodeInputs(initialCountryName, countryCode);
+                                    });
+                                });
                             }
                         }
                     }
@@ -621,19 +639,41 @@
 </script>
 <script>
     var elements = document.querySelectorAll(".mobile_code_input");
+    var countryCodeInputs = document.querySelectorAll('.countryCode');
+    var countryNameInputs = document.querySelectorAll('.countryName');
+
+    // Function to update country code inputs
+    function updateCountryCodeInputs(countryName, countryCode) {
+        countryCodeInputs.forEach(function(input) {
+            input.value = countryCode;
+        });
+        countryNameInputs.forEach(function(input) {
+            input.value = countryName;
+        });
+    }
 
     // Loop through each element and apply the code
     elements.forEach(function(element) {
-        window.intlTelInput(element, {
-            initialCountry: "in",
-            separateDialCode: true,
-            // utilsScript: "assets/frontuser/js/utils.js"
+        var countryName = localStorage.getItem('countryCodeName');
+
+        if (countryName != '') {
+            var iti = window.intlTelInput(element, {
+                initialCountry: countryName,
+                separateDialCode: true
+            });
+        } else {
+            var iti = window.intlTelInput(element, {
+                initialCountry: "in",
+                separateDialCode: true
+            });
+        }
+
+        // Listen for the countrychange event
+        element.addEventListener('countrychange', function() {
+            // Get the selected country's dial code
+            var countryCode = iti.getSelectedCountryData().dialCode;
+            var initialCountryName = iti.getSelectedCountryData().iso2;
+            updateCountryCodeInputs(initialCountryName, countryCode);
         });
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const preloader = document.getElementById("preloader");
-        preloader.style.display = "none";
     });
 </script>

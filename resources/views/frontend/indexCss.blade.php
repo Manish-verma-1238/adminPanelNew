@@ -63,6 +63,22 @@
         width: 100%;
     }
 
+    .iti {
+        width: 100%;
+        /* Adjust the width as needed */
+    }
+
+    .iti__selected-flag {
+        width: auto;
+        /* Ensure the flag size is appropriate */
+    }
+
+    .iti__selected-dial-code {
+        color: #ffffff!important;
+        display: inline-block;
+        margin-left: 5px;
+    }
+
     aside:before,
     aside:after {
         height: 0;
