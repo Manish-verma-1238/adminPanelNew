@@ -29,7 +29,7 @@
             color: white;
             font-size: 15px
         }
-        
+
         input:focus {
             outline: 0;
             border-color: #bd8200;
@@ -150,106 +150,30 @@
         color: #212529
     }
 
-    .modelboxcong {
-        vertical-align: middle;
-        display: flex;
+    .is-invalid~.invalid-feedback,
+    .is-invalid~.invalid-tooltip,
+    .was-validated :invalid~.invalid-feedback,
+    .was-validated :invalid~.invalid-tooltip {
+        color: #ffcc00;
+    }
 
+    .iti__country-name {
+        color: #000 !important;
+    }
 
-        .card {
-            border-radius: 3vh;
-            margin: auto;
-            max-width: 380px;
-            padding: 7vh 6vh;
-            align-items: center;
-            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
+    .intl-tel-input,
+    .iti {
+        width: 100%;
+    }
 
-        @media(max-width:767px) {
-            .card {
-                width: 90vw;
-            }
-        }
+    .iti {
+        width: 100%;
+        /* Adjust the width as needed */
+    }
 
-        .card-img {
-            padding: 20px 0;
-            width: 40%;
-        }
-
-        .card-img img {
-            opacity: 0.7;
-        }
-
-        .card-title {
-            margin-bottom: unset;
-        }
-
-        .card-title p {
-            color: rgb(29, 226, 226);
-            font-weight: 900;
-            font-size: 30px;
-            margin-bottom: unset;
-        }
-
-        .card-text p {
-            color: grey;
-            font-size: 25px;
-            text-align: center;
-            padding: 3vh 0;
-            font-weight: lighter;
-        }
-
-        .btn {
-            width: 100%;
-            background-color: rgb(29, 226, 226);
-            border-color: rgb(29, 226, 226);
-            border-radius: 25px;
-            color: white;
-            font-size: 15px;
-        }
-
-        .modal-header .close {
-            padding: 1rem 1rem;
-            margin: 0rem 0rem 0rem auto !important;
-            background: black !important;
-            color: white !important;
-        }
-
-        .modal-content {
-            position: relative;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            width: 100%;
-            pointer-events: auto;
-            background-color: transparent !important;
-            background-clip: padding-box;
-            border: none !important;
-            border-radius: 0.3rem;
-            outline: 0;
-        }
-
-        .modal-header {
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-align: start;
-            align-items: flex-start;
-            -ms-flex-pack: justify;
-            justify-content: space-between;
-            padding: 1rem 1rem;
-            border-bottom: none !important;
-            border-top-left-radius: calc(0.3rem - 1px);
-            border-top-right-radius: calc(0.3rem - 1px);
-        }
-
-        #termsDiv{
-            position: relative;
-        }
-
-        #termsCheckbox{
-            position: absolute;
-            left: 30px!important;
-            border: 3px solid #73AD21;
-        }
+    .iti__selected-flag {
+        width: auto;
+        /* Ensure the flag size is appropriate */
     }
 </style>
 
@@ -303,7 +227,7 @@
 </div>
 
 <div class="container">
-    <form action="{{route('booking')}}" method="post">
+    <form action="{{route('booking')}}" method="post" id="bookingForm">
         @csrf
         <div class="row">
             <div class=" col-12 col-md-8 big-form pb-4">
@@ -330,20 +254,14 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <label>Mobile no.</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-phone"></i></span>
-                                </div>
-                                <input type="text" name="phone" class="form-control" placeholder="Enter mobile number">
-                            </div>
+                            <input type="text" class="form-control mobile_code_input" placeholder="Contact Number" name="phone" value="{{$phone}}" required>
+                            <input type="hidden" class="countryCode" name="countryCode" value="{{$countryCode}}">
                         </div>
                         <div class="col-md-6 col-12">
                             <label>Alternate mobile no.</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-phone"></i></span>
-                                </div>
-                                <input type="text" name="alternatePhone" class="form-control" placeholder="Enter alternate mobile no.">
+                                <input type="text" class="form-control alter_mobile_code_input" placeholder="Alternate Number" name="alternatePhone">
+                                <input type="hidden" class="alterCountryCode" name="alterCountryCode">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
@@ -354,7 +272,7 @@
                                         <i class="fa fa-user"></i>
                                     </span>
                                 </div>
-                                <select class="custom-select" id="country">
+                                <select class="custom-select" id="country" name="passengers">
                                     @for($i=1; $i <= $car->passengers; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                         @endfor
@@ -369,7 +287,7 @@
                                         <i class="fa fa-suitcase"></i>
                                     </span>
                                 </div>
-                                <select class="custom-select" id="country">
+                                <select class="custom-select" id="country" name="bags">
                                     @for($i=1; $i <= $car->bags; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                         @endfor
@@ -378,7 +296,7 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="terms" id="gstCheckbox">
+                                <input class="form-check-input" type="checkbox" name="gstCheckbox" id="gstCheckbox">
                                 <label class="form-check-label" for="gstCheckbox">
                                     GST Number
                                 </label>
@@ -392,6 +310,12 @@
                                 <input type="text" name="gst" class="form-control" placeholder="Enter GST number">
                             </div>
                         </div>
+                        <input type="hidden" name="source" value="{{$source ?? ''}}">
+                        <input type="hidden" name="destination" value="{{$destination ?? ''}}">
+                        <input type="hidden" name="stops" value="{{$stops ?? ''}}">
+                        <input type="hidden" name="trip" value="{{$triptype ?? ''}}">
+                        <input type="hidden" name="pickupdate" value="{{$pickupdate ?? ''}}">
+                        <input type="hidden" name="pickuptime" value="{{$pickuptime ?? ''}}">
                     </div>
                 </div>
             </div>
@@ -431,17 +355,18 @@
                                 </select>
                             </dt>
                             <input type="hidden" name="price" id="encryptPrice" value="{{encrypt(round($total))}}"></input>
-                            <dd class="text-right text-dark b ml-3"><strong  id="totalPrice">{{round($total)}} Rs</strong></dd>
+                            <dd class="text-right text-dark b ml-3"><strong id="totalPrice">{{round($total)}} Rs</strong></dd>
                         </dl>
                         <hr>
                         <div class="form-check" id="termsDiv">
                             <input class="form-check-input" type="checkbox" name="terms" id="termsCheckbox" required>
                             <label class="form-check-label" for="termsCheckbox">
-                                I agree to the <a href="#">Terms & Conditions</a>
+                                I agree to the <a href="javascript::void(0)" data-toggle="modal" data-target="#termsAndConditions">Terms & Conditions</a>
                             </label>
                         </div>
                         <div class="text-center">
-                            <button type="submit" style="background-color: var(--main-color);" class="btn btn-out btn-square btn-main" data-abc="true" data-toggle="modal" data-target="#exampleModal">
+                            <!-- data-abc="true" data-toggle="modal" data-target="#exampleModal" -->
+                            <button type="submit" style="background-color: var(--main-color);" class="btn btn-out btn-square btn-main">
                                 Submit Booking
                             </button>
                         </div>
@@ -452,32 +377,42 @@
     </form>
 </div>
 
-<!-- congratulations -->
-<div class='modelboxcong'>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>
-                <div class="card">
-                    <!-- <div class="card-img">
-                        <img class="img-fluid" src="uploads/about-img.png">
-                    </div> -->
-                    <div class="card-title">
-                        <p>Success!</p>
-                    </div>
-                    <div class="card-text">
-                        <p>Yay! You have successfully booked your cab.</p>
-                    </div>
-                    <button class="btn">Your Booking ID: ZIPZAP127584</button>
-                    <div class="card-text text-center">
-                        <small>An email has been sent to your registred email
-                            address.</small>
-                    </div>
-                </div>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="termsAndConditions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="point">1. CAB FUEL INCLUDED</p>
+                <p class="point">2. DRIVER FOOD INCLUDED</p>
+                <p class="point">3. DRIVER NIGHT INCLUDED ALL ONE WAY TRIPS ROUND TRIP WILL EXTRA ₹250/DAY</p>
+                <p class="point">4. SPECIAL PERMIT CHARGE AND SPECIAL SIGHTSEEING POINT ENTRY NOT INCLUDED ANY TRIP</p>
+                <p class="point d-none">5. ONE DAYS MEANS 12:00AM TO 11:59PM</p>
+                <p class="point d-none">6. Our date and time runs according to the date, calendar date and time</p>
+                <p class="point d-none">7. The AC will be turned off when the car is climbing the mountain</p>
+                <p class="point d-none">8. There will be a daily limit of 250 kms in the round trip and the kilometer point to point will be noted</p>
+                <p class="point d-none">9. The car will not go to the narrow and congested ma area, and the crowded place</p>
+                <p class="point d-none">10. Smoking is prohibited inside the cab</p>
+                <p class="point d-none">11. In one way trip, a pet animal charges 500 extra and in round trip 1000 full trips</p>
+                <p class="point d-none">12. TOLL + STATE TAX WILL EXTRA EACH ROUND TRIP</p>
+                <p class="point d-none">13. EXTRA PICKUP & DROP CHARGEABLE</p>
+                <p class="point d-none">14. The only pre - selected points in the hill area will be shown: the remaining km limit will allow you to visit the extra point; you will need to pay extra</p>
+                <p class="point d-none">15. PLEASE PAY 10% advance for booking confirmation & your side booking will not refund on CANCEL</p>
+                <p class="point d-none">16. If in any way one-sided price is not available then you will have to increase the price, otherwise you can cancel your amount thirty minutes before picksub time and your advance will be refunded</p>
+                <button id="viewMoreBtn" class="btn btn-primary mt-3">View More</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
 
 @include('frontend.common.footer')
 
@@ -485,25 +420,126 @@
     $(document).ready(function() {
         $('#pay_percentage').on('change', function() {
             var percentage = $(this).val();
-            var total = {{round($total)}};
+            var total = '{{round($total)}}';
 
             if (percentage == 25) {
-                total = Math.ceil(total/4);
-                $('#totalPrice').html(total+' Rs');
+                total = Math.ceil(total / 4);
+                $('#totalPrice').html(total + ' Rs');
             } else if (percentage == 50) {
-                total = Math.ceil(total/2);
-                $('#totalPrice').html(total+' Rs');
+                total = Math.ceil(total / 2);
+                $('#totalPrice').html(total + ' Rs');
             } else {
-                $('#totalPrice').html(total+' Rs');
+                $('#totalPrice').html(total + ' Rs');
             }
         });
 
-        $('#gstCheckbox').on('change', function(){
-            if($(this).prop('checked')){
+        $('#gstCheckbox').on('change', function() {
+            if ($(this).prop('checked')) {
                 $('#gstDiv').show();
-            }else{
+            } else {
                 $('#gstDiv').hide();
             }
+        });
+
+        // Show/hide additional points on click of "View More" button
+        $('#viewMoreBtn').click(function() {
+            $('.point.d-none').removeClass('d-none');
+            $('#viewMoreBtn').hide();
+        });
+
+        $('#bookingForm').validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: {
+                    required: true,
+                    number: true
+                },
+                terms: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: 'Name is Required.'
+                },
+                email: {
+                    required: 'Email is Required.',
+                    email: 'Enter a valid Email.'
+                },
+                phone: {
+                    required: 'Contact number is Required.',
+                    number: 'Enter a valid contact detail.'
+                },
+                terms: {
+                    required: 'Check the terms & conditions'
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.input-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+</script>
+<script>
+    var elements = document.querySelectorAll(".mobile_code_input");
+    var alterElements = document.querySelectorAll(".alter_mobile_code_input");
+    var countryCodeInputs = document.querySelectorAll('.countryCode');
+    var altercountryCodeInputs = document.querySelectorAll('.alterCountryCode');
+    var countryInitial = '{{ $countryName }}';
+    // Function to update country code inputs
+    function updateCountryCodeInputs(countryCode) {
+        countryCodeInputs.forEach(function(input) {
+            input.value = countryCode;
+        });
+    }
+
+    function alterUpdateCountryCodeInputs(countryCode) {
+        altercountryCodeInputs.forEach(function(input) {
+            input.value = countryCode;
+        });
+    }
+    // Loop through each element and apply the code
+    elements.forEach(function(element) {
+
+        var iti = window.intlTelInput(element, {
+            initialCountry: countryInitial,
+            separateDialCode: true
+        });
+
+        // Listen for the countrychange event
+        element.addEventListener('countrychange', function() {
+            // Get the selected country's dial code
+            var countryCode = iti.getSelectedCountryData().dialCode;
+            updateCountryCodeInputs(countryCode);
+        });
+    });
+
+    alterElements.forEach(function(element) {
+
+        var iti = window.intlTelInput(element, {
+            initialCountry: countryInitial,
+            separateDialCode: true
+        });
+
+        // Listen for the countrychange event
+        element.addEventListener('countrychange', function() {
+            // Get the selected country's dial code
+            var countryCode = iti.getSelectedCountryData().dialCode;
+            alterUpdateCountryCodeInputs(countryCode);
         });
     });
 </script>

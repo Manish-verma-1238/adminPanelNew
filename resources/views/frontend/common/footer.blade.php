@@ -61,6 +61,35 @@
 </section>
 <!-- footer -->
 
+<!-- congratulations -->
+<div class='modelboxcong'>
+    <div class="modal fade" id="booking-success" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>
+                <div class="card">
+                    <!-- <div class="card-img">
+                        <img class="img-fluid" src="uploads/about-img.png">
+                    </div> -->
+                    <div class="card-title">
+                        <p>Cab Booked!</p>
+                    </div>
+                    <div class="card-text">
+                        <p>Thankyou! For choosing ZipZap Taxi.</p>
+                    </div>
+                    <button class="btn">Your Booking ID: <span id="booking-id">ZIPZAP127584</span></button>
+                    <div class="card-text text-center">
+                        <small>An email has been sent to your registred email
+                            address.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script>
     function initAutocomplete() {
         $("input[id*='location']").each(function() {
@@ -92,7 +121,7 @@
 <script async defer src="{{asset('assets/frontend/assets/frontuser/js/validation.js')}}"></script>
 <script src="{{asset('assets/frontend/assets/frontuser/js/custom.js')}}"></script>
 <script src="{{asset('assets/frontend/assets/frontuser/js/intlTelInput.js')}}"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.9.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>

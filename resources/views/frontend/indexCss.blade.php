@@ -74,7 +74,7 @@
     }
 
     .iti__selected-dial-code {
-        color: #ffffff!important;
+        color: #ffffff !important;
         display: inline-block;
         margin-left: 5px;
     }
@@ -155,4 +155,106 @@
     }
 
     /* selectbox */
+
+    .modelboxcong {
+        vertical-align: middle;
+        display: flex;
+
+
+        .card {
+            border-radius: 3vh;
+            margin: auto;
+            max-width: 380px;
+            padding: 7vh 6vh;
+            align-items: center;
+            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        @media(max-width:767px) {
+            .card {
+                width: 90vw;
+            }
+        }
+
+        .card-img {
+            padding: 20px 0;
+            width: 40%;
+        }
+
+        .card-img img {
+            opacity: 0.7;
+        }
+
+        .card-title {
+            margin-bottom: unset;
+        }
+
+        .card-title p {
+            color: rgb(29, 226, 226);
+            font-weight: 900;
+            font-size: 30px;
+            margin-bottom: unset;
+        }
+
+        .card-text p {
+            color: grey;
+            font-size: 25px;
+            text-align: center;
+            padding: 3vh 0;
+            font-weight: lighter;
+        }
+
+        .btn {
+            width: 100%;
+            background-color: rgb(29, 226, 226);
+            border-color: rgb(29, 226, 226);
+            border-radius: 25px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .modal-header .close {
+            padding: 1rem 1rem;
+            margin: 0rem 0rem 0rem auto !important;
+            background: black !important;
+            color: white !important;
+        }
+
+        .modal-content {
+            position: relative;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: transparent !important;
+            background-clip: padding-box;
+            border: none !important;
+            border-radius: 0.3rem;
+            outline: 0;
+        }
+
+        .modal-header {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: start;
+            align-items: flex-start;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 1rem 1rem;
+            border-bottom: none !important;
+            border-top-left-radius: calc(0.3rem - 1px);
+            border-top-right-radius: calc(0.3rem - 1px);
+        }
+
+        #termsDiv {
+            position: relative;
+        }
+
+        #termsCheckbox {
+            position: absolute;
+            left: 30px !important;
+            border: 3px solid #73AD21;
+        }
+    }
 </style>

@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Models\admin\State;
 use App\Models\admin\Taxi;
 use App\Models\admin\Price;
 use App\Models\admin\Location;
 use App\Models\admin\LocationDetail;
+use App\Models\Booking;
+use App\Utils\CommonUtils;
 
 class FrontendController extends Controller
 {
@@ -110,7 +113,10 @@ class FrontendController extends Controller
                 ->with('pickupdate', $request['pickupdate'])
                 ->with('pickuptime', $request['pickuptime'])
                 ->with('triptype', $request['triptype'])
-                ->with('stops', $request['stops']);
+                ->with('stops', $request['stops'])
+                ->with('phone', $request['phone'])
+                ->with('countryCode', $request['countryCode'])
+                ->with('countryName', $request['countryName']);
         } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
@@ -213,7 +219,10 @@ class FrontendController extends Controller
                 ->with('triptype', $request['triptype'])
                 ->with('stops', $request['stops'])
                 ->with('car', $car)
-                ->with('price', $price);
+                ->with('price', $price)
+                ->with('phone', $request['phone'])
+                ->with('countryCode', $request['countryCode'])
+                ->with('countryName', $request['countryName']);
         } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
@@ -222,6 +231,48 @@ class FrontendController extends Controller
 
     public function booking(Request $request)
     {
-        dd($request->all());
+        try {
+            $booking = new Booking();
+            $bookingId = CommonUtils::BookingIdgenerate();
+            $price = decrypt($request['price']);
+            $phone = '+'. $request['countryCode'] .'-' . $request['phone'];
+            $alterPhone = '+'. $request['alterCountryCode'] .'-' . $request['alternatePhone'];
+            
+            if($request['paidPercentage'] == '25'){
+                $balanceAmout = $price - $price/4;
+            }elseif($request['paidPercentage'] == '50'){
+                $balanceAmout = $price - $price/2;
+            }else{
+                $balanceAmout = $price - $price;
+            }
+            
+            // $booking->booking_unique_id = $bookingId;
+            // $booking->status = 'pending';
+            // $booking->trip = $request['trip'] ?? '';
+            // $booking->source = $request['source'] ?? '';
+            // $booking->stops = $request['stops'] ?? '';
+            // $booking->destination = $request['destination'] ?? '';
+            // $booking->price = round($price) ?? '';
+            // $booking->paid_price_percentage = $request['paidPercentage'] ?? '';
+            // $booking->balance_price = round($balanceAmout) ?? '';
+            // $booking->passengers = $request['passengers'] ?? '';
+            // $booking->bags = $request['bags'] ?? '';
+            // $booking->name = $request['name'] ?? '';
+            // $booking->email = $request['email'] ?? '';
+            // $booking->mobile = $phone ?? '';
+            // $booking->alternate_no = $alterPhone ?? '';
+            // $booking->gst_no = $request['gst'] ?? '';
+            // $booking->ride_date = $request['pickupdate'] ?? '';
+            // $booking->ride_time = $request['pickuptime'] ?? '';
+            // $booking->save();
+
+            Mail::to($request->input('email'))->send(new ForgotPassword($user));
+
+            return redirect()->route('main')->with('booking-success', $bookingId);
+
+        } catch (\Exception $e) {
+            // Handle the exception, log the error, or return an error response
+            return redirect::back()->with('error',  $e->getMessage());
+        }
     }
 }

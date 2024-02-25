@@ -108,6 +108,9 @@
                                 <input type="hidden" name="car" value="{{encrypt($car->taxi->id)}}"></input>
                                 <input type="hidden" name="distance" value="{{$distance}}"></input>
                                 <input type="hidden" name="price" value="{{encrypt(round($car->price * $distance))}}"></input>
+                                <input type="hidden" name="phone" value="{{$phone}}"></input>
+                                <input type="hidden" name="countryCode" value="{{$countryCode}}"></input>
+                                <input type="hidden" name="countryName" value="{{$countryName}}"></input>
                                 <button type="submit" class="btn btn-block"><small>BOOK NOW</small></button>
                             </form>
                         </div>

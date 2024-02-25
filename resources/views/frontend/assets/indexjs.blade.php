@@ -9,6 +9,15 @@
 </script>
 @endif
 
+@if(session('booking-success'))
+<script>
+    $(document).ready(function(){
+        $('#booking-id').html('{{session("booking-success")}}');
+        $('#booking-success').modal('show');
+    });
+</script>
+@endif
+
 <script>
     (function() {
         "use strict";

@@ -27,7 +27,7 @@ use App\Http\Controllers\frontend\FrontendController;
 
 /* Admin routes */
 Route::group(['middleware' => 'auth_loggin'], function () {
-    Route::get('/login', [AuthController::class, 'loginView'])->name('view.login');
+    Route::get('/admin', [AuthController::class, 'loginView'])->name('view.login');
     Route::post('/login/admin', [AuthController::class, 'login'])->name('login');
     Route::get('google/login', [AuthController::class, 'googleLogin'])->name('google.login.view');
     Route::get('/google/callback', [AuthController::class, 'googleCallback'])->name('google.login');
