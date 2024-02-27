@@ -14,6 +14,7 @@ use App\Models\admin\Location;
 use App\Models\admin\LocationDetail;
 use App\Models\Booking;
 use App\Utils\CommonUtils;
+use App\Mail\BookingSuccessMail;
 
 class FrontendController extends Controller
 {
@@ -235,44 +236,79 @@ class FrontendController extends Controller
             $booking = new Booking();
             $bookingId = CommonUtils::BookingIdgenerate();
             $price = decrypt($request['price']);
-            $phone = '+'. $request['countryCode'] .'-' . $request['phone'];
-            $alterPhone = '+'. $request['alterCountryCode'] .'-' . $request['alternatePhone'];
-            
-            if($request['paidPercentage'] == '25'){
-                $balanceAmout = $price - $price/4;
-            }elseif($request['paidPercentage'] == '50'){
-                $balanceAmout = $price - $price/2;
-            }else{
+            $phone = '+' . $request['countryCode'] . '-' . $request['phone'];
+            if (isset($request['alternatePhone']) && !empty($request['alternatePhone'])) {
+                $alterPhone = '+' . $request['alterCountryCode'] . '-' . $request['alternatePhone'];
+            } else {
+                $alterPhone = '';
+            }
+
+
+            if ($request['paidPercentage'] == '25') {
+                $paid = $price / 4;
+                $balanceAmout = $price - $price / 4;
+            } elseif ($request['paidPercentage'] == '50') {
+                $paid = $price / 2;
+                $balanceAmout = $price - $price / 2;
+            } else {
+                $paid = $price;
                 $balanceAmout = $price - $price;
             }
-            
-            // $booking->booking_unique_id = $bookingId;
-            // $booking->status = 'pending';
-            // $booking->trip = $request['trip'] ?? '';
-            // $booking->source = $request['source'] ?? '';
-            // $booking->stops = $request['stops'] ?? '';
-            // $booking->destination = $request['destination'] ?? '';
-            // $booking->price = round($price) ?? '';
-            // $booking->paid_price_percentage = $request['paidPercentage'] ?? '';
-            // $booking->balance_price = round($balanceAmout) ?? '';
-            // $booking->passengers = $request['passengers'] ?? '';
-            // $booking->bags = $request['bags'] ?? '';
-            // $booking->name = $request['name'] ?? '';
-            // $booking->email = $request['email'] ?? '';
-            // $booking->mobile = $phone ?? '';
-            // $booking->alternate_no = $alterPhone ?? '';
-            // $booking->gst_no = $request['gst'] ?? '';
-            // $booking->ride_date = $request['pickupdate'] ?? '';
-            // $booking->ride_time = $request['pickuptime'] ?? '';
-            // $booking->save();
 
-            Mail::to($request->input('email'))->send(new ForgotPassword($user));
+            $booking->booking_unique_id = $bookingId;
+            $booking->status = 'pending';
+            $booking->car_id = decrypt($request['car']) ?? '';
+            $booking->trip = $request['trip'] ?? '';
+            $booking->source = $request['source'] ?? '';
+            $booking->stops = $request['stops'] ?? '';
+            $booking->destination = $request['destination'] ?? '';
+            $booking->price = round($price) ?? '';
+            $booking->paid_price_percentage = $request['paidPercentage'] ?? '';
+            $booking->balance_price = round($balanceAmout) ?? '';
+            $booking->passengers = $request['passengers'] ?? '';
+            $booking->bags = $request['bags'] ?? '';
+            $booking->name = $request['name'] ?? '';
+            $booking->email = $request['email'] ?? '';
+            $booking->mobile = $phone ?? '';
+            $booking->alternate_no = $alterPhone ?? '';
+            $booking->gst_no = $request['gst'] ?? '';
+            $booking->ride_date = $request['pickupdate'] ?? '';
+            $booking->ride_time = $request['pickuptime'] ?? '';
 
-            return redirect()->route('main')->with('booking-success', $bookingId);
+            if ($booking->save()) {
+                $taxi = Taxi::find(decrypt($request['car']));
+                $taxiDetail = $taxi->name . ' (' . $taxi->passengers . '+1)';
 
+                $data = [
+                    'booking_unique_id' => $bookingId,
+                    'car' => $taxiDetail ?? '',
+                    'trip' => $request['trip'] ?? '',
+                    'source' => $request['source'] ?? '',
+                    'stops' => $request['stops'] ?? '',
+                    'destination' => $request['destination'] ?? '',
+                    'price' => round($price) ?? '',
+                    'paid_price_percentage' => $request['paidPercentage'] ?? '',
+                    'paid_price' => $paid,
+                    'balance_price' => round($balanceAmout) ?? '',
+                    'passengers' => $request['passengers'] ?? '',
+                    'bags' => $request['bags'] ?? '',
+                    'name' => $request['name'] ?? '',
+                    'email' => $request['email'] ?? '',
+                    'mobile' => $phone ?? '',
+                    'alternate_no' => $alterPhone ?? '',
+                    'gst_no' => $request['gst'] ?? '',
+                    'ride_date' => $request['pickupdate'] ?? '',
+                    'ride_time' => $request['pickuptime'] ?? ''
+                ];
+
+                Mail::to($request->input('email'))->send(new BookingSuccessMail($data));
+
+                return redirect()->route('main')->with('booking-success', $bookingId);
+            }
         } catch (\Exception $e) {
+            dd($e->getMessage());
             // Handle the exception, log the error, or return an error response
-            return redirect::back()->with('error',  $e->getMessage());
+            return redirect::route('main')->with('error',  $e->getMessage());
         }
     }
 }

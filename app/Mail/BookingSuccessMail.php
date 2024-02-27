@@ -12,13 +12,14 @@ use Illuminate\Queue\SerializesModels;
 class BookingSuccessMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($datas)
     {
-        //
+        $this->data = $datas;
     }
 
     /**
@@ -27,27 +28,13 @@ class BookingSuccessMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Booking Success Mail',
+            subject: 'ZipZap Taxi Booking Confirmation Mail',
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
+    public function build()
     {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        $emailData = $this->data;
+        return $this->from(env('MAIL_FROM_ADDRESS', 'default@example.com'), 'Jimeet Blogs')->subject("ZipZap Taxi Booking Confirmation")->view('emails.booking', ['emailData' => $emailData]);
     }
 }

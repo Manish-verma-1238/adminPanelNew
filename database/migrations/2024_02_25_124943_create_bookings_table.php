@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->string('booking_unique_id');
+            $table->unsignedBigInteger('car_id');
             $table->enum('status', ['pending', 'complete'])->default('pending');
             $table->string('trip');
             $table->string('source');

@@ -11,7 +11,9 @@
 
 @if(session('booking-success'))
 <script>
-    $(document).ready(function(){
+    // Clear all items stored in local storage
+    localStorage.clear();
+    $(document).ready(function() {
         $('#booking-id').html('{{session("booking-success")}}');
         $('#booking-success').modal('show');
     });
@@ -663,19 +665,10 @@
 
     // Loop through each element and apply the code
     elements.forEach(function(element) {
-        var countryName = localStorage.getItem('countryCodeName');
-
-        if (countryName != '') {
-            var iti = window.intlTelInput(element, {
-                initialCountry: countryName,
-                separateDialCode: true
-            });
-        } else {
-            var iti = window.intlTelInput(element, {
-                initialCountry: "in",
-                separateDialCode: true
-            });
-        }
+        var iti = window.intlTelInput(element, {
+            initialCountry: "in",
+            separateDialCode: true
+        });
 
         // Listen for the countrychange event
         element.addEventListener('countrychange', function() {
