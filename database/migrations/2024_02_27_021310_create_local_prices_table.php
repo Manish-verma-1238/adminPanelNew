@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('range');
             $table->string('price');
             $table->string('extra_km');
-            $table->string('extra_price');
+            $table->string('extra_hour');
             $table->timestamps();
         });
     }
