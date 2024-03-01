@@ -201,12 +201,12 @@
                                                                 </div>
                                                                 <div class="mb-3 col-11 pr-0">
                                                                     <div class="field field_v3">
-                                                                        <select id="mySelect" class=" field__input selectpicker ">
+                                                                        <select id="mySelect" class=" field__input selectpicker " name="packages">
                                                                             <option value=""> Select Packages </option>
-                                                                            <option value="4-40"> 4 Hours 40 Km </option>
-                                                                            <option value="8-80"> 8 Hours 80 Km </option>
-                                                                            <option value="12-120"> 12 Hours 120 Km  </option>
-                                                                            <option value="24-250"> 12 Hours 120 Km  </option>
+                                                                            <option value="4-40"> 4 Hours - 40 Km </option>
+                                                                            <option value="8-80"> 8 Hours - 80 Km </option>
+                                                                            <option value="12-120"> 12 Hours - 120 Km  </option>
+                                                                            <option value="24-250"> 24 Hours - 250 Km  </option>
                                                                         </select>
                                                                     </div>
 

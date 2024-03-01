@@ -131,7 +131,7 @@
                 @endforeach
                 @endif
                 <tr>
-                    <td>Pick-off Location</td>
+                    @if($emailData['trip']=='local')<td>Package</td>@else<td>Drop-off Location</td>@endif
                     <td>{{ucwords($emailData['destination']) ?? ''}}</td>
                 </tr>
                 @if(isset($emailData['ride_date']))

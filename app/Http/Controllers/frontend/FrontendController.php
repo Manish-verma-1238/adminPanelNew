@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\admin\State;
 use App\Models\admin\Taxi;
 use App\Models\admin\Price;
+use App\Models\admin\LocalPrice;
 use App\Models\admin\Location;
 use App\Models\admin\LocationDetail;
 use App\Models\Booking;
@@ -34,6 +35,28 @@ class FrontendController extends Controller
             $trip = $request['triptype'];
             $source = $this->alloweStates($request['source']);
             $destination = $this->alloweStates($request['destination']);
+
+            if (isset($trip) && $trip == 'local') {
+                if (!$source) {
+                    return redirect()->route('main')->with('not-found-error', 'Cab not available on this location.');
+                }
+
+                list($time, $distance) = explode('-', $request['packages']);
+                $packages = "$time Hour - $distance Km";
+
+                $cars = LocalPrice::with('taxi')->where('range', $request['packages'])->get();
+
+                return view('frontend.cars')
+                    ->with('cars', $cars)
+                    ->with('packages', $packages)
+                    ->with('source', $request['source'])
+                    ->with('pickupdate', $request['pickupdate'])
+                    ->with('pickuptime', $request['pickuptime'])
+                    ->with('triptype', $request['triptype'])
+                    ->with('phone', $request['phone'])
+                    ->with('countryCode', $request['countryCode'])
+                    ->with('countryName', $request['countryName']);
+            }
 
             // check the states is available in case of round-trip
             if (isset($trip) && $trip == 'round-trip') {
@@ -127,7 +150,7 @@ class FrontendController extends Controller
     private function alloweStates($stateName)
     {
         $allowedStates = State::where('show', 'yes')->get();
-
+        $match = false;
         foreach ($allowedStates as $state) {
             if (stristr(strtolower($stateName), strtolower($state['name']))) {
                 $match = true;
@@ -223,7 +246,8 @@ class FrontendController extends Controller
                 ->with('price', $price)
                 ->with('phone', $request['phone'])
                 ->with('countryCode', $request['countryCode'])
-                ->with('countryName', $request['countryName']);
+                ->with('countryName', $request['countryName'])
+                ->with('packages', $request['packages']);
         } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());

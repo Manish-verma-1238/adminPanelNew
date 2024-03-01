@@ -187,6 +187,7 @@
                 <span>{{$pickupdate}} {{$pickuptime}}</span>
             </p>
         </div>
+        @if(isset($triptype) && $triptype == 'oneway')
         <div class="box col-3 mb-4">
             <img src="{{asset('assets/frontend/uploads/duration.png')}}" alt="img">
             <p>Duration
@@ -194,6 +195,15 @@
                 <span>{{$time ?? ''}}</span>
             </p>
         </div>
+        @elseif(isset($triptype) && $triptype == 'local')
+        <div class="box col-3 mb-4">
+            <img src="{{asset('assets/frontend/uploads/duration.png')}}" alt="img">
+            <p>Package
+                <br>
+                <span>{{$destination ?? ''}}</span>
+            </p>
+        </div>
+        @endif
         <div class="box col-3 mb-4">
             <img src="{{asset('assets/frontend/uploads/directions.png')}}" alt="img">
             <p>Trip Type
@@ -211,11 +221,16 @@
 <div class="container">
     <div class="modify-route p-2 justify-content-start">
         @if(isset($triptype) && $triptype == 'round-trip')
+        @php
+        $stops = implode(' -> ', $stops);
+        @endphp
         <p class="m-0"><img src="{{asset('assets/frontend/uploads/pickup.png')}}" alt="img"> <strong style="color:#ffcc00;">Pick-up: </strong> {{$source}}</p>
         @if(isset($stops) && !empty($stops))
         <p class="m-0"><img src="{{asset('assets/frontend/uploads/pickup.png')}}" alt="img"> <strong style="color:#ffcc00;">Stops: </strong> {{$stops}}</p>
         @endif
         <p class="m-0"><img src="{{asset('assets/frontend/uploads/pickup.png')}}" alt="img"> <strong style="color:#ffcc00;">Drop-off: </strong> {{$destination}}</p>
+        @elseif(isset($triptype) && $triptype == 'local')
+        <p class="m-0"><img src="{{asset('assets/frontend/uploads/pickup.png')}}" alt="img"> <strong style="color:#ffcc00;">Pick-up: </strong> {{$source}}</p>
         @else
         <p class="m-0"><img src="{{asset('assets/frontend/uploads/pickup.png')}}" alt="img"> <strong style="color:#ffcc00;">Pick-up: </strong> {{$source}}</p>
         <p class="m-0"><img src="{{asset('assets/frontend/uploads/pickup.png')}}" alt="img"> <strong style="color:#ffcc00;">Drop-off: </strong> {{$destination}}</p>
