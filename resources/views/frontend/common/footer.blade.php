@@ -5,10 +5,12 @@
             <div class="row">
                 <div class="col-6 col-lg-4 col-md-4">
                     <div class="foot_box">
-                        <h3>About Taxi</h3>
+                        <h3>Quick links</h3>
                         <ul>
-                            <li><a href="about-us.html">About Us</a></li>
-                            <li><a href="contact-us.html">Contact Us</a></li>
+                            <li><a href="{{route('about')}}">About Us</a></li>
+                            <li><a href="{{route('contact')}}">Contact Us</a></li>
+                            <li><a href="javascript::void(0)">Our Packages</a></li>
+                            <li><a href="javascript::void(0)">Hotels</a></li>
                         </ul>
                     </div>
                 </div>
@@ -20,7 +22,6 @@
                             <li><a href="terms-conditions.html">Terms & Conditions</a></li>
                             <li><a href="refund-policy.html">Refund & Cancellation Policy</a></li>
                             <li><a href="faq.html">FAQs</a></li>
-                            <li><a href="blog-list.html">Blog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -29,9 +30,9 @@
                         <h3>Address</h3>
                         <div class="site-link">
                             <ul>
-                                <li><a href="#"><i class="fa fa-phone"></i>123456789</a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i>dummy@zizpap.in</a></li>
-                                <li><a href="#"><i class="fa fa-home"></i>address</a></li>
+                                <li><a href="tel:9888799313"><i class="fa fa-phone"></i>+91 98887 99313</a></li>
+                                <li><a href="mailto:zipzaptaxichd@gmail.com"><i class="fa fa-envelope"></i>zipzaptaxichd@gmail.com</a></li>
+                                <li><a href="javascript::void(0)"><i class="fa fa-home"></i>46, Krishna Enclave, Dhakoli, Zirakpur, Punjab 140603, India</a></li>
                             </ul>
                         </div>
                         <div class="footer-social-icons">
@@ -53,7 +54,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-12">
-                    <p class="text-center">© 2021</p>
+                    <p class="text-center">© 2024 ZipZap Taxi. All Rights Reserved</p>
                 </div>
             </div>
         </div>

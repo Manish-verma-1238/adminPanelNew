@@ -9,6 +9,16 @@
 </script>
 @endif
 
+@if(session('hotels-info'))
+<script>
+    Swal.fire({
+        icon: "info",
+        title: "Hotel accommodations will be ready shortly.",
+        footer: '<a href="#">For more details, Contact us: 8427997675</a>'
+    });
+</script>
+@endif
+
 @if(session('booking-success'))
 <script>
     // Clear all items stored in local storage

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>zipZap</title>
+    <title>{{$pageTitle ?? ''}} ZipZap Taxis</title>
     <meta charset="UTF-8" />
     <link rel="icon" href="{{asset('assets/frontend/uploads/logo nav.png')}}" type="image/x-icon" />
     <link rel="preload" href="{{asset('assets/frontend/assets/maxcdn.bootstrapcdn.com/bootstrap/bootstrap.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -29,9 +29,12 @@
                 <a class="navbar-brand logo-img" href="{{route('main')}}">
                     <img src="{{asset('assets/frontend/uploads/logo nav.png')}}" height="75px">
                 </a>
-                <aside class="ribbon2 d-sm-none d-block">
+                <!-- <aside class="ribbon2 d-sm-none d-block">
                     Hotel Coming Soon
-                </aside>
+                </aside> -->
+                <div class="d-sm-none d-block top_btn">
+                    <a href="{{route('hotels')}}" class="singup_btn sign ">Hotels</a>
+                </div>
                 <button class="navbar-toggler leftNavbarToggler bg-size" type="button" style="background-image: url('{{asset('assets/frontend/assets/frontuser/images/icons/menu.png')}}');" data-toggle="collapse" data-target="#menu_bar" aria-controls="menu_bar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -44,16 +47,16 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About Us</a>
+                            <a class="nav-link" href="{{route('about')}}">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Our Packages</a>
+                            <a class="nav-link" href="javascript::void(0)">Our Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">hotels</a>
+                            <a class="nav-link" href="{{route('hotels')}}">hotels</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link br_n" href="#">Contact Us</a>
+                            <a class="nav-link br_n" href="{{route('contact')}}">Contact Us</a>
                         </li>
                     </ul>
                     <div class="top_btn">

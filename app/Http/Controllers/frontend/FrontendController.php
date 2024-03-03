@@ -335,4 +335,19 @@ class FrontendController extends Controller
             return redirect::route('main')->with('error',  $e->getMessage());
         }
     }
+
+    public function about()
+    {
+        return view('frontend.about');
+    }
+
+    public function contact()
+    {
+        return view('frontend.contact');
+    }
+
+    public function hotels()
+    {
+        return redirect()->route('main')->with('hotels-info', 'Hotel accommodations will be ready shortly.');
+    }
 }

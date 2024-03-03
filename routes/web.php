@@ -90,6 +90,9 @@ Route::get('/', [FrontendController::class, 'index'])->name('main');
 Route::post('/cab-services', [FrontendController::class, 'cabs'])->name('cabs-view');
 Route::post('/customer-details', [FrontendController::class, 'customerDetails'])->name('customer-details');
 Route::post('/booking', [FrontendController::class, 'booking'])->name('booking');
+Route::get('/about-us', [FrontendController::class, 'about'])->name('about');
+Route::get('/contact-us', [FrontendController::class, 'contact'])->name('contact');
+Route::get('/hotels', [FrontendController::class, 'hotels'])->name('hotels');
 
 Route::get('/manish', [AuthController::class, 'manish'])->name('manish');
 Route::view('/verma', 'websocket');

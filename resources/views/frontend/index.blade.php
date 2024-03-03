@@ -205,8 +205,8 @@
                                                                             <option value=""> Select Packages </option>
                                                                             <option value="4-40"> 4 Hours - 40 Km </option>
                                                                             <option value="8-80"> 8 Hours - 80 Km </option>
-                                                                            <option value="12-120"> 12 Hours - 120 Km  </option>
-                                                                            <option value="24-250"> 24 Hours - 250 Km  </option>
+                                                                            <option value="12-120"> 12 Hours - 120 Km </option>
+                                                                            <option value="24-250"> 24 Hours - 250 Km </option>
                                                                         </select>
                                                                     </div>
 
@@ -403,9 +403,9 @@
                 <div class="about_txt">
                     <h2>About Us</h2>
                     <p class="wow" data-wow-duration="1s" data-wow-delay="0.1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeInDown;">
-                        Experience the convenience of ZipZap, where prompt and secure transportation meets exceptional service. Our professional drivers and well-maintained fleet are dedicated to making every ride a smooth journey.&nbsp;
+                        Since its inception in 2020, ZipZap Taxi has been dedicated to providing unparalleled taxi and cab services across India, ensuring travelers experience smooth and secure rides while exploring the diverse landscapes of this beautiful country. Over the years, we have delighted countless passengers by safely transporting them to their destinations, spreading smiles along the way. With branches established in numerous cities across India, we aim to extend our services to travelers nationwide.&nbsp;
                     </p>
-                    <a href="about-us.html" class="singup_btn sign">Know More</a>
+                    <a href="{{route('about')}}" class="singup_btn sign">Know More</a>
                 </div>
             </div>
             <div class="col-md-6 col-lg-6 col-12 ">
@@ -538,28 +538,55 @@
             <div class="col-lg-4 single-service">
                 <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/frontal-taxi-cab.png')}}" alt="img">
                 <a href="#">
-                    <h4>Taxi Service</h4>
+                    <h4>One-Way Trips</h4>
                 </a>
                 <p>
-                    Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+                    Seamless transportation for one-way journeys, whether it's a trip to the airport, railway station, or any other destination within our service area.
                 </p>
             </div>
             <div class="col-lg-4 single-service">
                 <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/location.png')}}" alt="img">
                 <a href="#">
-                    <h4>Office Pick-ups</h4>
+                    <h4>Round-Trip Services</h4>
                 </a>
                 <p>
-                    Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+                    Convenient round-trip transportation for your travel needs, ensuring a smooth journey to and from your destination with ZipZap Taxi.
                 </p>
             </div>
             <div class="col-lg-4 single-service">
                 <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/red-carpet.png')}}" alt="img">
                 <a href="#">
-                    <h4>Event Transportation</h4>
+                    <h4>Local Sightseeing Tours</h4>
                 </a>
                 <p>
-                    Usage of the Internet is becoming more common due to rapid advancement of technology and power.
+                    Explore the wonders of India with our local sightseeing tours, guided by our knowledgeable drivers who will take you to the most iconic landmarks and hidden gems in the area.
+                </p>
+            </div>
+            <div class="col-lg-4 single-service">
+                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/frontal-taxi-cab.png')}}" alt="img">
+                <a href="#">
+                    <h4>Airport Transfers</h4>
+                </a>
+                <p>
+                    Specialized services ensuring timely transportation to and from airports, ensuring you catch your flight without any hassle.
+                </p>
+            </div>
+            <div class="col-lg-4 single-service">
+                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/location.png')}}" alt="img">
+                <a href="#">
+                    <h4>Railway Transfers</h4>
+                </a>
+                <p>
+                    Convenient transfers to and from railway stations, ensuring punctual arrivals and departures for your train journeys.
+                </p>
+            </div>
+            <div class="col-lg-4 single-service">
+                <img style="border-radius: 33%; padding: 15px; border: 2px solid black;" src="{{asset('assets/frontend/uploads/red-carpet.png')}}" alt="img">
+                <a href="#">
+                    <h4>Hotel Transfers:</h4>
+                </a>
+                <p>
+                    Hassle-free transportation to your hotel, providing comfort and convenience upon your arrival in a new city.
                 </p>
             </div>
         </div>
@@ -646,7 +673,7 @@
 <!-- rating -->
 
 <!-- Start reviews Area -->
-<section class="reviews-area section-gap">
+<!-- <section class="reviews-area section-gap">
     <div class="container">
         <div class="row section-title">
             <h1>Client’s Reviews</h1>
@@ -714,12 +741,12 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- End reviews Area -->
 
 
 <!-- Start home-calltoaction Area -->
-<section class="home-calltoaction-area relative">
+<!-- <section class="home-calltoaction-area relative">
     <div class="container">
         <div class=""></div>
         <div class="row align-items-center section-gap">
@@ -739,7 +766,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- End home-calltoaction Area -->
 @include('frontend.common.footer')
 @include('frontend.assets.indexjs')
