@@ -67,6 +67,7 @@
         <div class="row g-4 portfolio-container">
             @if(isset($cars) && !empty($cars) && isset($triptype) && $triptype != 'local')
             @foreach($cars as $car)
+            @if($car->taxi->status != 'hide')
             <div class="col-md-6 col-lg-4 mb-4 wow fadeIn " data-wow-delay="0.1s">
                 <div class="card">
                     <img src="{{asset('/assets/admin/assets/img/upload/taxis/').'/'.$car->taxi->image}}" class="card-img-top" width="100%">
@@ -131,6 +132,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             @endforeach
             @elseif(isset($cars) && !empty($cars) && isset($triptype) && $triptype == 'local')
             @foreach($cars as $car)
