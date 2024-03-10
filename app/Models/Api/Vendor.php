@@ -12,6 +12,6 @@ class Vendor extends Model
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'phone', 'otp' ,'self_referal_code', 'refered_by', 'device_type'
+        'name', 'email', 'phone', 'otp' ,'self_referal_code', 'refered_by', 'device_type',  'device_token'
     ];
 }

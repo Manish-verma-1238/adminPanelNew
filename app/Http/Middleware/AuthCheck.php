@@ -19,7 +19,7 @@ class AuthCheck
         if(Auth::check()){
             
         }else{
-            return redirect('login')->with('error', 'Your session expires. Please Login Again.');
+            return redirect('admin')->with('error', 'Your session expires. Please Login Again.');
         }
         return $next($request);
     }

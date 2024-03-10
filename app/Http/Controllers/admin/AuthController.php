@@ -195,7 +195,7 @@ class AuthController extends Controller
             $user->password = Hash::make($request['password']);
             $user->update();
 
-            return redirect('login')->with('success', 'Your Password is updated. Login Here.');
+            return redirect('admin')->with('success', 'Your Password is updated. Login Here.');
         } catch (\Exception $e) {
             // Handle the exception, log the error, or return an error response
             return redirect::back()->with('error',  $e->getMessage());
@@ -233,7 +233,7 @@ class AuthController extends Controller
     {
         Session::flush();
         Auth::logout();
-        return redirect('login')->with('success', 'Logout Successfully.');
+        return redirect('admin')->with('success', 'Logout Successfully.');
     }
 
     public function manish()

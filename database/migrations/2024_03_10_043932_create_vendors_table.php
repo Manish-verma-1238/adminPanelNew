@@ -15,13 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->string('otp')->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->string('password')->nullable();
             $table->string('self_referal_code');
             $table->string('refered_by')->nullable();
-            $table->enum('device_type', [0, 1])->default(0); //0 for android and 1 for ios
-            $table->string('device_token')->nullable();
             $table->timestamps();
         });
     }

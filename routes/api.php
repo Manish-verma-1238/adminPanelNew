@@ -15,11 +15,17 @@ use App\Http\Controllers\Api\VendorController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('vendor')->middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/upload-images', [VendorController::class, 'uploadImages'])->name('upload-images');
 });
 
-Route::post('/register', [VendorController::class, 'register'])->name('register');
-Route::post('/login', [VendorController::class, 'login'])->name('login');
-Route::post('/resend-otp', [VendorController::class, 'resendOtp'])->name('resend-otp');
-Route::post('/verify-otp', [VendorController::class, 'verifyOtp'])->name('verify-otp');
+Route::prefix('vendor')->group(function () {
+    Route::post('/register', [VendorController::class, 'register'])->name('register');
+    Route::post('/login', [VendorController::class, 'login'])->name('login');
+    Route::post('/resend-otp', [VendorController::class, 'resendOtp'])->name('resend-otp');
+    Route::post('/verify-otp', [VendorController::class, 'verifyOtp'])->name('verify-otp');
+    Route::post('/logout', [VendorController::class, 'logout'])->name('logout');
+});
